@@ -2,14 +2,14 @@ Facelift
 ========
 Facelift is an experiment in creating a DSL for CSS in Scala. Goals are discoverability, type safety and ease of use.
 
-Inline with Scala XML-litterals::
+Inline with Scala XML-litterals:
 
     val titleId = Id("title")
     val titleClass = Class("wide", "cool")
     val titleStyle = Style(Color.Green, MarginPx(45, 20, 10, 10), 'paddingLeft -> "10px")
     val html = <html><body>{ <h1></h1> % titleId % titleClass % titleStyle } </body></html>
 
-In a CSS file::
+In a CSS file:
 
     val css2 =
       new CssElement(Id("link"))(
@@ -24,19 +24,19 @@ In a CSS file::
         FontSizePx(18),
         BackgroundColor("#F5F5F5"))
 
-Required imports:: 
+Required imports:
 
     import tbje.facelift.Html._
     import tbje.facelift.css._
 
-Start using it::
+Start using it:
 
     git clone git@github.com:tbje/facelift.git
     cd facelift
     sbt
     > publish-local
     
-In your project::
+In your project (SBT-settings):
     
     libraryDependencies ++= Seq(
         "tbje" %% "facelift" % "0.1-SNAPSHOT"
