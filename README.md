@@ -11,6 +11,7 @@ Inline with Scala XML-litterals:
 
 In a CSS file:
 
+    import CssSelector._
     val css2 =
       new CssElement(Id("link"))(
         'paddingLeft -> "20px",
