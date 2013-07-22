@@ -9,7 +9,7 @@ Inline with Scala XML-litterals::
     val titleStyle = Style(Color.Green, MarginPx(45, 20, 10, 10), 'paddingLeft -> "10px")
     val html = <html><body>{ <h1></h1> % titleId % titleClass % titleStyle } </body></html>
 
-or in a CSS file::
+In a CSS file::
 
     val css2 =
       new CssElement(Id("link"))(
@@ -24,6 +24,23 @@ or in a CSS file::
         FontSizePx(18),
         BackgroundColor("#F5F5F5"))
 
+Required imports:: 
+
+    import tbje.facelift.Html._
+    import tbje.facelift.css._
+
+Start using it::
+
+    git clone git@github.com:tbje/facelift.git
+    cd facelift
+    sbt
+    > publish-local
+    
+In your project::
+    
+    libraryDependencies ++= Seq(
+        "tbje" %% "facelift" % "0.1-SNAPSHOT"
+    )
 
 Next steps:
 -----------
