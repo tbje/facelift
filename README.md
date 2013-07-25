@@ -23,6 +23,7 @@ In a CSS file:
         PaddingPx(30),
         TextAlign.Center,
         FontSizePx(18),
+        FontFamily.websafe.serif.Georgia,
         BackgroundColor("#F5F5F5"))
 
 Nesting: 

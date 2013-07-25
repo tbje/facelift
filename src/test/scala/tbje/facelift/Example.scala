@@ -25,6 +25,7 @@ class Example {
         PaddingPx(30),
         TextAlign.Center,
         FontSizePx(18),
+        FontFamily.websafe.serif.Georgia,
         BackgroundColor("#F5F5F5"))
     val css =
       CssElement(H1, Class("tst"), A)(
