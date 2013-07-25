@@ -12,13 +12,6 @@ class Example {
     val html = <html><body>{ <h1></h1> % titleId % titleClass % titleStyle } </body></html>
   }
 
-  class Form {
-    case class Input(initialValue: String, name: String) // Might want to set name.
-    val action = ""
-    val fields = Seq(Input("test", "name"))
-    val validations = ""
-  }
-
   object CssTest {
     import CssSelector._
     val linkCss =
