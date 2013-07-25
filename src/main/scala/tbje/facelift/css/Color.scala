@@ -1,6 +1,6 @@
 package tbje.facelift.css
 
-case class Color(color: String) extends CssAttr {
+case class Color(color: String) extends CssDeclaration {
   override def toString = s"color: $color"
 }
 object Color {

@@ -7,67 +7,67 @@ import scala.xml.UnprefixedAttribute
 package css {
   // Sets all the background properties in one declaration
   // From CSS version 1
-  case class Background(background: String) extends CssAttr {
+  case class Background(background: String) extends CssDeclaration {
     override def toString = s"background: $background"
   }
 
   // Sets whether a background image is fixed or scrolls with the rest of the page
   // From CSS version 1
-  case class BackgroundAttachment(backgroundAttachment: String) extends CssAttr {
+  case class BackgroundAttachment(backgroundAttachment: String) extends CssDeclaration {
     override def toString = s"background-attachment: $backgroundAttachment"
   }
 
   // Sets the background color of an element
   // From CSS version 1
-  case class BackgroundColor(backgroundColor: String) extends CssAttr {
+  case class BackgroundColor(backgroundColor: String) extends CssDeclaration {
     override def toString = s"background-color: $backgroundColor"
   }
 
   // Sets the background image for an element
   // From CSS version 1
-  case class BackgroundImage(backgroundImage: String) extends CssAttr {
+  case class BackgroundImage(backgroundImage: String) extends CssDeclaration {
     override def toString = s"background-image: $backgroundImage"
   }
 
   // Sets the starting position of a background image
   // From CSS version 1
-  case class BackgroundPosition(backgroundPosition: String) extends CssAttr {
+  case class BackgroundPosition(backgroundPosition: String) extends CssDeclaration {
     override def toString = s"background-position: $backgroundPosition"
   }
 
   // Sets how a background image will be repeated
   // From CSS version 1
-  case class BackgroundRepeat(backgroundRepeat: String) extends CssAttr {
+  case class BackgroundRepeat(backgroundRepeat: String) extends CssDeclaration {
     override def toString = s"background-repeat: $backgroundRepeat"
   }
 
   // Specifies the painting area of the background
   // From CSS version 3
-  case class BackgroundClip(backgroundClip: String) extends CssAttr {
+  case class BackgroundClip(backgroundClip: String) extends CssDeclaration {
     override def toString = s"background-clip: $backgroundClip"
   }
   // Specifies the positioning area of the background images
   // From CSS version 3
-  case class BackgroundOrigin(backgroundOrigin: String) extends CssAttr {
+  case class BackgroundOrigin(backgroundOrigin: String) extends CssDeclaration {
     override def toString = s"background-origin: $backgroundOrigin"
   }
 
   // Specifies the size of the background images
   // From CSS version 3
-  case class BackgroundSize(backgroundSize: String) extends CssAttr {
+  case class BackgroundSize(backgroundSize: String) extends CssDeclaration {
     override def toString = s"background-size: $backgroundSize"
   }
 
-  abstract class CssAttr {
+  abstract class CssDeclaration {
     override def toString: String
   }
-  case class FontSizeEm(size: Double) extends CssAttr {
+  case class FontSizeEm(size: Double) extends CssDeclaration {
     override def toString = s"font-size: ${size}em"
   }
-  case class FontSizePx(size: Int) extends CssAttr {
+  case class FontSizePx(size: Int) extends CssDeclaration {
     override def toString = s"font-size: ${size}px"
   }
-  case class Margin(value: String) extends CssAttr {
+  case class Margin(value: String) extends CssDeclaration {
     override val toString = s"margin: $value"
   }
   object MarginPx {
@@ -76,10 +76,10 @@ package css {
     def apply(topAndBottom: Int, rightAndLeft: Int) = new Margin(s"${topAndBottom}px ${rightAndLeft}px")
     def apply(all: Int) = new Margin(s"${all}px")
   }
-  case class Padding(value: String) extends CssAttr {
+  case class Padding(value: String) extends CssDeclaration {
     override val toString = s"padding: $value"
   }
-  case class Width(value: String) extends CssAttr {
+  case class Width(value: String) extends CssDeclaration {
     override def toString = s"width: $value"
   }
   object WidthPx {
@@ -91,7 +91,7 @@ package css {
     def apply(topAndBottom: Int, rightAndLeft: Int) = new Padding(s"${topAndBottom}px ${rightAndLeft}px")
     def apply(all: Int) = new Padding(s"${all}px")
   }
-  case class TextAlign(value: String) extends CssAttr {
+  case class TextAlign(value: String) extends CssDeclaration {
     override val toString = s"text-align: $value"
   }
   object TextAlign {
@@ -103,19 +103,19 @@ package css {
     val Default = Left
   }
 
-  class CssElement(elements: CssSelector*)(styles: CssAttr*) {
+  class CssElement(elements: CssSelector*)(styles: CssDeclaration*) {
     override val toString =
       s"""|${elements mkString " "} {
   		|  ${styles.mkString("", ";\n  ", ";")}
   		|}""".stripMargin
   }
 
-  object CssAttr {
-    implicit def tuple2ToCSSAttr(t: (String, String)) = new CssAttr {
+  object CssDeclaration {
+    implicit def tuple2ToCSSAttr(t: (String, String)) = new CssDeclaration {
       val (key, value) = t
       override val toString = s"$key: $value"
     }
-    implicit def tuple2ToCSSAttr2(t: (Symbol, String)) = new CssAttr {
+    implicit def tuple2ToCSSAttr2(t: (Symbol, String)) = new CssDeclaration {
       val (key, value) = t
       val unCamelCased = key.name.foldLeft("") { (a, b) => if (b == b.toUpper) s"$a-${b.toLower}" else s"$a$b" }
       override val toString = s"$unCamelCased: $value"
@@ -162,7 +162,7 @@ object Html {
     "name",
     Text(name),
     scala.xml.Null)
-  case class Style(attrs: CssAttr*) extends UnprefixedAttribute(
+  case class Style(attrs: CssDeclaration*) extends UnprefixedAttribute(
     "display",
     Text(attrs mkString "; "),
     scala.xml.Null)
