@@ -59,13 +59,13 @@ package css {
     def declarations: Seq[CssDeclaration]
     def children = Seq[CssElement]()
     def addParents(parentSelectors: Seq[CssSelector], parentDeclarations: Seq[CssDeclaration]): CssElement
-    override val toString: String =
-      s"""|${selectors mkString " "} {
+    override val toString: String = {
+      val elements = s"""|${selectors mkString " "} {
   		|  ${declarations.mkString("", ";\n  ", ";")}
   		|}
-  		|
-  		|${children.map(_.toString) mkString "\n\n"}
-  		""".stripMargin
+  		|""".stripMargin +: children.map(_.toString)
+      elements mkString ("", "\n", "")
+    }
 
   }
   case class CssElementWithoutChildren(selectors: Seq[CssSelector], declarations: Seq[CssDeclaration]) extends CssElement {
