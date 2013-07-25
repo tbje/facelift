@@ -1,7 +1,8 @@
 package tbje.facelift.css
 
 case class Color(color: String) extends CssDeclaration {
-  override def toString = s"color: $color"
+  val property = "color"
+  val value = color
 }
 object Color {
   object AliceBlue extends Color("aliceblue")

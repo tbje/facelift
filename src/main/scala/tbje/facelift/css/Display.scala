@@ -1,7 +1,7 @@
 package tbje.facelift.css
 
 case class Display(value: String) extends CssDeclaration {
-  override def toString = s"display: $value"
+  val property = "display"
 }
 
 object Display {
