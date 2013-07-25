@@ -103,11 +103,32 @@ package css {
     val Default = Left
   }
 
-  class CssElement(elements: CssSelector*)(styles: CssDeclaration*) {
-    override val toString =
-      s"""|${elements mkString " "} {
-  		|  ${styles.mkString("", ";\n  ", ";")}
-  		|}""".stripMargin
+  abstract class CssElement {
+    def selectors: Seq[CssSelector]
+    def declarations: Seq[CssDeclaration]
+    def children = Seq[CssElement]()
+    def addParents(parentSelectors: Seq[CssSelector], parentDeclarations: Seq[CssDeclaration]): CssElement
+    override val toString: String =
+      s"""|${selectors mkString " "} {
+  		|  ${declarations.mkString("", ";\n  ", ";")}
+  		|}
+  		|
+  		|${children.map(_.toString) mkString "\n\n"}
+  		""".stripMargin
+
+  }
+  case class CssElementWithoutChildren(selectors: Seq[CssSelector], declarations: Seq[CssDeclaration]) extends CssElement {
+    def apply(children: CssElement*) = new CssElementWithChildren(selectors, declarations, children map (_.addParents(selectors, declarations)))
+    def addParents(parentSelectors: Seq[CssSelector], parentDeclarations: Seq[CssDeclaration]): CssElement =
+      copy(selectors = parentSelectors ++ selectors, declarations = declarations ++ parentDeclarations)
+  }
+  case class CssElementWithChildren(selectors: Seq[CssSelector], declarations: Seq[CssDeclaration], override val children: Seq[CssElement], parentSelectors: Seq[CssSelector] = Seq(), parentDeclarations: Seq[CssDeclaration] = Seq()) extends CssElement {
+    def addParents(parentSelectors: Seq[CssSelector], parentDeclarations: Seq[CssDeclaration]): CssElement =
+      copy(selectors = parentSelectors ++ selectors, declarations = declarations ++ parentDeclarations, children = children map (_.addParents(parentSelectors, parentDeclarations)))
+  }
+
+  object CssElement {
+    def apply(elements: CssSelector*)(styles: CssDeclaration*) = new CssElementWithoutChildren(elements, styles)
   }
 
   object CssDeclaration {

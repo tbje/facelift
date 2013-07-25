@@ -21,16 +21,8 @@ class Example {
 
   object CssTest {
     import CssSelector._
-    val css =
-      new CssElement(H1, Class("tst"), A)(
-        Color.Green,
-        MarginPx(10, 20, 10, 20),
-        'marginLeft -> "auto",
-        "margin-left" -> "auto",
-        'paddingLeft -> "10px",
-        FontSizeEm(1.3))
-    val css2 =
-      new CssElement(Id("link"))(
+    val linkCss =
+      CssElement(Id("link"))(
         'paddingLeft -> "20px",
         'boxShadow -> "auto",
         'boxShadow -> "0 2px 5px rgba(0,0,0,.3)",
@@ -41,6 +33,22 @@ class Example {
         TextAlign.Center,
         FontSizePx(18),
         BackgroundColor("#F5F5F5"))
+    val css =
+      CssElement(H1, Class("tst"), A)(
+        Color.Green,
+        MarginPx(10, 20, 10, 20),
+        'marginLeft -> "auto",
+        "margin-left" -> "auto",
+        'paddingLeft -> "10px",
+        FontSizeEm(1.3))(linkCss)
+    val css2 =
+      CssElement(H2, Class("tast"), A)(
+        Color.Green,
+        MarginPx(10, 20, 10, 20),
+        'marginLeft -> "auto",
+        "margin-left" -> "auto",
+        'paddingLeft -> "10px",
+        FontSizeEm(1.3))(linkCss)
 
   }
 
