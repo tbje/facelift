@@ -71,11 +71,11 @@ package css {
   case class CssElementWithoutChildren(selectors: Seq[CssSelector], declarations: Seq[CssDeclaration]) extends CssElement {
     def apply(children: CssElement*) = new CssElementWithChildren(selectors, declarations, children map (_.addParents(selectors, declarations)))
     def addParents(parentSelectors: Seq[CssSelector], parentDeclarations: Seq[CssDeclaration]): CssElement =
-      copy(selectors = parentSelectors ++ selectors, declarations = declarations ++ parentDeclarations)
+      copy(selectors = parentSelectors ++ selectors, declarations = declarations ++ parentDeclarations.filterNot(el => declarations.exists(_.property == el.property)))
   }
   case class CssElementWithChildren(selectors: Seq[CssSelector], declarations: Seq[CssDeclaration], override val children: Seq[CssElement], parentSelectors: Seq[CssSelector] = Seq(), parentDeclarations: Seq[CssDeclaration] = Seq()) extends CssElement {
     def addParents(parentSelectors: Seq[CssSelector], parentDeclarations: Seq[CssDeclaration]): CssElement =
-      copy(selectors = parentSelectors ++ selectors, declarations = declarations ++ parentDeclarations, children = children map (_.addParents(parentSelectors, parentDeclarations)))
+      copy(selectors = parentSelectors ++ selectors, declarations = declarations ++ parentDeclarations.filterNot(el => declarations.exists(_.property == el.property)), children = children map (_.addParents(parentSelectors, parentDeclarations)))
   }
 
   object CssElement {
