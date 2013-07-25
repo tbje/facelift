@@ -27,6 +27,7 @@ In a CSS file:
         BackgroundColor("#F5F5F5"))
 
 Nesting: 
+
     val linkCss =
       CssElement(Id("link"))(
         WidthPx(140),
