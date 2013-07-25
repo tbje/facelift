@@ -25,6 +25,27 @@ In a CSS file:
         FontSizePx(18),
         BackgroundColor("#F5F5F5"))
 
+Nesting: 
+    val linkCss =
+      CssElement(Id("link"))(
+        WidthPx(140),
+        Color.Blue)
+
+    val wideCss =
+      CssElement(Class("wide"))(
+        WidthPx(340))(linkCss)
+
+    println(wideCss) 
+
+    .wide {
+      width: 340px;
+    }
+
+    .wide #link {
+      width: 140px;
+      color: blue;
+    }              
+
 Required imports:
 
     import tbje.facelift.Html._
@@ -45,6 +66,5 @@ In your project (SBT-settings):
 
 Next steps:
 -----------
-1. Syntax for nested rules (ref. LESS)
-2. Direct support for more css properties (you can always *'property -> "value"* or *"property" -> "value"* )
-3. CSS file generator plugin for SBT
+1. Direct support for more css properties (you can always *'property -> "value"* or *"property" -> "value"* )
+2. CSS file generator plugin for SBT
