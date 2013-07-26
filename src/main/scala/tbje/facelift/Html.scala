@@ -16,7 +16,7 @@ object Html {
     scala.xml.Null)
   import css._
   case class Style(attrs: CssDeclaration*) extends UnprefixedAttribute(
-    "display",
+    "style",
     Text(attrs mkString "; "),
     scala.xml.Null)
 }
