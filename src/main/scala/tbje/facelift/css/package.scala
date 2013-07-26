@@ -2,6 +2,8 @@ package tbje.facelift
 
 package css {
 
+  import tbje.facelift.css.CssSelector.{ A, Pseudo }
+
   abstract class CssDeclaration {
     def property: String
     def value: String
@@ -23,11 +25,19 @@ package css {
     def declarations: Seq[CssDeclaration]
     def children = Seq[CssElement]()
     def addParents(parentSelectors: Seq[CssSelector], parentDeclarations: Seq[CssDeclaration]): CssElement
+    def removeParentForPseudo(selectors: Seq[CssSelector]) = {
+      val pseudos = selectors.collect { case x: Pseudo => x }
+      pseudos.foldLeft(selectors) { (sel, pseudo) =>
+        sel.collect { case x if x != pseudo.parent => x }
+      }
+    }
     override val toString: String = {
-      val elements = s"""|${selectors mkString " "} {
+      val elements = (if (declarations.isEmpty) Seq() else {
+        Seq(s"""|${removeParentForPseudo(selectors) mkString " "} {
   		|  ${declarations.mkString("", ";\n  ", ";")}
   		|}
-  		|""".stripMargin +: children.map(_.toString)
+  		|""".stripMargin)
+      }) ++ children.map(_.toString)
       elements mkString ("", "\n", "")
     }
 
