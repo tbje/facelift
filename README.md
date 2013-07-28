@@ -7,7 +7,7 @@ Inline with Scala XML-litterals:
     val titleId = Id("title")
     val titleClass = Class("wide", "cool")
     val titleStyle = Style(Color.Green, MarginPx(45, 20, 10, 10), 'paddingLeft -> "10px")
-    val html = <html><body>{ <h1></h1> % titleId % titleClass % titleStyle } </body></html>
+    val html = <html><body>{ <h1/> % titleId % titleClass % titleStyle } </body></html>
 
 In a CSS file:
 
