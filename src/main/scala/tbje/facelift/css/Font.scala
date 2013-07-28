@@ -35,6 +35,7 @@ class FontSize(val value: String) extends CssDeclaration {
 
 object FontSize {
   def apply(value: String) = new FontSize(value)
+  def apply(measure: CssMeasure) = new FontSize(measure.value)
 }
 
 case class FontSizeEm(size: Double) extends FontSize(s"${size}em")

@@ -1,8 +1,29 @@
 package tbje.facelift
 
+package object css {
+  implicit def intToUnit(x: Int) = new css.ToUnitOps(x)
+  implicit def doublToUnit(x: Double) = new css.ToUnitOps(x)
+}
+
 package css {
 
   import tbje.facelift.css.CssSelector.{ A, Pseudo }
+  object Auto extends CssMeasure("auto")
+  object Inherit extends CssMeasure("inherit")
+
+  case class CssMeasure(value: String)
+
+  class ToUnitOps[T](x: T) {
+    def px = CssMeasure(s"${x}px")
+    def pct = CssMeasure(s"${x}%")
+    def em = CssMeasure(s"${x}em")
+    def in = CssMeasure(s"${x}in")
+    def cm = CssMeasure(s"${x}cm")
+    def mm = CssMeasure(s"${x}mm")
+    def ex = CssMeasure(s"${x}ex")
+    def pt = CssMeasure(s"${x}pt")
+    val % = pct
+  }
 
   abstract class CssDeclaration {
     def property: String

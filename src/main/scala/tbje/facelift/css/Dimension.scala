@@ -8,6 +8,7 @@ object Width {
   object Auto extends Width("auto")
   object Inherit extends Width("inherit")
   def apply(value: String) = new Width(value)
+  def apply(measure: CssMeasure) = new Width(measure.value)
 }
 
 case class WidthPx(px: Int) extends Width(s"${px}px")
@@ -22,6 +23,7 @@ object Height {
   object Auto extends Width("auto")
   object Inherit extends Width("inherit")
   def apply(value: String) = new Height(value)
+  def apply(measure: CssMeasure) = new Height(measure.value)
 }
 
 case class HeightPx(px: Int) extends Height(s"${px}px")
