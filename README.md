@@ -22,7 +22,7 @@ In a CSS file:
         Color.Chartreuse,
         PaddingPx(30),
         TextAlign.Center,
-        FontSizePx(18),
+        FontSize(1.2 em),
         FontFamily.websafe.serif.Georgia,
         BackgroundColor("#F5F5F5"))
 
@@ -69,4 +69,6 @@ In your project (SBT-settings):
 Next steps:
 -----------
 1. Direct support for more css properties (you can always *'property -> "value"* or *"property" -> "value"* )
+    * Contributions are welcome and I stubbed up missing properties and added TODO tasks.  
 2. CSS file generator plugin for SBT
+3. String interpolation Selector macro.
