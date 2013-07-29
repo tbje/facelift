@@ -18,6 +18,7 @@ class PaddingLeft(val value: String) extends CssDeclaration {
 
 object PaddingLeft {
   def apply(value: String) = new PaddingLeft(value)
+  def apply(measure: CssMeasure) = new PaddingLeft(measure.value)
 }
 
 case class PaddingLeftPx(x: Int) extends PaddingLeft(s"${x}px")
@@ -27,7 +28,8 @@ class PaddingRight(val value: String) extends CssDeclaration {
 }
 
 object PaddingRight {
-  def apply(value: String) = new PaddingLeft(value)
+  def apply(value: String) = new PaddingRight(value)
+  def apply(measure: CssMeasure) = new PaddingRight(measure.value)
 }
 
 case class PaddingRightPx(x: Int) extends PaddingRight(s"${x}px")
@@ -38,6 +40,7 @@ class PaddingTop(val value: String) extends CssDeclaration {
 
 object PaddingTop {
   def apply(value: String) = new PaddingTop(value)
+  def apply(measure: CssMeasure) = new PaddingTop(measure.value)
 }
 
 case class PaddingTopPx(x: Int) extends PaddingTop(s"${x}px")
@@ -48,6 +51,7 @@ class PaddingBottom(val value: String) extends CssDeclaration {
 
 object PaddingBottom {
   def apply(value: String) = new PaddingBottom(value)
+  def apply(measure: CssMeasure) = new PaddingBottom(measure.value)
 }
 
 case class PaddingBottomPx(x: Int) extends PaddingBottom(s"${x}px")

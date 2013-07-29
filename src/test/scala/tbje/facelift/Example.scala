@@ -16,7 +16,7 @@ class Example {
     import CssSelector._
     val linkCss =
       CssElement(Id("link"))(
-        'paddingLeft -> "20px",
+        PaddingLeft(20 px),
         'boxShadow -> "auto",
         'boxShadow -> "0 2px 5px rgba(0,0,0,.3)",
         WidthPx(340),
@@ -32,7 +32,7 @@ class Example {
       CssElement(H1, Class("tst"), A)(
         Color.Green,
         MarginPx(10, 20, 10, 20),
-        'marginLeft -> "auto",
+        MarginLeft(Auto),
         "margin-left" -> "auto",
         'paddingLeft -> "10px",
         FontSizeEm(1.3))(linkCss)
