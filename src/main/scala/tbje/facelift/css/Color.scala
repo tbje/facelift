@@ -1,5 +1,24 @@
 package tbje.facelift.css
 
+/**
+ * Permits the specification of a source color profile other than the default
+ * Available from CSS version 3
+ */
+// TODO: color-profile
+
+/**
+ * Sets the opacity level for an element
+ * Available from CSS version 3
+ *
+ */
+// TODO: opacity
+
+/**
+ * Permits the specification of a color profile rendering intent other than the default
+ * Available from CSS version 3
+ */
+// TODO: rendering-intent
+
 case class Color(color: String) extends CssDeclaration {
   val property = "color"
   val value = color

@@ -1,5 +1,51 @@
 package tbje.facelift.css
 
+/**
+ * Sets all the font properties in one declaration
+ * Available from CSS version 1
+ */
+// TODO: font
+
+/**
+ * Specifies the font style for text
+ * Available from CSS version 1
+ */
+// TODO: font-style
+
+/**
+ * Specifies whether or not a text should be displayed in a small-caps font
+ * Available from CSS version 1
+ */
+// TODO: font-variant
+
+/**
+ * Specifies the weight of a font
+ * Available from CSS version 1
+ */
+// TODO: font-weight
+
+/**
+ * A rule that allows websites to download and use fonts other than the "web-safe" fonts
+ * Available from CSS version 3
+ */
+// TODO: @font-face
+
+/**
+ * Preserves the readability of text when font fallback occurs
+ * Available from CSS version 3
+ */
+// TODO: font-size-adjust
+
+/**
+ * Selects a normal, condensed, or expanded face from a font family
+ * Available from CSS version 3
+ */
+// TODO: font-stretch
+
+/**
+ * Specifies the font family for text
+ * Available from CSS version 1
+ */
 class FontFamily(val value: String) extends CssDeclaration {
   val property = "font-family"
 }
@@ -29,6 +75,10 @@ object FontFamily {
   }
 }
 
+/**
+ * Specifies the font size of text
+ * Available from CSS version 1
+ */
 class FontSize(val value: String) extends CssDeclaration {
   val property = "font-size"
 }
