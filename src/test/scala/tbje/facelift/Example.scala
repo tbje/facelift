@@ -2,14 +2,21 @@ package tbje.facelift
 
 class Example {
 
-  import Html._
+  import attr._
+  import html._
   import css._
 
   object FirstPage {
     val titleId = Id("title")
-    val titleClass = Class("wide", "cool")
+    val titleClass = Class("cool")
     val titleStyle = Style(Color.Green, MarginPx(45, 20, 10, 10), 'paddingLeft -> "10px")
     val html = <html><body>{ <h1></h1> % titleId % titleClass % titleStyle } </body></html>
+    val html2 =
+      Html {
+        Body {
+          H1("Welcome to FaceLift", titleId, titleClass, titleStyle)
+        }
+      }
   }
 
   object CssTest {
