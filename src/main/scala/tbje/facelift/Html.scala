@@ -6,8 +6,8 @@ package html {
   class XmlBase(label: String) extends Elem(null, label, scala.xml.Null, TopScope, false, Seq.empty: _*) {
     def combineAttrs(attrs: Seq[Attribute]) =
       attrs.foldLeft(Null: MetaData)((x, y) => x.append(y).asInstanceOf[Attribute])
-    def apply(content: String, attrs: Attribute*): NodeSeq = apply(Text(content), attrs: _*)
-    def apply(xml: NodeSeq, attrs: Attribute*): NodeSeq = copy(attributes = combineAttrs(attrs), child = xml)
+    def apply(content: String, attrs: Attribute*): Elem = apply(Text(content), attrs: _*)
+    def apply(xml: NodeSeq, attrs: Attribute*): Elem = copy(attributes = combineAttrs(attrs), child = xml)
   }
 
   object Html extends XmlBase("html")
@@ -21,6 +21,10 @@ package html {
   object Span extends XmlBase("span")
 
   object P extends XmlBase("p")
+
+  object I extends XmlBase("i")
+
+  object Img extends XmlBase("img")
 
   object Div extends XmlBase("div")
 
@@ -46,5 +50,11 @@ package attr {
     "style",
     Text(attrs mkString "; "),
     scala.xml.Null)
+
+  case class Src(name: String) extends UnprefixedAttribute(
+    "src",
+    Text(name),
+    scala.xml.Null)
+
 }
 
