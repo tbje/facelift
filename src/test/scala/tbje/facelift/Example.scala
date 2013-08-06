@@ -3,7 +3,7 @@ package tbje.facelift
 class Example {
 
   import attr._
-  import html._
+  import html.{ Style => StyleTag, _ }
   import css._
 
   object FirstPage {
