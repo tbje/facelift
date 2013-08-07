@@ -11,7 +11,16 @@ package html {
     def apply(attrs: Attribute*): Elem = copy(attributes = combineAttrs(attrs), child = NodeSeq.Empty)
   }
 
-  object Doctype extends XmlBase("DOCTYPE") // Defines the document type
+  class ElementOps(elem: Elem) {
+    def apply(xml: NodeSeq) = elem.copy(child = elem.child ++ xml)
+    def apply(txt: String) = elem.copy(child = elem.child ++ Text(txt))
+  }
+
+  object ElementOps {
+    implicit def augmentElemToElementOps(elem: Elem) = new ElementOps(elem)
+  }
+
+  object Doctype extends XmlBase("!DOCTYPE") // Defines the document type
   object A extends XmlBase("a") // Defines a hyperlink
   object Abbr extends XmlBase("abbr") // Defines an abbreviation
   object Acronym extends XmlBase("acronym") // Not supported in HTML5. Defines an acronym
@@ -50,7 +59,7 @@ package html {
   object Dl extends XmlBase("dl") // Defines a description list
   object Dt extends XmlBase("dt") // Defines a term/name in a description list
   object Em extends XmlBase("em") // Defines emphasized text 
-  object Embed extends XmlBase("embed") // New - 	Defines a container for an external (non-HTML) application
+  object Embed extends XmlBase("embed") // New - Defines a container for an external (non-HTML) application
   object Fieldset extends XmlBase("fieldset") // Groups related elements in a form
   object Figcaption extends XmlBase("figcaption") // New - Defines a caption for a <figure> element
   object Figure extends XmlBase("figure") // New - Specifies self-contained content
@@ -134,31 +143,3 @@ package html {
   object Wbr extends XmlBase("wbr") // New - Defines a possible line-break
 
 }
-
-package attr {
-
-  case class Id(id: String) extends UnprefixedAttribute("id", Text(id), scala.xml.Null)
-
-  case class Class(names: String*) extends UnprefixedAttribute(
-    "class",
-    Text(names mkString " "),
-    scala.xml.Null)
-
-  case class Name(name: String) extends UnprefixedAttribute(
-    "name",
-    Text(name),
-    scala.xml.Null)
-
-  import css._
-  case class Style(attrs: CssDeclaration*) extends UnprefixedAttribute(
-    "style",
-    Text(attrs mkString "; "),
-    scala.xml.Null)
-
-  case class Src(name: String) extends UnprefixedAttribute(
-    "src",
-    Text(name),
-    scala.xml.Null)
-
-}
-

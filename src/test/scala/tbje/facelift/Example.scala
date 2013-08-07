@@ -2,19 +2,24 @@ package tbje.facelift
 
 class Example {
 
-  import attr._
-  import html.{ Style => StyleTag, _ }
-  import css._
+  import tbje.facelift.imports._
 
   object FirstPage {
     val titleId = Id("title")
     val titleClass = Class("cool")
     val titleStyle = Style(Color.Green, MarginPx(45, 20, 10, 10), 'paddingLeft -> "10px")
-    val html = <html><body>{ <h1></h1> % titleId % titleClass % titleStyle } </body></html>
-    val html2 =
+    val html1 = // Integrate attributes with standard scala xml
+      <html><body>{ <h1></h1> % titleId % titleClass % titleStyle } </body></html>
+    val html2 = // Html DSL, children then attributes style
       Html {
         Body {
           H1("Welcome to FaceLift", titleId, titleClass, titleStyle)
+        }
+      }
+    val html3 = // Html DSL, attributes first style
+      Html {
+        Body(Style('backgroundColor -> "#F5F5F5")) {
+          H1(titleId, titleClass, titleStyle)("Welcome to FaceLift")(B("my friend")) // Calling apply multiple times will concatenate children
         }
       }
   }
