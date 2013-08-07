@@ -133,6 +133,7 @@ package object imports {
   val Style = attr.Style
   val Src = attr.Src
   val Href = attr.Href
+  val Onclick = attr.Onclick
 
   val CssMeasure = css.CssMeasure
   val CssElementWithoutChildren = css.CssElementWithoutChildren

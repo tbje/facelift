@@ -6,31 +6,20 @@ package attr {
 
   import css._
 
-  case class Id(id: String) extends UnprefixedAttribute("id", Text(id), scala.xml.Null)
+  class AttributeBase(name: String, value: String) extends UnprefixedAttribute(name, Text(value), scala.xml.Null)
 
-  case class Class(names: String*) extends UnprefixedAttribute(
-    "class",
-    Text(names mkString " "),
-    scala.xml.Null)
+  case class Id(id: String) extends AttributeBase("id", id)
 
-  case class Name(name: String) extends UnprefixedAttribute(
-    "name",
-    Text(name),
-    scala.xml.Null)
-  case class Style(attrs: CssDeclaration*) extends UnprefixedAttribute(
-    "style",
-    Text(attrs mkString "; "),
-    scala.xml.Null)
+  case class Class(names: String*) extends AttributeBase("class", names mkString " ")
 
-  case class Src(name: String) extends UnprefixedAttribute(
-    "src",
-    Text(name),
-    scala.xml.Null)
+  case class Name(name: String) extends AttributeBase("name", name)
 
-  case class Href(href: String) extends UnprefixedAttribute(
-    "href",
-    Text(href),
-    scala.xml.Null)
+  case class Style(attrs: CssDeclaration*) extends AttributeBase("style", attrs mkString "; ")
 
+  case class Src(name: String) extends AttributeBase("src", name)
+
+  case class Href(href: String) extends AttributeBase("href", href)
+
+  case class Onclick(onclick: String) extends AttributeBase("onclick", onclick)
 }
 
