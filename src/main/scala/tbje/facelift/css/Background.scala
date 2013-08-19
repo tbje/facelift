@@ -18,6 +18,15 @@ case class BackgroundAttachment(backgroundAttachment: String) extends CssDeclara
   val value = backgroundAttachment
 }
 
+object BackgroundAttachment {
+  /** The background scrolls along with the element. This is default */
+  val Scroll = BackgroundAttachment("scroll")
+  /** The background is fixed with regard to the viewport */
+  val Fixed = BackgroundAttachment("fixed")
+  /** The background scrolls along with the element's contents */
+  val Local = BackgroundAttachment("local")
+}
+
 /**
  * Sets the background color of an element
  * From CSS version 1
@@ -36,6 +45,12 @@ object BackgroundColor extends BaseColorObject("background-color")
 case class BackgroundImage(backgroundImage: String) extends CssDeclaration {
   val property = "background-image"
   val value = backgroundImage
+}
+
+object BackgroundImage {
+  def url(url: String*) = BackgroundImage("url" + url.mkString("('", "' ,'", "')"))
+  val None = BackgroundImage("none")
+  val Inherit = BackgroundImage("inherit")
 }
 
 /**
