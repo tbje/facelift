@@ -179,10 +179,23 @@ class BaseColorObject(property: String) {
    * For example, the #0000ff value is rendered as blue, because the blue component is set to its highest value (ff) and the others are set to 0.
    *
    */
+  val hexColor = "#FF3423"
   def hex(hexColor: String) = new BaseColor(hexColor, property) {
     // TODO: Add macro check on hex format
     require(hexColor.size == 7, "Hex color format must be #RRGGBB")
     require(hexColor.head == '#', "Hex color format must be #RRGGBB")
+    def testValue(start: Int, part: String): Unit = {
+      val subString = hexColor.substring(start, start + 2)
+      try {
+        Integer.parseInt(subString, 16)
+      } catch {
+        case e: NumberFormatException =>
+          throw new IllegalArgumentException(s"requirement failed: $subString is not a legal value for $part")
+      }
+    }
+    testValue(1, "RR")
+    testValue(3, "GG")
+    testValue(5, "BB")
   }
 
   /**
@@ -196,9 +209,73 @@ class BaseColorObject(property: String) {
    */
   def rgb(red: Int, green: Int, blue: Int) = new BaseColor(s"rgb($red, $green, $blue)", property) {
     // TODO: Add macro check on rgb values
-    require(red >= 0 && red <= 256, "Red rgb value must be between 0 and 255.")
-    require(green >= 0 && green <= 256, "Green rgb value must be between 0 and 255.")
-    require(blue >= 0 && blue <= 256, "Blue rgb value must be between 0 and 255.")
+    require(red >= 0 && red <= 255, "Red rgb value must be between 0 and 255.")
+    require(green >= 0 && green <= 255, "Green rgb value must be between 0 and 255.")
+    require(blue >= 0 && blue <= 255, "Blue rgb value must be between 0 and 255.")
   }
+
+  def rgbPct(red: Int, green: Int, blue: Int) = new BaseColor(s"rgb($red%, $green%, $blue%)", property) {
+    // TODO: Add macro check on rgb values
+    require(red >= 0 && red <= 100, "Red rgb % value must be between 0 and 100.")
+    require(green >= 0 && green <= 100, "Green rgb % value must be between 0 and 100.")
+    require(blue >= 0 && blue <= 100, "Blue rgb % value must be between 0 and 100.")
+  }
+
+  /**
+   * RGBA color values are supported in IE9+, Firefox 3+, Chrome, Safari, and in Opera 10+.
+   *
+   * RGBA color values are an extension of RGB color values with an alpha channel - which specifies the opacity of the object.
+   *
+   * An RGBA color value is specified with: rgba(red, green, blue, alpha). The alpha parameter is a number between 0.0 (fully transparent) and 1.0 (fully opaque).
+   */
+  def rgba(red: Int, green: Int, blue: Int, transparency: Double) = new BaseColor(s"rgb($red, $green, $blue, $transparency)", property) {
+    // TODO: Add macro check on rgba values
+    require(red >= 0 && red <= 255, "Red rgb value must be between 0 and 255.")
+    require(green >= 0 && green <= 255, "Green rgb value must be between 0 and 255.")
+    require(blue >= 0 && blue <= 255, "Blue rgb value must be between 0 and 255.")
+    require(transparency >= 0.0 && transparency <= 1.0, "Transparency must be between 0.0 and 1.0.")
+  }
+
+  def rgbaPct(red: Int, green: Int, blue: Int, transparency: Int) = new BaseColor(s"rgb($red%, $green%, $blue%, $transparency)", property) {
+    // TODO: Add macro check on rgba values
+    require(red >= 0 && red <= 100, "Red rgb % value must be between 0 and 100.")
+    require(green >= 0 && green <= 100, "Green rgb % value must be between 0 and 100.")
+    require(blue >= 0 && blue <= 100, "Blue rgb % value must be between 0 and 100.")
+    require(transparency >= 0.0 && transparency <= 1.0, "Transparency must be between 0.0 and 1.0.")
+  }
+
+  /**
+   * HSL color values are supported in IE9+, Firefox, Chrome, Safari, and in Opera 10+.
+   *
+   * HSL stands for hue, saturation, and lightness - and represents a cylindrical-coordinate representation of colors.
+   *
+   * An HSL color value is specified with: hsl(hue, saturation, lightness).
+   *
+   * Hue is a degree on the color wheel (from 0 to 360) - 0 (or 360) is red, 120 is green, 240 is blue. Saturation is a percentage value;
+   * 0% means a shade of gray and 100% is the full color. Lightness is also a percentage; 0% is black, 100% is white.
+   */
+  def hsl(hue: Int, saturation: Int, lightness: Int) = new BaseColor(s"hsl($hue, $saturation, $lightness)", property) {
+    // TODO: Add macro check on hsl value
+    require(hue >= 0 && hue <= 360, "The hue value must be between 0 and 360 degrees.")
+    require(saturation >= 0 && saturation <= 100, "The saturation value must be between 0 and 100%.")
+    require(lightness >= 0 && lightness <= 100, "The lightness value must be between 0 and 100%.")
+  }
+
+  /**
+   * HSLA color values are supported in IE9+, Firefox 3+, Chrome, Safari, and in Opera 10+.
+   *
+   * HSLA color values are an extension of HSL color values with an alpha channel - which specifies the opacity of the object.
+   *
+   * An HSLA color value is specified with: hsla(hue, saturation, lightness, alpha), where the alpha parameter defines the opacity.
+   * The alpha parameter is a number between 0.0 (fully transparent) and 1.0 (fully opaque).
+   */
+  def hsla(hue: Int, saturation: Int, lightness: Int, transparency: Double) = new BaseColor(s"hsl($hue, $saturation%, $lightness%, $transparency)", property) {
+    // TODO: Add macro check on hsla values
+    require(hue >= 0 && hue <= 360, "The hue value must be between 0 and 360 degrees.")
+    require(saturation >= 0 && saturation <= 100, "The saturation value must be between 0 and 100%.")
+    require(lightness >= 0 && lightness <= 100, "The lightness value must be between 0 and 100%.")
+    require(transparency >= 0.0 && transparency <= 1.0, "Transparency must be between 0.0 and 1.0.")
+  }
+
 }
 
