@@ -27,6 +27,8 @@ case class BackgroundColor(backgroundColor: String) extends CssDeclaration {
   val value = backgroundColor
 }
 
+object BackgroundColor extends BaseColorObject("background-color")
+
 /**
  * Sets the background image for an element
  * From CSS version 1
