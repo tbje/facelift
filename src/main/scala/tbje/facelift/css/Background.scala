@@ -62,6 +62,20 @@ case class BackgroundPosition(backgroundPosition: String) extends CssDeclaration
   val value = backgroundPosition
 }
 
+object BackgroundPosition {
+  val LeftTop = BackgroundPosition("left top")
+  val LeftCenter = BackgroundPosition("left center")
+  val LeftBottom = BackgroundPosition("left bottom")
+  val RightTop = BackgroundPosition("right top")
+  val RightCenter = BackgroundPosition("right center")
+  val RightBottom = BackgroundPosition("right bottom")
+  val CenterTop = BackgroundPosition("center top")
+  val CenterCenter = BackgroundPosition("center center")
+  val CenterBottom = BackgroundPosition("center bottom")
+  val Inherit = BackgroundPosition("inherit")
+  def apply(x: CssMeasure, y: CssMeasure) = new BackgroundPosition(s"${x.value}, ${y.value}")
+}
+
 /**
  * Sets how a background image will be repeated
  * From CSS version 1
@@ -69,6 +83,18 @@ case class BackgroundPosition(backgroundPosition: String) extends CssDeclaration
 case class BackgroundRepeat(backgroundRepeat: String) extends CssDeclaration {
   val property = "background-repeat"
   val value = backgroundRepeat
+}
+
+object BackgroundRepeat {
+  /** The background image will be repeated both vertically and horizontally. This is default */
+  val Repeat = BackgroundRepeat("repeat")
+  /** The background image will be repeated only horizontally */
+  val RepeatX = BackgroundRepeat("repeat-x")
+  /** The background image will be repeated only vertically */
+  val RepeatY = BackgroundRepeat("repeat-y")
+  /** The background-image will not be repeated */
+  val NoRepeat = BackgroundRepeat("no-repeat")
+  val Inherit = BackgroundRepeat("inherit")
 }
 
 /**

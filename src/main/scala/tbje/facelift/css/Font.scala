@@ -4,43 +4,79 @@ package tbje.facelift.css
  * Sets all the font properties in one declaration
  * Available from CSS version 1
  */
-// TODO: font
+case class Font(font: String) extends CssDeclaration {
+  val property = "font"
+  val value = font
+}
+
+object Font {
+  // TODO: font values
+}
 
 /**
  * Specifies the font style for text
  * Available from CSS version 1
  */
-// TODO: font-style
+case class FontStyle(fontStyle: String) extends CssDeclaration {
+  val property = "font-style"
+  val value = fontStyle
+}
+
+object FontStyle {
+  // TODO: font-style values
+}
 
 /**
  * Specifies whether or not a text should be displayed in a small-caps font
  * Available from CSS version 1
  */
-// TODO: font-variant
+case class FontVariant(fontVariant: String) extends CssDeclaration {
+  val property = "font-variant"
+  val value = fontVariant
+}
 
-/**
- * Specifies the weight of a font
- * Available from CSS version 1
- */
-// TODO: font-weight
+object FontVariant {
+  // TODO: font-variant values
+}
 
 /**
  * A rule that allows websites to download and use fonts other than the "web-safe" fonts
  * Available from CSS version 3
  */
-// TODO: @font-face
+case class FontFace(fontFace: String) extends CssDeclaration {
+  val property = "@font-face"
+  val value = fontFace
+}
+
+object FontFace {
+  // TODO: @font-face values
+}
 
 /**
  * Preserves the readability of text when font fallback occurs
  * Available from CSS version 3
  */
-// TODO: font-size-adjust
+case class FontSizeAdjust(fontSizeAdjust: String) extends CssDeclaration {
+  val property = "font-size-adjust"
+  val value = fontSizeAdjust
+}
+
+object FontSizeAdjust {
+  // TODO: font-size-adjust values
+}
 
 /**
  * Selects a normal, condensed, or expanded face from a font family
  * Available from CSS version 3
  */
-// TODO: font-stretch
+case class FontStretch(fontStretch: String) extends CssDeclaration {
+  val property = "font-stretch"
+  val value = fontStretch
+}
+
+object FontStretch {
+  // TODO: font-stretch values
+}
 
 /**
  * Specifies the font family for text
@@ -93,24 +129,6 @@ case class FontSizeEm(size: Double) extends FontSize(s"${size}em")
 case class FontSizePx(size: Int) extends FontSize(s"${size}px")
 
 /**
- * Sets all the font properties in one declaration
- * Available from CSS version 1
- */
-// TODO: font
-
-/**
- * Specifies the font style for text
- * Available from CSS version 1
- */
-// TODO: font-style
-
-/**
- * Specifies whether or not a text should be displayed in a small-caps font
- * Available
- */
-// TODO: font-variant
-
-/**
  * Specifies the weight of a font
  * Available from CSS version 1
  */
@@ -130,26 +148,9 @@ object FontWeight {
   val Weight700 = FontWeight(700)
   val Weight800 = FontWeight(800)
   val Weight900 = FontWeight(900)
-  val Normal = FontWeight("normal") // Defines normal characters. This is default
-  val Bold = FontWeight("bold") // Defines thick characters
-  val Bolder = FontWeight("bolder") // Defines thicker characters
-  val Lighter = FontWeight("lighter") // Defines lighter characters
+  val Normal = new FontWeight("normal") // Defines normal characters. This is default
+  val Bold = new FontWeight("bold") // Defines thick characters
+  val Bolder = new FontWeight("bolder") // Defines thicker characters
+  val Lighter = new FontWeight("lighter") // Defines lighter characters
 }
 
-/**
- * A rule that allows websites to download and use fonts other than the "web-safe" fonts
- * Available from CSS version 3
- */
-// TODO: @font-face
-
-/**
- * Preserves the readability of text when font fallback occurs
- * Available from CSS version 3
- */
-// TODO: font-size-adjust
-
-/**
- * Selects a normal, condensed, or expanded face from a font family
- * Available from CSS version 3
- */
-// TODO: font-stretch

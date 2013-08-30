@@ -1,29 +1,46 @@
 package tbje.facelift.css
 
+//import scala.reflect.macros.Context
+
 /**
  * Permits the specification of a source color profile other than the default
  * Available from CSS version 3
  */
-// TODO: color-profile
+case class ColorProfile(colorProfile: String) extends CssDeclaration {
+  val property = "color-profile"
+  val value = colorProfile
+}
+
+object ColorProfile {
+  // TODO: color-profile values
+}
 
 /**
  * Sets the opacity level for an element
  * Available from CSS version 3
  *
  */
-// TODO: opacity
+case class Opacity(opacity: String) extends CssDeclaration {
+  val property = "opacity"
+  val value = opacity
+}
+
+object Opacity {
+  // TODO: opacity values
+}
 
 /**
  * Permits the specification of a color profile rendering intent other than the default
  * Available from CSS version 3
  */
-// TODO: rendering-intent
-case class Color(color: String) extends CssDeclaration {
-  val property = "color"
-  val value = color
+case class RenderingIntent(renderingIntent: String) extends CssDeclaration {
+  val property = "rendering-intent"
+  val value = renderingIntent
 }
 
-object Color extends BaseColorObject("color")
+object RenderingIntent {
+  // TODO: rendering-intent values
+}
 
 case class BaseColor(color: String, property: String) extends CssDeclaration {
   val value = color
@@ -261,6 +278,9 @@ class BaseColorObject(property: String) {
     require(lightness >= 0 && lightness <= 100, "The lightness value must be between 0 and 100%.")
   }
 
+  // import scala.language.experimental.macros
+  // def hslMacro(hue: Int, saturation: Int, lightness: Int): CssDeclaration = macro MacroDef.hslMacroImpl
+
   /**
    * HSLA color values are supported in IE9+, Firefox 3+, Chrome, Safari, and in Opera 10+.
    *
@@ -278,4 +298,16 @@ class BaseColorObject(property: String) {
   }
 
 }
+
+// object MacroDef {
+//   def hslMacroImpl(c: Context)(hue: c.Expr[Int], saturation: c.Expr[Int], lightness: c.Expr[Int]): c.Expr[CssDeclaration] = {
+//     import c.universe._
+//     hue.tree match {
+//       case Literal(Constant(h: Int)) =>
+//         if (h < 0) c.abort(hue.tree.pos, s"The hue value must be between 0 and 360 degrees but was $h.")
+//       case _ =>
+//     }
+//     reify { Color.hsl(hue.splice, 1, 2) }
+//   }
+// }
 

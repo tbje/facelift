@@ -1,15 +1,134 @@
 package tbje.facelift.css
 
-// TODO: top	Specifies the top position of a positioned element	2
-// TODO: bottom	Specifies the bottom position of a positioned element	2
-// TODO: left	Specifies the left position of a positioned element	2
-// TODO: right	Specifies the right position of a positioned element	2
-// TODO: clip	Clips an absolutely positioned element	2
-// TODO: cursor	Specifies the type of cursor to be displayed	2
-// TODO: overflow	Specifies what happens if content overflows an element's box	2
-// TODO: position	Specifies the type of positioning method used for an element (static, relative, absolute or fixed)	2
-// TODO: visibility	Specifies whether or not an element is visible	2
-// TODO: z-index	Sets the stack order of a positioned element	2
+/**
+ * Specifies the top position of a positioned element
+ * Available from CSS version 2
+ */
+case class Top(top: String) extends CssDeclaration {
+  val property = "top"
+  val value = top
+}
+
+object Top {
+  // TODO: top values
+}
+
+/**
+ * Specifies the bottom position of a positioned element
+ *  Available from CSS version 2
+ */
+case class Bottom(bottom: String) extends CssDeclaration {
+  val property = "bottom"
+  val value = bottom
+}
+
+object Bottom {
+  // TODO: bottom values
+}
+
+/**
+ * Specifies the left position of a positioned element
+ *  Available from CSS version 2
+ */
+case class Left(left: String) extends CssDeclaration {
+  val property = "left"
+  val value = left
+}
+
+object Left {
+  // TODO: left values
+}
+
+/**
+ * Specifies the right position of a positioned element
+ *  Available from CSS version 2
+ */
+case class Right(right: String) extends CssDeclaration {
+  val property = "right"
+  val value = right
+}
+
+object Right {
+  // TODO: right values
+}
+
+/**
+ * Clips an absolutely positioned element
+ *  Available from CSS version 2
+ */
+case class Clip(clip: String) extends CssDeclaration {
+  val property = "clip"
+  val value = clip
+}
+
+object Clip {
+  // TODO: clip values
+}
+
+/**
+ * Specifies the type of cursor to be displayed
+ *  Available from CSS version 2
+ */
+case class Cursor(cursor: String) extends CssDeclaration {
+  val property = "cursor"
+  val value = cursor
+}
+
+object Cursor {
+  // TODO: cursor values
+}
+
+/**
+ * Specifies what happens if content overflows an element's box
+ *  Available from CSS version 2
+ */
+case class Overflow(overflow: String) extends CssDeclaration {
+  val property = "overflow"
+  val value = overflow
+}
+
+object Overflow {
+  // TODO: overflow values
+}
+
+/**
+ * Specifies the type of positioning method used for an element (static, relative, absolute or fixed)
+ *  Available from CSS version 2
+ */
+case class Position(position: String) extends CssDeclaration {
+  val property = "position"
+  val value = position
+}
+
+object Position {
+  // TODO: position values
+}
+
+/**
+ * Specifies whether or not an element is visible
+ *  Available from CSS version 2
+ */
+case class Visibility(visibility: String) extends CssDeclaration {
+  val property = "visibility"
+  val value = visibility
+}
+
+object Visibility {
+  // TODO: visibility values
+}
+
+/**
+ * Sets the stack order of a positioned element
+ *  Available from CSS version 2
+ */
+case class ZIndex(zIndex: String) extends CssDeclaration {
+  val property = "z-index"
+  val value = zIndex
+}
+
+object ZIndex {
+  // TODO: z-index values
+}
 
 class Float(val value: String) extends CssDeclaration {
   val property = "float"
