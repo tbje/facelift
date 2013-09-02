@@ -1,6 +1,6 @@
 package tbje.facelift.css
 
-//import scala.reflect.macros.Context
+import scala.reflect.macros.Context
 
 /**
  * Permits the specification of a source color profile other than the default
@@ -188,6 +188,8 @@ class BaseColorObject(property: String) {
   object Yellow extends BaseColor("yellow", property)
   object YellowGreen extends BaseColor("yellowgreen", property)
 
+  import scala.language.experimental.macros
+
   /**
    * Hexadecimal color values are supported in all major browsers.
    *
@@ -196,23 +198,28 @@ class BaseColorObject(property: String) {
    * For example, the #0000ff value is rendered as blue, because the blue component is set to its highest value (ff) and the others are set to 0.
    *
    */
-  val hexColor = "#FF3423"
-  def hex(hexColor: String) = new BaseColor(hexColor, property) {
+  def hex(hexColor: String) = macro ColorHelper.hexMacroImpl
+  def hexImpl(hexColor: String) = new BaseColor(hexColor, property) {
+    import ColorHelper._
     // TODO: Add macro check on hex format
-    require(hexColor.size == 7, "Hex color format must be #RRGGBB")
-    require(hexColor.head == '#', "Hex color format must be #RRGGBB")
-    def testValue(start: Int, part: String): Unit = {
-      val subString = hexColor.substring(start, start + 2)
+    require(hexFormatCheck(hexColor), hexFormatErrorMsg(hexColor))
+    def testValue(value: String, part: String): Option[String] = {
       try {
-        Integer.parseInt(subString, 16)
+        Integer.parseInt(value, 16)
+        None
       } catch {
         case e: NumberFormatException =>
-          throw new IllegalArgumentException(s"requirement failed: $subString is not a legal value for $part")
+          Some(s"$value is not a legal value for $part, should be between 00 and FF")
       }
     }
-    testValue(1, "RR")
-    testValue(3, "GG")
-    testValue(5, "BB")
+    val lst = (hexColor.tail.sliding(2, 2).toList zip Seq("RR", "GG", "BB"))
+
+    lst foreach {
+      case (value, part) =>
+        testValue(value, part) match {
+          case Some(msg) => throw new IllegalArgumentException(msg)
+        }
+    }
   }
 
   /**
@@ -224,15 +231,17 @@ class BaseColorObject(property: String) {
    *
    * Also, the following values define the same color: rgb(0,0,255) and rgb(0%,0%,100%).
    */
-  def rgb(red: Int, green: Int, blue: Int) = new BaseColor(s"rgb($red, $green, $blue)", property) {
-    // TODO: Add macro check on rgb values
+  def rgb(red: Int, green: Int, blue: Int) = macro ColorHelper.rgbMacroImpl
+
+  def rgbOld(red: Int, green: Int, blue: Int) = new BaseColor(s"rgb($red, $green, $blue)", property) {
     require(red >= 0 && red <= 255, "Red rgb value must be between 0 and 255.")
     require(green >= 0 && green <= 255, "Green rgb value must be between 0 and 255.")
     require(blue >= 0 && blue <= 255, "Blue rgb value must be between 0 and 255.")
   }
 
-  def rgbPct(red: Int, green: Int, blue: Int) = new BaseColor(s"rgb($red%, $green%, $blue%)", property) {
-    // TODO: Add macro check on rgb values
+  def rgbPct(red: Int, green: Int, blue: Int) = macro ColorHelper.rgbPctMacroImpl
+
+  def rgbPctOld(red: Int, green: Int, blue: Int) = new BaseColor(s"rgb($red%, $green%, $blue%)", property) {
     require(red >= 0 && red <= 100, "Red rgb % value must be between 0 and 100.")
     require(green >= 0 && green <= 100, "Green rgb % value must be between 0 and 100.")
     require(blue >= 0 && blue <= 100, "Blue rgb % value must be between 0 and 100.")
@@ -245,20 +254,24 @@ class BaseColorObject(property: String) {
    *
    * An RGBA color value is specified with: rgba(red, green, blue, alpha). The alpha parameter is a number between 0.0 (fully transparent) and 1.0 (fully opaque).
    */
-  def rgba(red: Int, green: Int, blue: Int, transparency: Double) = new BaseColor(s"rgb($red, $green, $blue, $transparency)", property) {
-    // TODO: Add macro check on rgba values
-    require(red >= 0 && red <= 255, "Red rgb value must be between 0 and 255.")
-    require(green >= 0 && green <= 255, "Green rgb value must be between 0 and 255.")
-    require(blue >= 0 && blue <= 255, "Blue rgb value must be between 0 and 255.")
-    require(transparency >= 0.0 && transparency <= 1.0, "Transparency must be between 0.0 and 1.0.")
+  def rgba(red: Int, green: Int, blue: Int, transparency: Double) = macro ColorHelper.rgbaMacroImpl
+
+  def rgbaOld(red: Int, green: Int, blue: Int, transparency: Double) = new BaseColor(s"rgb($red, $green, $blue, $transparency)", property) {
+    import ColorHelper._
+    require(octetByteCheck(red), octetByteErrorMsg("red rgb", red))
+    require(octetByteCheck(green), octetByteErrorMsg("green rgb", green))
+    require(octetByteCheck(blue), octetByteErrorMsg("blue rgb", blue))
+    require(zeroToOneCheck(transparency), zeroToOneErrorMsg("Transparency", transparency))
   }
 
-  def rgbaPct(red: Int, green: Int, blue: Int, transparency: Int) = new BaseColor(s"rgb($red%, $green%, $blue%, $transparency)", property) {
-    // TODO: Add macro check on rgba values
-    require(red >= 0 && red <= 100, "Red rgb % value must be between 0 and 100.")
-    require(green >= 0 && green <= 100, "Green rgb % value must be between 0 and 100.")
-    require(blue >= 0 && blue <= 100, "Blue rgb % value must be between 0 and 100.")
-    require(transparency >= 0.0 && transparency <= 1.0, "Transparency must be between 0.0 and 1.0.")
+  def rgbaPct(red: Int, green: Int, blue: Int, transparency: Double) = macro ColorHelper.rgbaPctMacroImpl
+
+  def rgbaPctOld(red: Int, green: Int, blue: Int, transparency: Double) = new BaseColor(s"rgb($red%, $green%, $blue%, $transparency)", property) {
+    import ColorHelper._
+    require(percentCheck(red), percentErrorMsg("red rgb %", red))
+    require(percentCheck(green), percentErrorMsg("green rgb %", green))
+    require(percentCheck(blue), percentErrorMsg("blue rgb %", blue))
+    require(zeroToOneCheck(transparency), zeroToOneErrorMsg("Transparency", transparency))
   }
 
   /**
@@ -271,15 +284,14 @@ class BaseColorObject(property: String) {
    * Hue is a degree on the color wheel (from 0 to 360) - 0 (or 360) is red, 120 is green, 240 is blue. Saturation is a percentage value;
    * 0% means a shade of gray and 100% is the full color. Lightness is also a percentage; 0% is black, 100% is white.
    */
-  def hsl(hue: Int, saturation: Int, lightness: Int) = new BaseColor(s"hsl($hue, $saturation, $lightness)", property) {
-    // TODO: Add macro check on hsl value
-    require(hue >= 0 && hue <= 360, "The hue value must be between 0 and 360 degrees.")
-    require(saturation >= 0 && saturation <= 100, "The saturation value must be between 0 and 100%.")
-    require(lightness >= 0 && lightness <= 100, "The lightness value must be between 0 and 100%.")
-  }
+  def hsl(hue: Int, saturation: Int, lightness: Int): CssDeclaration = macro ColorHelper.hslMacroImpl
 
-  // import scala.language.experimental.macros
-  // def hslMacro(hue: Int, saturation: Int, lightness: Int): CssDeclaration = macro MacroDef.hslMacroImpl
+  def hslOld(hue: Int, saturation: Int, lightness: Int) = new BaseColor(s"hsl($hue, $saturation, $lightness)", property) {
+    import ColorHelper._
+    require(degreesCheck(hue), degreesErrorMsg("hue", hue))
+    require(percentCheck(saturation), percentErrorMsg("saturation", saturation))
+    require(percentCheck(lightness), percentErrorMsg("lightness", lightness))
+  }
 
   /**
    * HSLA color values are supported in IE9+, Firefox 3+, Chrome, Safari, and in Opera 10+.
@@ -289,25 +301,118 @@ class BaseColorObject(property: String) {
    * An HSLA color value is specified with: hsla(hue, saturation, lightness, alpha), where the alpha parameter defines the opacity.
    * The alpha parameter is a number between 0.0 (fully transparent) and 1.0 (fully opaque).
    */
-  def hsla(hue: Int, saturation: Int, lightness: Int, transparency: Double) = new BaseColor(s"hsl($hue, $saturation%, $lightness%, $transparency)", property) {
-    // TODO: Add macro check on hsla values
-    require(hue >= 0 && hue <= 360, "The hue value must be between 0 and 360 degrees.")
-    require(saturation >= 0 && saturation <= 100, "The saturation value must be between 0 and 100%.")
-    require(lightness >= 0 && lightness <= 100, "The lightness value must be between 0 and 100%.")
-    require(transparency >= 0.0 && transparency <= 1.0, "Transparency must be between 0.0 and 1.0.")
+  def hsla(hue: Int, saturation: Int, lightness: Int, transparency: Double) = macro ColorHelper.hslaMacroImpl
+
+  def hslaOld(hue: Int, saturation: Int, lightness: Int, transparency: Double) = new BaseColor(s"hsl($hue, $saturation%, $lightness%, $transparency)", property) {
+    import ColorHelper._
+    require(degreesCheck(hue), degreesErrorMsg("hue", hue))
+    require(percentCheck(saturation), percentErrorMsg("saturation", saturation))
+    require(percentCheck(lightness), percentErrorMsg("lightness", lightness))
+    require(zeroToOneCheck(transparency), zeroToOneErrorMsg("Transparency", transparency))
   }
 
 }
 
-// object MacroDef {
-//   def hslMacroImpl(c: Context)(hue: c.Expr[Int], saturation: c.Expr[Int], lightness: c.Expr[Int]): c.Expr[CssDeclaration] = {
-//     import c.universe._
-//     hue.tree match {
-//       case Literal(Constant(h: Int)) =>
-//         if (h < 0) c.abort(hue.tree.pos, s"The hue value must be between 0 and 360 degrees but was $h.")
-//       case _ =>
-//     }
-//     reify { Color.hsl(hue.splice, 1, 2) }
-//   }
-// }
+object ColorHelper {
+
+  def checkMacroVar[T](c: Context)(x: c.Expr[T], req: T => Boolean, errorMsg: T => String) = {
+    import c.universe._
+    x.tree match {
+      case Literal(Constant(value: T)) =>
+        if (!req(value)) c.abort(x.tree.pos, errorMsg(value))
+      case _ =>
+    }
+  }
+  val degreesCheck = (x: Int) => x >= 0 && x <= 360
+  val percentCheck = (x: Int) => x >= 0 && x <= 100
+  val zeroToOneCheck = (x: Double) => x >= 0.0 && x <= 1.0
+  val octetByteCheck = (x: Int) => x >= 0 && x <= 255
+
+  def degreesErrorMsg(name: String, was: Int) = s"The $name value must be between 0 and 360 degrees, but was $was."
+  def percentErrorMsg(name: String, was: Int) = s"The $name value must be between 0 and 100%, but was $was%."
+  def zeroToOneErrorMsg(name: String, was: Double) = s"$name must be between 0.0 and 1.0, but was $was."
+  def octetByteErrorMsg(name: String, was: Int) = s"The $name value must be between 0 and 255, but was $was."
+  def hexFormatErrorMsg(was: String) = s"Hex color format must be #RRGGBB, but was $was."
+
+  val hexFormatCheck = (x: String) => x.size == 7 && x.head == '#'
+
+  private def testHex(value: String, part: String): Option[String] = {
+    try {
+      Integer.parseInt(value, 16)
+      None
+    } catch {
+      case e: NumberFormatException =>
+        Some(s"$value is not a legal value for $part")
+    }
+  }
+
+  def hexMacroImpl(c: Context { type PrefixType = BaseColorObject })(hexColor: c.Expr[String]): c.Expr[CssDeclaration] = {
+    import c.universe._
+    checkMacroVar[String](c)(hexColor, hexFormatCheck, hexFormatErrorMsg(_))
+    hexColor.tree match {
+      case Literal(Constant(value: String)) =>
+        value.tail.sliding(2, 2).toList zip Seq("RR", "GG", "BB") foreach {
+          case (value, part) =>
+            testHex(value, part) match {
+              case Some(msg) => c.abort(hexColor.tree.pos, msg)
+              case _ =>
+            }
+        }
+      case _ =>
+    }
+    reify { c.prefix.splice.hexImpl(hexColor.splice) }
+  }
+
+  def rgbMacroImpl(c: Context { type PrefixType = BaseColorObject })(red: c.Expr[Int], green: c.Expr[Int], blue: c.Expr[Int]): c.Expr[CssDeclaration] = {
+    import c.universe._
+    checkMacroVar[Int](c)(red, octetByteCheck, octetByteErrorMsg("red rgb %", _))
+    checkMacroVar[Int](c)(green, octetByteCheck, octetByteErrorMsg("green rgb %", _))
+    checkMacroVar[Int](c)(blue, octetByteCheck, octetByteErrorMsg("blue rgb %", _))
+    reify { c.prefix.splice.rgbOld(red.splice, green.splice, blue.splice) }
+  }
+
+  def rgbPctMacroImpl(c: Context { type PrefixType = BaseColorObject })(red: c.Expr[Int], green: c.Expr[Int], blue: c.Expr[Int]): c.Expr[CssDeclaration] = {
+    import c.universe._
+    checkMacroVar[Int](c)(red, percentCheck, percentErrorMsg("red rgb %", _))
+    checkMacroVar[Int](c)(green, percentCheck, percentErrorMsg("green rgb %", _))
+    checkMacroVar[Int](c)(blue, percentCheck, percentErrorMsg("blue rgb %", _))
+    reify { c.prefix.splice.rgbPctOld(red.splice, green.splice, blue.splice) }
+  }
+
+  def rgbaMacroImpl(c: Context { type PrefixType = BaseColorObject })(red: c.Expr[Int], green: c.Expr[Int], blue: c.Expr[Int], transparency: c.Expr[Double]): c.Expr[CssDeclaration] = {
+    import c.universe._
+    checkMacroVar[Int](c)(red, octetByteCheck, octetByteErrorMsg("red rgba %", _))
+    checkMacroVar[Int](c)(green, octetByteCheck, octetByteErrorMsg("green rgba %", _))
+    checkMacroVar[Int](c)(blue, octetByteCheck, octetByteErrorMsg("blue rgba %", _))
+    checkMacroVar[Double](c)(transparency, zeroToOneCheck, zeroToOneErrorMsg("Transparency", _))
+    reify { c.prefix.splice.rgbaOld(red.splice, green.splice, blue.splice, transparency.splice) }
+  }
+
+  def rgbaPctMacroImpl(c: Context { type PrefixType = BaseColorObject })(red: c.Expr[Int], green: c.Expr[Int], blue: c.Expr[Int], transparency: c.Expr[Double]): c.Expr[CssDeclaration] = {
+    import c.universe._
+    checkMacroVar[Int](c)(red, percentCheck, percentErrorMsg("red rgba %", _))
+    checkMacroVar[Int](c)(green, percentCheck, percentErrorMsg("green rgba %", _))
+    checkMacroVar[Int](c)(blue, percentCheck, percentErrorMsg("blue rgba %", _))
+    checkMacroVar[Double](c)(transparency, zeroToOneCheck, zeroToOneErrorMsg("Transparency", _))
+    reify { c.prefix.splice.rgbaPctOld(red.splice, green.splice, blue.splice, transparency.splice) }
+  }
+
+  def hslMacroImpl(c: Context { type PrefixType = BaseColorObject })(hue: c.Expr[Int], saturation: c.Expr[Int], lightness: c.Expr[Int]): c.Expr[CssDeclaration] = {
+    import c.universe._
+    checkMacroVar[Int](c)(hue, degreesCheck, degreesErrorMsg("hue", _))
+    checkMacroVar[Int](c)(saturation, percentCheck, percentErrorMsg("saturation", _))
+    checkMacroVar[Int](c)(lightness, percentCheck, percentErrorMsg("lightness", _))
+    reify { c.prefix.splice.hslOld(hue.splice, saturation.splice, lightness.splice) }
+  }
+
+  def hslaMacroImpl(c: Context { type PrefixType = BaseColorObject })(hue: c.Expr[Int], saturation: c.Expr[Int], lightness: c.Expr[Int], transparency: c.Expr[Double]): c.Expr[CssDeclaration] = {
+    import c.universe._
+    checkMacroVar[Int](c)(hue, degreesCheck, degreesErrorMsg("hue", _))
+    checkMacroVar[Int](c)(saturation, percentCheck, percentErrorMsg("saturation", _))
+    checkMacroVar[Int](c)(lightness, percentCheck, percentErrorMsg("lightness", _))
+    checkMacroVar[Double](c)(transparency, zeroToOneCheck, zeroToOneErrorMsg("Transparency", _))
+    reify { c.prefix.splice.hslaOld(hue.splice, saturation.splice, lightness.splice, transparency.splice) }
+  }
+
+}
 
