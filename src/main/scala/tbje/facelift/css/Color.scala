@@ -342,7 +342,7 @@ object ColorHelper {
       None
     } catch {
       case e: NumberFormatException =>
-        Some(s"$value is not a legal value for $part")
+        Some(s"$value is not a legal value for $part, should be between 00 and FF.")
     }
   }
 
@@ -365,9 +365,9 @@ object ColorHelper {
 
   def rgbMacroImpl(c: Context { type PrefixType = BaseColorObject })(red: c.Expr[Int], green: c.Expr[Int], blue: c.Expr[Int]): c.Expr[CssDeclaration] = {
     import c.universe._
-    checkMacroVar[Int](c)(red, octetByteCheck, octetByteErrorMsg("red rgb %", _))
-    checkMacroVar[Int](c)(green, octetByteCheck, octetByteErrorMsg("green rgb %", _))
-    checkMacroVar[Int](c)(blue, octetByteCheck, octetByteErrorMsg("blue rgb %", _))
+    checkMacroVar[Int](c)(red, octetByteCheck, octetByteErrorMsg("red rgb", _))
+    checkMacroVar[Int](c)(green, octetByteCheck, octetByteErrorMsg("green rgb", _))
+    checkMacroVar[Int](c)(blue, octetByteCheck, octetByteErrorMsg("blue rgb", _))
     reify { c.prefix.splice.rgbOld(red.splice, green.splice, blue.splice) }
   }
 
@@ -381,9 +381,9 @@ object ColorHelper {
 
   def rgbaMacroImpl(c: Context { type PrefixType = BaseColorObject })(red: c.Expr[Int], green: c.Expr[Int], blue: c.Expr[Int], transparency: c.Expr[Double]): c.Expr[CssDeclaration] = {
     import c.universe._
-    checkMacroVar[Int](c)(red, octetByteCheck, octetByteErrorMsg("red rgba %", _))
-    checkMacroVar[Int](c)(green, octetByteCheck, octetByteErrorMsg("green rgba %", _))
-    checkMacroVar[Int](c)(blue, octetByteCheck, octetByteErrorMsg("blue rgba %", _))
+    checkMacroVar[Int](c)(red, octetByteCheck, octetByteErrorMsg("red rgba", _))
+    checkMacroVar[Int](c)(green, octetByteCheck, octetByteErrorMsg("green rgba", _))
+    checkMacroVar[Int](c)(blue, octetByteCheck, octetByteErrorMsg("blue rgba", _))
     checkMacroVar[Double](c)(transparency, zeroToOneCheck, zeroToOneErrorMsg("Transparency", _))
     reify { c.prefix.splice.rgbaOld(red.splice, green.splice, blue.splice, transparency.splice) }
   }
