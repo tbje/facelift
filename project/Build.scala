@@ -35,22 +35,6 @@ object BuildSettings {
 object FaceliftBuild extends Build {
   import BuildSettings._  
 
-  object FilterBadDependency extends RewriteRule {
-      override def transform(n: Node): Seq[Node] = n match {
-        case dependencies @ Elem(_, "dependencies", _, _, _*) =>
-          <dependencies>
-            {
-              dependencies.child filterNot { dep =>
-                (dep \ "artifactId").text.contains("facelift-macros")  || 
-                (dep \ "name").text.contains("facelift-macros") 
-              }
-            }
-          </dependencies>
-        case other => other
-      }
-  }
-
-  object TransformFilterBadDependencies extends RuleTransformer(FilterBadDependency)
 
   lazy val root: Project = Project(
     name,
@@ -58,12 +42,10 @@ object FaceliftBuild extends Build {
     settings = buildSettings ++ Seq(
       run <<= run in Compile in core)
     ) dependsOn(macros) settings (
+      allDependencies <<= allDependencies.map{ deps => deps.filter(_.name != "facelift-macros") },
       // include the macro classes and resources in the main jar
       mappings in (Compile, packageBin) ++= mappings.in(macros, Compile, packageBin).value,
-      mappings in (Compile, packageBin) ++= mappings.in(core, Compile, packageBin).value, 
-      makePomConfiguration ~= { config =>
-       config.copy(process = TransformFilterBadDependencies)//process = TransformFilterBadDependencies)
-      }//, 
+      mappings in (Compile, packageBin) ++= mappings.in(core, Compile, packageBin).value//,
       //ivyConfigurations := ivyConfigurations.value.map{x => println(x.name); x}.filterNot(_.name.contains("facelift-macros"))
   ) 
 
