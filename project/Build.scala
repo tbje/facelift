@@ -1,9 +1,8 @@
 import sbt._
-import com.typesafe.sbt.SbtSite.site
-import com.typesafe.sbt.SbtGhPages.ghpages
-import com.typesafe.sbt.SbtGit.GitKeys._
-import com.typesafe.sbt.SbtGit._
 import Keys._
+import sbt.Keys._
+import scala.xml.{Elem, Node}
+import scala.xml.transform.{RuleTransformer, RewriteRule}
 
 object BuildSettings {
   val name = "facelift"
@@ -11,7 +10,6 @@ object BuildSettings {
     organization := "tbje",
     version := "0.1-SNAPSHOT",
     scalaVersion := "2.10.3",
-    git.remoteRepo := "git@github.com:tbje/facelift.git",
     resolvers += Resolver.sonatypeRepo("snapshots"),
     resolvers += Resolver.sonatypeRepo("releases"),
     scalacOptions ++= Seq(
@@ -21,7 +19,7 @@ object BuildSettings {
         "-language:_",
         "-target:jvm-1.6",
         "-encoding", "UTF-8"
-    ), // ++ site.settings ++ ,
+    ),
     publishTo := {
       val publishDir = Option(System.getProperty("publish.dir")).getOrElse(System.getProperty("user.dir")) 
       val publishPath = "/[organization]/[module](_[scalaVersion])/[revision]/[artifact](_[scalaVersion])-[revision](-[classifier]).[ext]"
@@ -37,16 +35,37 @@ object BuildSettings {
 object FaceliftBuild extends Build {
   import BuildSettings._  
 
+  object FilterBadDependency extends RewriteRule {
+      override def transform(n: Node): Seq[Node] = n match {
+        case dependencies @ Elem(_, "dependencies", _, _, _*) =>
+          <dependencies>
+            {
+              dependencies.child filterNot { dep =>
+                (dep \ "artifactId").text.contains("facelift-macros")  || 
+                (dep \ "name").text.contains("facelift-macros") 
+              }
+            }
+          </dependencies>
+        case other => other
+      }
+  }
+
+  object TransformFilterBadDependencies extends RuleTransformer(FilterBadDependency)
+
   lazy val root: Project = Project(
     name,
     file("."),
     settings = buildSettings ++ Seq(
-      run <<= run in Compile in core) ++ Seq(site.settings : _*) ++ Seq(ghpages.settings: _*)
-  ) dependsOn(macros) settings (
-    // include the macro classes and resources in the main jar
-    mappings in (Compile, packageBin) ++= mappings.in(macros, Compile, packageBin).value,
-    mappings in (Compile, packageBin) ++= mappings.in(core, Compile, packageBin).value
-  )
+      run <<= run in Compile in core)
+    ) dependsOn(macros) settings (
+      // include the macro classes and resources in the main jar
+      mappings in (Compile, packageBin) ++= mappings.in(macros, Compile, packageBin).value,
+      mappings in (Compile, packageBin) ++= mappings.in(core, Compile, packageBin).value, 
+      makePomConfiguration ~= { config =>
+       config.copy(process = TransformFilterBadDependencies)//process = TransformFilterBadDependencies)
+      }//, 
+      //ivyConfigurations := ivyConfigurations.value.map{x => println(x.name); x}.filterNot(_.name.contains("facelift-macros"))
+  ) 
 
   lazy val macros: Project = Project(
     name + "-macros",
