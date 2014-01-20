@@ -21,5 +21,30 @@ package attr {
   case class Href(href: String) extends AttributeBase("href", href)
 
   case class Onclick(onclick: String) extends AttributeBase("onclick", onclick)
+
+  case class Rel(id: String) extends AttributeBase("rel", id)
+
+  object Rel {
+    def apply(es: String*) = new Rel(es.mkString(" "))
+    object Stylesheet extends Rel("stylesheet")
+  }
+
+  case class Role(id: String) extends AttributeBase("role", id)
+
+  case class Type(id: String) extends AttributeBase("type", id)
+
+  object Type {
+    object ImagePng extends Type("image/png")
+    object TextJavaScript extends Type("text/javascript")
+  }
+
+  case class Content(id: String) extends AttributeBase("content", id)
+
+  case class Charset(id: String) extends AttributeBase("charset", id)
+
+  case class DataToggle(id: String) extends AttributeBase("data-toggle", id)
+
+  case class DataTarget(id: String) extends AttributeBase("data-target", id)
+
 }
 

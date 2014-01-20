@@ -34,12 +34,12 @@ class Example {
         WidthPx(340),
         Height(30.px),
         Margin(30.px, Auto, 0.px),
-        Color.Chartreuse,
+        Color.hsla(260, 100, 100, 0),
         PaddingPx(30),
         TextAlign.Center,
         FontSizePx(18),
         FontFamily.websafe.serif.Georgia,
-        BackgroundColor("#F5F5F5"))
+        BackgroundColor.hex("#00F5F5"))
     val css =
       CssElement(H1, Class("tst"), A)(
         Color.Green,

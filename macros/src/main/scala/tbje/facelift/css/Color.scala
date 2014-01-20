@@ -1,6 +1,7 @@
 package tbje.facelift.css
 
 import scala.reflect.macros.Context
+import scala.reflect.ClassTag
 
 /**
  * Permits the specification of a source color profile other than the default
@@ -218,6 +219,7 @@ class BaseColorObject(property: String) {
       case (value, part) =>
         testValue(value, part) match {
           case Some(msg) => throw new IllegalArgumentException(msg)
+          case _ =>
         }
     }
   }
@@ -315,7 +317,7 @@ class BaseColorObject(property: String) {
 
 object ColorHelper {
 
-  def checkMacroVar[T](c: Context)(x: c.Expr[T], req: T => Boolean, errorMsg: T => String) = {
+  def checkMacroVar[T: ClassTag](c: Context)(x: c.Expr[T], req: T => Boolean, errorMsg: T => String) = {
     import c.universe._
     x.tree match {
       case Literal(Constant(value: T)) =>

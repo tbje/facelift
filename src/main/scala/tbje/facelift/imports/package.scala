@@ -152,6 +152,45 @@ package object imports {
   val BackgroundClip = css.BackgroundClip
   val BackgroundOrigin = css.BackgroundOrigin
   val BackgroundSize = css.BackgroundSize
+  // From Border
+  val Border = css.Border
+  val BorderBottom = css.BorderBottom
+  val BorderBottomColor = css.BorderBottomColor
+  val BorderBottomStyle = css.BorderBottomStyle
+  val BorderBottomWidth = css.BorderBottomWidth
+  val BorderColor = css.BorderColor
+  val BorderLeft = css.BorderLeft
+  val BorderLeftColor = css.BorderLeftColor
+  val BorderLeftStyle = css.BorderLeftStyle
+  val BorderLeftWidth = css.BorderLeftWidth
+  val BorderRight = css.BorderRight
+  val BorderRightColor = css.BorderRightColor
+  val BorderRightStyle = css.BorderRightStyle
+  val BorderRightWidth = css.BorderRightWidth
+  val BorderStyle = css.BorderStyle
+  val BorderTop = css.BorderTop
+  val BorderTopColor = css.BorderTopColor
+  val BorderTopStyle = css.BorderTopStyle
+  val BorderTopWidth = css.BorderTopWidth
+  val BorderWidth = css.BorderWidth
+  val Outline = css.Outline
+  val OutlineColor = css.OutlineColor
+  val OutlineStyle = css.OutlineStyle
+  val OutlineWidth = css.OutlineWidth
+  val BorderBottomLeftRadius = css.BorderBottomLeftRadius
+  val BorderBottomRightRadius = css.BorderBottomRightRadius
+  val BorderImage = css.BorderImage
+  val BorderImageOutset = css.BorderImageOutset
+  val BorderImageRepeat = css.BorderImageRepeat
+  val BorderImageSlice = css.BorderImageSlice
+  val BorderImageSource = css.BorderImageSource
+  val BorderImageWidth = css.BorderImageWidth
+  val BorderRadius = css.BorderRadius
+  val BorderTopLeftRadius = css.BorderTopLeftRadius
+  val BorderTopRightRadius = css.BorderTopRightRadius
+  val BoxDecorationBreak = css.BoxDecorationBreak
+  val BoxShadow = css.BoxShadow
+
   val Float = css.Float
   val Clear = css.Clear
   val Display = css.Display
@@ -188,5 +227,13 @@ package object imports {
   val CssSelector = css.CssSelector
   val PaddingPx = css.PaddingPx
   val MarginPx = css.MarginPx
+
+  val Rel = attr.Rel
+  val Role = attr.Role
+  val Type = attr.Type
+  val Content = attr.Content
+  val Charset = attr.Charset
+  val DataToggle = attr.DataToggle
+  val DataTarget = attr.DataTarget
 
 }
