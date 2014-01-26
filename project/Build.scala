@@ -19,7 +19,8 @@ object BuildSettings {
         "-language:_",
         "-target:jvm-1.6",
         "-encoding", "UTF-8"
-    ),
+    ), 
+    incOptions := incOptions.value.withNameHashing(true),
     publishTo := {
       val publishDir = Option(System.getProperty("publish.dir")).getOrElse(System.getProperty("user.dir")) 
       val publishPath = "/[organization]/[module](_[scalaVersion])/[revision]/[artifact](_[scalaVersion])-[revision](-[classifier]).[ext]"
@@ -55,13 +56,16 @@ object FaceliftBuild extends Build {
     settings = buildSettings ++ Seq(
       libraryDependencies <+= (scalaVersion)("org.scala-lang" % "scala-reflect" % _))
   ) settings (
-//    publish := {},
-//    publishLocal := {}
+    publish := {},
+    publishLocal := {}
   ) dependsOn(core) 
 
   lazy val core: Project = Project(
     name + "-core",
     file("core"),
     settings = buildSettings
+  ) settings (
+    publish := {},
+    publishLocal := {}
   )
 }
