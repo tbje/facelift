@@ -1,6 +1,10 @@
 -dependencyfile
 *~
 *.db
+.SyncArchive/*
+.SyncId
+.SyncIgnore
+.cache
 core/target/*
 core/data/*
 core/.settings
@@ -44,3 +48,4 @@ project/plugins/*
 tmpDir/
 .ensime_lucene/*
 .worksheet/*
+/.target
