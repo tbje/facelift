@@ -35,9 +35,7 @@ case class BorderBottomColor(borderBottomColor: String) extends CssDeclaration {
   val value = borderBottomColor
 }
 
-object BorderBottomColor {
-  // TODO: border-bottom-color values
-}
+object BorderBottomColor extends BaseColorObject("border-bottom-color")
 
 /**
  * Sets the style of the bottom border
@@ -74,9 +72,7 @@ case class BorderColor(borderColor: String) extends CssDeclaration {
   val value = borderColor
 }
 
-object BorderColor {
-  // TODO: border-color values
-}
+object BorderColor extends BaseColorObject("border-color")
 
 /**
  * Sets all the left border properties in one declaration
@@ -100,9 +96,7 @@ case class BorderLeftColor(borderLeftColor: String) extends CssDeclaration {
   val value = borderLeftColor
 }
 
-object BorderLeftColor {
-  // TODO: border-left-color values
-}
+object BorderLeftColor extends BaseColorObject("border-left-color")
 
 /**
  * Sets the style of the left border
@@ -152,9 +146,7 @@ case class BorderRightColor(borderRightColor: String) extends CssDeclaration {
   val value = borderRightColor
 }
 
-object BorderRightColor {
-  // TODO: border-right-color values
-}
+object BorderRightColor extends BaseColorObject("border-right-color")
 
 /**
  * Sets the style of the right border
@@ -217,9 +209,7 @@ case class BorderTopColor(borderTopColor: String) extends CssDeclaration {
   val value = borderTopColor
 }
 
-object BorderTopColor {
-  // TODO: border-top-color values
-}
+object BorderTopColor extends BaseColorObject("border-top-color")
 
 /**
  * Sets the style of the top border
@@ -282,9 +272,7 @@ case class OutlineColor(outlineColor: String) extends CssDeclaration {
   val value = outlineColor
 }
 
-object OutlineColor {
-  // TODO: outline-color values
-}
+object OutlineColor extends BaseColorObject("outline-color")
 
 /**
  * Sets the style of an outline
