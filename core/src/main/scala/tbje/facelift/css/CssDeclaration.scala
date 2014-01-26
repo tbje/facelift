@@ -14,4 +14,8 @@ object CssDeclaration {
     val (camelCasedProperty, value) = t
     val property = camelCasedProperty.name.foldLeft("") { (a, b) => if (b == b.toUpper) s"$a-${b.toLower}" else s"$a$b" }
   }
+  def unapply(x: Any) = x match {
+    case css: CssDeclaration => Some((css.property, css.value))
+    case _ => None
+  }
 }
