@@ -14,7 +14,11 @@ package attr {
 
   case class Name(name: String) extends AttributeBase("name", name)
 
-  case class Style(attrs: CssDeclaration*) extends AttributeBase("style", attrs mkString "; ")
+  case class Style(str: String) extends AttributeBase("style", str)
+
+  object Style {
+    def apply(attrs: CssDeclaration*) = new Style(attrs mkString "; ")
+  }
 
   case class Src(name: String) extends AttributeBase("src", name)
 
