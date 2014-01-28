@@ -231,6 +231,7 @@ package object imports {
   val Rel = attr.Rel
   val Role = attr.Role
   val Type = attr.Type
+  val Value = attr.Value
   val Content = attr.Content
   val Charset = attr.Charset
   val DataToggle = attr.DataToggle

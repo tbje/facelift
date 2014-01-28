@@ -12,6 +12,8 @@ package attr {
 
   case class Class(names: String*) extends AttributeBase("class", names mkString " ")
 
+  case class Value(name: String) extends AttributeBase("value", name)
+
   case class Name(name: String) extends AttributeBase("name", name)
 
   case class Style(str: String) extends AttributeBase("style", str)
