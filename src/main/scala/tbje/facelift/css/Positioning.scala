@@ -10,7 +10,9 @@ case class Top(top: String) extends CssDeclaration {
 }
 
 object Top {
-  // TODO: top values
+  def apply(m: CssMeasure) = new Top(m.value)
+  val Auto = Top("auto")
+  val Inherit = Top("inherit")
 }
 
 /**
@@ -23,7 +25,9 @@ case class Bottom(bottom: String) extends CssDeclaration {
 }
 
 object Bottom {
-  // TODO: bottom values
+  def apply(m: CssMeasure) = new Bottom(m.value)
+  val Auto = Bottom("auto")
+  val Inherit = Bottom("inherit")
 }
 
 /**
@@ -36,7 +40,9 @@ case class Left(left: String) extends CssDeclaration {
 }
 
 object Left {
-  // TODO: left values
+  def apply(m: CssMeasure) = new Left(m.value)
+  val Auto = Left("auto")
+  val Inherit = Left("inherit")
 }
 
 /**
@@ -49,7 +55,9 @@ case class Right(right: String) extends CssDeclaration {
 }
 
 object Right {
-  // TODO: right values
+  def apply(m: CssMeasure) = new Right(m.value)
+  val Auto = Right("auto")
+  val Inherit = Right("inherit")
 }
 
 /**
@@ -62,7 +70,10 @@ case class Clip(clip: String) extends CssDeclaration {
 }
 
 object Clip {
-  // TODO: clip values
+  val Auto = Clip("auto")
+  val Inherit = Clip("inherit")
+  def RectPx(x: Int, width: Int, height: Int, y: Int) = Clip(s"rect($x px, $width px, $height px, $y px)")
+  def Rect(x: CssMeasure, width: CssMeasure, height: CssMeasure, y: CssMeasure) = Clip(s"rect(${x.value}, ${width.value}, ${height.value}, ${y.value})")
 }
 
 /**
@@ -75,7 +86,42 @@ case class Cursor(cursor: String) extends CssDeclaration {
 }
 
 object Cursor {
-  // TODO: cursor values
+  val Alias = Cursor("alias")
+  val AllScroll = Cursor("all-scroll")
+  val Auto = Cursor("auto")
+  val Cell = Cursor("cell")
+  val ContextMenu = Cursor("context-menu")
+  val ColResize = Cursor("col-resize")
+  val Copy = Cursor("copy")
+  val Crosshair = Cursor("crosshair")
+  val Default = Cursor("default")
+  val EResize = Cursor("e-resize")
+  val EwResize = Cursor("ew-resize")
+  val Help = Cursor("help")
+  val Move = Cursor("move")
+  val NResize = Cursor("n-resize")
+  val NeResize = Cursor("ne-resize")
+  val NeswResize = Cursor("nesw-resize")
+  val NsResize = Cursor("ns-resize")
+  val NwResize = Cursor("nw-resize")
+  val NwseResize = Cursor("nwse-resize")
+  val NoDrop = Cursor("no-drop")
+  val None = Cursor("none")
+  val NotAllowed = Cursor("not-allowed")
+  val Pointer = Cursor("pointer")
+  val Progress = Cursor("progress")
+  val RowResize = Cursor("row-resize")
+  val SResize = Cursor("s-resize")
+  val SeResize = Cursor("se-resize")
+  val SwResize = Cursor("sw-resize")
+  val Text = Cursor("text")
+  val Url = Cursor("URL")
+  val VerticalText = Cursor("vertical-text")
+  val WResize = Cursor("w-resize")
+  val Wait = Cursor("wait")
+  val ZoomIn = Cursor("zoom-in")
+  val ZoomOut = Cursor("zoom-out")
+  val Inherit = Cursor("inherit")
 }
 
 /**
@@ -88,7 +134,11 @@ case class Overflow(overflow: String) extends CssDeclaration {
 }
 
 object Overflow {
-  // TODO: overflow values
+  val Visible = Overflow("visible")
+  val Hidden = Overflow("hidden")
+  val Scroll = Overflow("scroll")
+  val Auto = Overflow("auto")
+  val Inherit = Overflow("inherit")
 }
 
 /**
@@ -101,7 +151,11 @@ case class Position(position: String) extends CssDeclaration {
 }
 
 object Position {
-  // TODO: position values
+  val Static = Position("static")
+  val Absolute = Position("absolute")
+  val Fixed = Position("fixed")
+  val Relative = Position("relative")
+  val Inherit = Position("inherit")
 }
 
 /**
@@ -114,7 +168,10 @@ case class Visibility(visibility: String) extends CssDeclaration {
 }
 
 object Visibility {
-  // TODO: visibility values
+  val Visible = Visibility("visible")
+  val Hidden = Visibility("hidden")
+  val Collapse = Visibility("collapse")
+  val Inherit = Visibility("inherit")
 }
 
 /**
@@ -127,7 +184,9 @@ case class ZIndex(zIndex: String) extends CssDeclaration {
 }
 
 object ZIndex {
-  // TODO: z-index values
+  def apply(index: Int) = new ZIndex(index.toString)
+  val Auto = ZIndex("auto")
+  val Inherit = ZIndex("inherit")
 }
 
 class Float(val value: String) extends CssDeclaration {
