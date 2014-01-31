@@ -47,7 +47,6 @@ object FaceliftBuild extends Build {
       // include the macro classes and resources in the main jar
       mappings in (Compile, packageBin) ++= mappings.in(macros, Compile, packageBin).value,
       mappings in (Compile, packageBin) ++= mappings.in(core, Compile, packageBin).value//,
-      //ivyConfigurations := ivyConfigurations.value.map{x => println(x.name); x}.filterNot(_.name.contains("facelift-macros"))
   ) 
 
   lazy val macros: Project = Project(
