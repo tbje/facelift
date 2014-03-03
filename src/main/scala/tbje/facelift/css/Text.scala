@@ -56,11 +56,11 @@ case class TextAlign(value: String) extends CssDeclaration {
 }
 
 object TextAlign {
-  object Left extends TextAlign("left") // Aligns the text to the left
-  object Right extends TextAlign("right") // Aligns the text to the right
-  object Center extends TextAlign("center") // Centers the text
-  object Justify extends TextAlign("justify") // Stretches the lines so that each line has equal width (like in newspapers and magazines
-  object Inherit extends TextAlign("inherit") // Specifies that the value of the text-align property should be inherited from the parent element
+  val Left = new TextAlign("left") // Aligns the text to the left
+  val Right = new TextAlign("right") // Aligns the text to the right
+  val Center = new TextAlign("center") // Centers the text
+  val Justify = new TextAlign("justify") // Stretches the lines so that each line has equal width (like in newspapers and magazines
+  val Inherit = new TextAlign("inherit") // Specifies that the value of the text-align property should be inherited from the parent element
   val Default = Left
 }
 

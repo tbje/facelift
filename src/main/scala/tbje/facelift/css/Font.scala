@@ -89,24 +89,24 @@ class FontFamily(val value: String) extends CssDeclaration {
 object FontFamily {
   object websafe {
     object serif {
-      object Georgia extends FontFamily("""Georgia, serif""")
-      object PalatinoLinotype extends FontFamily(""""Palatino Linotype", "Book Antiqua", Palatino, serif""")
-      object TimesNewRoman extends FontFamily(""""Times New Roman", Times, serif""")
+      val Georgia = new FontFamily("""Georgia, serif""")
+      val PalatinoLinotype = new FontFamily(""""Palatino Linotype", "Book Antiqua", Palatino, serif""")
+      val TimesNewRoman = new FontFamily(""""Times New Roman", Times, serif""")
     }
     object sansSerif {
-      object ArialHelvetica extends FontFamily("""Arial, Helvetica, sans-serif""")
-      object ArialBlack extends FontFamily(""""Arial Black", Gadget, sans-serif""")
-      object ComicSansMS extends FontFamily(""""Comic Sans MS", cursive, sans-serif""")
-      object ImpactCharcoal extends FontFamily("""Impact, Charcoal, sans-serif""")
-      object LucidaSansUnicode extends FontFamily(""""Lucida Sans Unicode", "Lucida Grande", sans-serif""")
-      object TahomaGeneva extends FontFamily("""Tahoma, Geneva, sans-serif""")
-      object TrebuchetMS extends FontFamily(""""Trebuchet MS", Helvetica, sans-serif""")
-      object VerdanaGeneva extends FontFamily("""Verdana, Geneva, sans-serif""")
+      val ArialHelvetica = new FontFamily("""Arial, Helvetica, sans-serif""")
+      val ArialBlack = new FontFamily(""""Arial Black", Gadget, sans-serif""")
+      val ComicSansMS = new FontFamily(""""Comic Sans MS", cursive, sans-serif""")
+      val ImpactCharcoal = new FontFamily("""Impact, Charcoal, sans-serif""")
+      val LucidaSansUnicode = new FontFamily(""""Lucida Sans Unicode", "Lucida Grande", sans-serif""")
+      val TahomaGeneva = new FontFamily("""Tahoma, Geneva, sans-serif""")
+      val TrebuchetMS = new FontFamily(""""Trebuchet MS", Helvetica, sans-serif""")
+      val VerdanaGeneva = new FontFamily("""Verdana, Geneva, sans-serif""")
     }
 
     object monospace {
-      object CourierNew extends FontFamily(""""Courier New", Courier, monospace""")
-      object LucidaConsole extends FontFamily(""""Lucida Console", Monaco, monospace""")
+      val CourierNew = new FontFamily(""""Courier New", Courier, monospace""")
+      val LucidaConsole = new FontFamily(""""Lucida Console", Monaco, monospace""")
     }
   }
 }
