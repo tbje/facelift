@@ -6,7 +6,20 @@ package attr {
 
   import css._
 
-  class AttributeBase(name: String, value: String) extends UnprefixedAttribute(name, Text(value), scala.xml.Null)
+  class AttributeBase(val attrName: String, val attrValue: String) extends UnprefixedAttribute(attrName, Text(attrValue), scala.xml.Null)
+
+  object AttributeBase {
+    implicit def tuple2ToAttrBase(t: (String, String)) = t match { case (name, value) => new AttributeBase(name, value) }
+    implicit def tuple2ToAttrBase2(t: (Symbol, String)) = {
+      val (camelCasedName, value) = t
+      val name = camelCasedName.name.foldLeft("") { (a, b) => if (b == b.toUpper) s"$a-${b.toLower}" else s"$a$b" }
+      new AttributeBase(name, value)
+    }
+    def unapply(x: Any) = x match {
+      case attr: AttributeBase => Some((attr.attrName, attr.attrValue))
+      case _ => None
+    }
+  }
 
   case class Id(id: String) extends AttributeBase("id", id)
 
