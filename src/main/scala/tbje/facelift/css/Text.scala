@@ -48,7 +48,7 @@ case class LineHeight(lineHeight: String) extends CssDeclaration {
 }
 
 object LineHeight {
-  // TODO: line-height values
+  def apply(measure: CssMeasure) = new LineHeight(measure.value)
 }
 
 case class TextAlign(value: String) extends CssDeclaration {
