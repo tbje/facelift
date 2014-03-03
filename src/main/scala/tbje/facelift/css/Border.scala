@@ -1,5 +1,37 @@
 package tbje.facelift.css
 
+trait WithStringApply[T] {
+  def apply(x: String): T
+}
+
+trait BorderWidthX[T] { t: WithStringApply[T] =>
+  val Medium = t.apply("medium")
+  val Thin = t.apply("thin")
+  val Thick = t.apply("thick")
+  def apply(c: CssMeasure): T = t.apply(c.value)
+}
+
+trait BorderStyleX[T] { t: WithStringApply[T] =>
+  val None = t.apply("none")
+  val Hidden = t.apply("hidden")
+  val Dotted = t.apply("dotted")
+  val Dashed = t.apply("dashed")
+  val Solid = t.apply("solid")
+  val Double = t.apply("double")
+  val Groove = t.apply("groove")
+  val Ridge = t.apply("ridge")
+  val Inset = t.apply("inset")
+  val Outset = t.apply("outset")
+  val Initial = t.apply("initial")
+  val Inherit = t.apply("inherit")
+}
+
+trait Radius[T] { t: WithStringApply[T] =>
+  def apply(measure: CssMeasure): T = t.apply(measure.value)
+  val Initial = t.apply("initial")
+  val Inherit = t.apply("inherit")
+}
+
 /**
  * Sets all the border properties in one declaration
  * Available from CSS version 1
@@ -27,6 +59,24 @@ object BorderBottom {
 }
 
 /**
+ * Sets the color of the four borders
+ * Available from CSS version 1
+ */
+case class BorderColor(borderColor: String) extends CssDeclaration {
+  val property = "border-color"
+  val value = borderColor
+}
+
+/**
+ * Sets the color of the top border
+ * Available from CSS version 1
+ */
+case class BorderTopColor(borderTopColor: String) extends CssDeclaration {
+  val property = "border-top-color"
+  val value = borderTopColor
+}
+
+/**
  * Sets the color of the bottom border	1
  * Available from CSS version
  */
@@ -35,7 +85,57 @@ case class BorderBottomColor(borderBottomColor: String) extends CssDeclaration {
   val value = borderBottomColor
 }
 
+/**
+ * Sets the color of the left border
+ * Available from CSS version 1
+ */
+case class BorderLeftColor(borderLeftColor: String) extends CssDeclaration {
+  val property = "border-left-color"
+  val value = borderLeftColor
+}
+
+/**
+ * Sets the color of the right border
+ * Available from CSS version 1
+ */
+case class BorderRightColor(borderRightColor: String) extends CssDeclaration {
+  val property = "border-right-color"
+  val value = borderRightColor
+}
+
+/**
+ * Sets the color of an outline
+ * Available from CSS version 2
+ */
+case class OutlineColor(outlineColor: String) extends CssDeclaration {
+  val property = "outline-color"
+  val value = outlineColor
+}
+
+object BorderColor extends BaseColorObject("border-color")
+object BorderTopColor extends BaseColorObject("border-top-color")
 object BorderBottomColor extends BaseColorObject("border-bottom-color")
+object BorderLeftColor extends BaseColorObject("border-left-color")
+object BorderRightColor extends BaseColorObject("border-right-color")
+object OutlineColor extends BaseColorObject("outline-color")
+
+/**
+ * Sets the style of the four borders
+ * Available from CSS version 1
+ */
+case class BorderStyle(borderStyle: String) extends CssDeclaration {
+  val property = "border-style"
+  val value = borderStyle
+}
+
+/**
+ * Sets the style of the top border
+ * Available from CSS version 1
+ */
+case class BorderTopStyle(borderTopStyle: String) extends CssDeclaration {
+  val property = "border-top-style"
+  val value = borderTopStyle
+}
 
 /**
  * Sets the style of the bottom border
@@ -46,8 +146,56 @@ case class BorderBottomStyle(borderBottomStyle: String) extends CssDeclaration {
   val value = borderBottomStyle
 }
 
-object BorderBottomStyle {
-  // TODO: border-bottom-style values
+/**
+ * Sets the style of the left border
+ * Available from CSS version 1
+ */
+case class BorderLeftStyle(borderLeftStyle: String) extends CssDeclaration {
+  val property = "border-left-style"
+  val value = borderLeftStyle
+}
+
+/**
+ * Sets the style of the right border
+ * Available from CSS version 1
+ */
+case class BorderRightStyle(borderRightStyle: String) extends CssDeclaration {
+  val property = "border-right-style"
+  val value = borderRightStyle
+}
+
+/**
+ * Sets the style of an outline
+ * Available from CSS version 2
+ */
+case class OutlineStyle(outlineStyle: String) extends CssDeclaration {
+  val property = "outline-style"
+  val value = outlineStyle
+}
+
+object BorderStyle extends BorderStyleX[BorderStyle] with WithStringApply[BorderStyle]
+object BorderTopStyle extends BorderStyleX[BorderTopStyle] with WithStringApply[BorderTopStyle]
+object BorderBottomStyle extends BorderStyleX[BorderBottomStyle] with WithStringApply[BorderBottomStyle]
+object BorderLeftStyle extends BorderStyleX[BorderLeftStyle] with WithStringApply[BorderLeftStyle]
+object BorderRightStyle extends BorderStyleX[BorderRightStyle] with WithStringApply[BorderRightStyle]
+object OutlineStyle extends BorderStyleX[OutlineStyle] with WithStringApply[OutlineStyle]
+
+/**
+ * Sets the width of the four borders
+ * Available from CSS version 1
+ */
+case class BorderWidth(borderWidth: String) extends CssDeclaration {
+  val property = "border-width"
+  val value = borderWidth
+}
+
+/**
+ * Sets the width of the top border
+ * Available from CSS version 1
+ */
+case class BorderTopWidth(borderTopWidth: String) extends CssDeclaration {
+  val property = "border-top-width"
+  val value = borderTopWidth
 }
 
 /**
@@ -59,20 +207,39 @@ case class BorderBottomWidth(borderBottomWidth: String) extends CssDeclaration {
   val value = borderBottomWidth
 }
 
-object BorderBottomWidth {
-  // TODO: border-bottom-width values
+/**
+ * Sets the width of the left border
+ * Available from CSS version 1
+ */
+case class BorderLeftWidth(borderLeftWidth: String) extends CssDeclaration {
+  val property = "border-left-width"
+  val value = borderLeftWidth
 }
 
 /**
- * Sets the color of the four borders
+ * Sets the width of the right border
  * Available from CSS version 1
  */
-case class BorderColor(borderColor: String) extends CssDeclaration {
-  val property = "border-color"
-  val value = borderColor
+case class BorderRightWidth(borderRightWidth: String) extends CssDeclaration {
+  val property = "border-right-width"
+  val value = borderRightWidth
 }
 
-object BorderColor extends BaseColorObject("border-color")
+/**
+ * Sets the width of an outline
+ * Available from CSS version 2
+ */
+case class OutlineWidth(outlineWidth: String) extends CssDeclaration {
+  val property = "outline-width"
+  val value = outlineWidth
+}
+
+object BorderWidth extends BorderWidthX[BorderWidth] with WithStringApply[BorderWidth]
+object BorderTopWidth extends BorderWidthX[BorderTopWidth] with WithStringApply[BorderTopWidth]
+object BorderBottomWidth extends BorderWidthX[BorderBottomWidth] with WithStringApply[BorderBottomWidth]
+object BorderLeftWidth extends BorderWidthX[BorderLeftWidth] with WithStringApply[BorderLeftWidth]
+object BorderRightWidth extends BorderWidthX[BorderRightWidth] with WithStringApply[BorderRightWidth]
+object OutlineWidth extends BorderWidthX[OutlineWidth] with WithStringApply[OutlineWidth]
 
 /**
  * Sets all the left border properties in one declaration
@@ -85,43 +252,6 @@ case class BorderLeft(borderLeft: String) extends CssDeclaration {
 
 object BorderLeft {
   // TODO: border-left values
-}
-
-/**
- * Sets the color of the left border
- * Available from CSS version 1
- */
-case class BorderLeftColor(borderLeftColor: String) extends CssDeclaration {
-  val property = "border-left-color"
-  val value = borderLeftColor
-}
-
-object BorderLeftColor extends BaseColorObject("border-left-color")
-
-/**
- * Sets the style of the left border
- * Available from CSS version 1
- */
-case class BorderLeftStyle(borderLeftStyle: String) extends CssDeclaration {
-  val property = "border-left-style"
-  val value = borderLeftStyle
-}
-
-object BorderLeftStyle {
-  // TODO: border-left-style values
-}
-
-/**
- * Sets the width of the left border
- * Available from CSS version 1
- */
-case class BorderLeftWidth(borderLeftWidth: String) extends CssDeclaration {
-  val property = "border-left-width"
-  val value = borderLeftWidth
-}
-
-object BorderLeftWidth {
-  // TODO: border-left-width values
 }
 
 /**
@@ -138,56 +268,6 @@ object BorderRight {
 }
 
 /**
- * Sets the color of the right border
- * Available from CSS version 1
- */
-case class BorderRightColor(borderRightColor: String) extends CssDeclaration {
-  val property = "border-right-color"
-  val value = borderRightColor
-}
-
-object BorderRightColor extends BaseColorObject("border-right-color")
-
-/**
- * Sets the style of the right border
- * Available from CSS version 1
- */
-case class BorderRightStyle(borderRightStyle: String) extends CssDeclaration {
-  val property = "border-right-style"
-  val value = borderRightStyle
-}
-
-object BorderRightStyle {
-  // TODO: border-right-style values
-}
-
-/**
- * Sets the width of the right border
- * Available from CSS version 1
- */
-case class BorderRightWidth(borderRightWidth: String) extends CssDeclaration {
-  val property = "border-right-width"
-  val value = borderRightWidth
-}
-
-object BorderRightWidth {
-  // TODO: border-right-width values
-}
-
-/**
- * Sets the style of the four borders
- * Available from CSS version 1
- */
-case class BorderStyle(borderStyle: String) extends CssDeclaration {
-  val property = "border-style"
-  val value = borderStyle
-}
-
-object BorderStyle {
-  // TODO: border-style values
-}
-
-/**
  * Sets all the top border properties in one declaration
  * Available from CSS version 1
  */
@@ -201,56 +281,6 @@ object BorderTop {
 }
 
 /**
- * Sets the color of the top border
- * Available from CSS version 1
- */
-case class BorderTopColor(borderTopColor: String) extends CssDeclaration {
-  val property = "border-top-color"
-  val value = borderTopColor
-}
-
-object BorderTopColor extends BaseColorObject("border-top-color")
-
-/**
- * Sets the style of the top border
- * Available from CSS version 1
- */
-case class BorderTopStyle(borderTopStyle: String) extends CssDeclaration {
-  val property = "border-top-style"
-  val value = borderTopStyle
-}
-
-object BorderTopStyle {
-  // TODO: border-top-style values
-}
-
-/**
- * Sets the width of the top border
- * Available from CSS version 1
- */
-case class BorderTopWidth(borderTopWidth: String) extends CssDeclaration {
-  val property = "border-top-width"
-  val value = borderTopWidth
-}
-
-object BorderTopWidth {
-  // TODO: border-top-width values
-}
-
-/**
- * Sets the width of the four borders
- * Available from CSS version 1
- */
-case class BorderWidth(borderWidth: String) extends CssDeclaration {
-  val property = "border-width"
-  val value = borderWidth
-}
-
-object BorderWidth {
-  // TODO: border-width values
-}
-
-/**
  * Sets all the outline properties in one declaration
  * Available from CSS version 2
  */
@@ -259,150 +289,7 @@ case class Outline(outline: String) extends CssDeclaration {
   val value = outline
 }
 
-object Outline {
-  // TODO: outline values
-}
-
-/**
- * Sets the color of an outline
- * Available from CSS version 2
- */
-case class OutlineColor(outlineColor: String) extends CssDeclaration {
-  val property = "outline-color"
-  val value = outlineColor
-}
-
-object OutlineColor extends BaseColorObject("outline-color")
-
-/**
- * Sets the style of an outline
- * Available from CSS version 2
- */
-case class OutlineStyle(outlineStyle: String) extends CssDeclaration {
-  val property = "outline-style"
-  val value = outlineStyle
-}
-
-object OutlineStyle {
-  // TODO: outline-style values
-}
-
-/**
- * Sets the width of an outline
- * Available from CSS version 2
- */
-case class OutlineWidth(outlineWidth: String) extends CssDeclaration {
-  val property = "outline-width"
-  val value = outlineWidth
-}
-
-object OutlineWidth {
-  // TODO: outline-width values
-}
-
-/**
- * Defines the shape of the border of the bottom-left corner
- * Available from CSS version 3
- */
-case class BorderBottomLeftRadius(borderBottomLeftRadius: String) extends CssDeclaration {
-  val property = "border-bottom-left-radius"
-  val value = borderBottomLeftRadius
-}
-
-object BorderBottomLeftRadius {
-  // TODO: border-bottom-left-radius values
-}
-
-/**
- * Defines the shape of the border of the bottom-right corner
- * Available from CSS version 3
- */
-case class BorderBottomRightRadius(borderBottomRightRadius: String) extends CssDeclaration {
-  val property = "border-bottom-right-radius"
-  val value = borderBottomRightRadius
-}
-
-object BorderBottomRightRadius {
-  // TODO: border-bottom-right-radius values
-}
-
-/**
- * A shorthand property for setting all the border-image-* properties
- * Available from CSS version 3
- */
-case class BorderImage(borderImage: String) extends CssDeclaration {
-  val property = "border-image"
-  val value = borderImage
-}
-
-object BorderImage {
-  // TODO: border-image values
-}
-
-/**
- * Specifies the amount by which the border image area extends beyond the border box
- * Available from CSS version 3
- */
-case class BorderImageOutset(borderImageOutset: String) extends CssDeclaration {
-  val property = "border-image-outset"
-  val value = borderImageOutset
-}
-
-object BorderImageOutset {
-  // TODO: border-image-outset values
-}
-
-/**
- * Specifies whether the image-border should be repeated, rounded or stretched
- * Available from CSS version 3
- */
-case class BorderImageRepeat(borderImageRepeat: String) extends CssDeclaration {
-  val property = "border-image-repeat"
-  val value = borderImageRepeat
-}
-
-object BorderImageRepeat {
-  // TODO: border-image-repeat values
-}
-
-/**
- * Specifies the inward offsets of the image-border
- * Available from CSS version 3
- */
-case class BorderImageSlice(borderImageSlice: String) extends CssDeclaration {
-  val property = "border-image-slice"
-  val value = borderImageSlice
-}
-
-object BorderImageSlice {
-  // TODO: border-image-slice values
-}
-
-/**
- * Specifies an image to be used as a border
- * Available from CSS version 3
- */
-case class BorderImageSource(borderImageSource: String) extends CssDeclaration {
-  val property = "border-image-source"
-  val value = borderImageSource
-}
-
-object BorderImageSource {
-  // TODO: border-image-source values
-}
-
-/**
- * Specifies the widths of the image-border
- * Available from CSS version 3
- */
-case class BorderImageWidth(borderImageWidth: String) extends CssDeclaration {
-  val property = "border-image-width"
-  val value = borderImageWidth
-}
-
-object BorderImageWidth {
-  // TODO: border-image-width values
-}
+object Outline {} // TODO: outline values
 
 /**
  * A shorthand property for setting all the four border-*-radius properties
@@ -411,10 +298,6 @@ object BorderImageWidth {
 case class BorderRadius(borderRadius: String) extends CssDeclaration {
   val property = "border-radius"
   val value = borderRadius
-}
-
-object BorderRadius {
-  // TODO: border-radius values
 }
 
 /**
@@ -426,10 +309,6 @@ case class BorderTopLeftRadius(borderTopLeftRadius: String) extends CssDeclarati
   val value = borderTopLeftRadius
 }
 
-object BorderTopLeftRadius {
-  // TODO: border-top-left-radius values
-}
-
 /**
  * Defines the shape of the border of the top-right corner
  * Available from CSS version 3
@@ -439,8 +318,100 @@ case class BorderTopRightRadius(borderTopRightRadius: String) extends CssDeclara
   val value = borderTopRightRadius
 }
 
-object BorderTopRightRadius {
-  // TODO: border-top-right-radius values
+/**
+ * Defines the shape of the border of the bottom-left corner
+ * Available from CSS version 3
+ */
+case class BorderBottomLeftRadius(borderBottomLeftRadius: String) extends CssDeclaration {
+  val property = "border-bottom-left-radius"
+  val value = borderBottomLeftRadius
+}
+
+/**
+ * Defines the shape of the border of the bottom-right corner
+ * Available from CSS version 3
+ */
+case class BorderBottomRightRadius(borderBottomRightRadius: String) extends CssDeclaration {
+  val property = "border-bottom-right-radius"
+  val value = borderBottomRightRadius
+}
+
+object BorderRadius extends WithStringApply[BorderRadius] with Radius[BorderRadius]
+object BorderTopLeftRadius extends WithStringApply[BorderTopLeftRadius] with Radius[BorderTopLeftRadius]
+object BorderTopRightRadius extends WithStringApply[BorderTopRightRadius] with Radius[BorderTopRightRadius]
+object BorderBottomLeftRadius extends WithStringApply[BorderBottomLeftRadius] with Radius[BorderBottomLeftRadius]
+object BorderBottomRightRadius extends WithStringApply[BorderBottomRightRadius] with Radius[BorderBottomRightRadius]
+
+/**
+ * A shorthand property for setting all the border-image-* properties
+ * Available from CSS version 3
+ */
+case class BorderImage(borderImage: String) extends CssDeclaration {
+  val property = "border-image"
+  val value = borderImage
+}
+
+object BorderImage // TODO: border-image values
+
+/**
+ * Specifies the amount by which the border image area extends beyond the border box
+ * Available from CSS version 3
+ */
+case class BorderImageOutset(borderImageOutset: String) extends CssDeclaration {
+  val property = "border-image-outset"
+  val value = borderImageOutset
+}
+
+object BorderImageOutset // TODO: border-image-outset values
+
+/**
+ * Specifies whether the image-border should be repeated, rounded or stretched
+ * Available from CSS version 3
+ */
+case class BorderImageRepeat(borderImageRepeat: String) extends CssDeclaration {
+  val property = "border-image-repeat"
+  val value = borderImageRepeat
+}
+
+object BorderImageRepeat // TODO: border-image-repeat values
+
+/**
+ * Specifies the inward offsets of the image-border
+ * Available from CSS version 3
+ */
+case class BorderImageSlice(borderImageSlice: String) extends CssDeclaration {
+  val property = "border-image-slice"
+  val value = borderImageSlice
+}
+
+object BorderImageSlice // TODO: border-image-slice values
+
+/**
+ * Specifies an image to be used as a border
+ * Available from CSS version 3
+ */
+case class BorderImageSource(borderImageSource: String) extends CssDeclaration {
+  val property = "border-image-source"
+  val value = borderImageSource
+}
+
+object BorderImageSource // TODO: border-image-source values
+
+/**
+ * Specifies the widths of the image-border
+ * Available from CSS version 3
+ */
+case class BorderImageWidth(borderImageWidth: String) extends CssDeclaration {
+  val property = "border-image-width"
+  val value = borderImageWidth
+}
+
+object BorderImageWidth {
+  def apply(measure: CssMeasure) = new BorderImageWidth(measure.value)
+  def apply(times: Int) = new BorderImageWidth(times.toString)
+  val Auto = new BorderImageWidth("auto")
+  val Initial = new BorderImageWidth("initial")
+  val Inherit = new BorderImageWidth("inherit")
 }
 
 /**
@@ -451,9 +422,7 @@ case class BoxDecorationBreak(boxDecorationBreak: String) extends CssDeclaration
   val value = boxDecorationBreak
 }
 
-object BoxDecorationBreak {
-  // TODO: box-decoration-break values
-}
+object BoxDecorationBreak // TODO: box-decoration-break values
 
 /**
  * Attaches one or more drop-shadows to the box
@@ -464,6 +433,4 @@ case class BoxShadow(boxShadow: String) extends CssDeclaration {
   val value = boxShadow
 }
 
-object BoxShadow {
-  // TODO: box-shadow values
-}
+object BoxShadow // TODO: box-shadow values
