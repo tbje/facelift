@@ -29,7 +29,20 @@ package attr {
 
   case class Value(name: String) extends AttributeBase("value", name)
 
+  case class For(name: String) extends AttributeBase("for", name)
+
+  case class Placeholder(name: String) extends AttributeBase("placeholder", name)
+
   case class Name(name: String) extends AttributeBase("name", name)
+
+  object Name {
+    val ApplicationName = Name("application-name")
+    val Author = Name("author")
+    val Description = Name("description")
+    val Generator = Name("generator")
+    val Keywords = Name("keywords")
+    val Viewport = Name("viewport")
+  }
 
   case class Style(str: String) extends AttributeBase("style", str)
 
@@ -43,12 +56,16 @@ package attr {
 
   case class Onclick(onclick: String) extends AttributeBase("onclick", onclick)
 
+  case class OnSubmit(onSubmit: String) extends AttributeBase("onsubmit", onSubmit)
+
   case class Rel(val types: String*) extends AttributeBase("rel", types mkString " ") {
     def &(other: Rel) = Rel((types ++ other.types): _*)
   }
 
   object Rel {
     val Stylesheet = Rel("stylesheet")
+    val Icon = Rel("icon")
+    val Shortcut = Rel("shortcut")
   }
 
   case class Role(id: String) extends AttributeBase("role", id)
@@ -56,13 +73,37 @@ package attr {
   case class Type(id: String) extends AttributeBase("type", id)
 
   object Type {
-    object ImagePng extends Type("image/png")
-    object TextJavaScript extends Type("text/javascript")
+    val Button = Type("button")
+    val Checkbox = Type("checkbox")
+    val Color = Type("color")
+    val Date = Type("date")
+    val Datetime = Type("datetime")
+    val DatetimeLocal = Type("datetime-local")
+    val Email = Type("email")
+    val File = Type("file")
+    val Hidden = Type("hidden")
+    val Image = Type("image")
+    val ImagePng = Type("image/png")
+    val Month = Type("month")
+    val Number = Type("number")
+    val Password = Type("password")
+    val Radio = Type("radio")
+    val Range = Type("range")
+    val Reset = Type("reset")
+    val Search = Type("search")
+    val Submit = Type("submit")
+    val Tel = Type("tel")
+    val Text = Type("text")
+    val TextJavaScript = Type("text/javascript")
   }
 
   case class Content(id: String) extends AttributeBase("content", id)
 
   case class Charset(id: String) extends AttributeBase("charset", id)
+
+  object Charset {
+    val UTF8 = Charset("utf-8")
+  }
 
   case class DataToggle(id: String) extends AttributeBase("data-toggle", id)
 
