@@ -23,7 +23,9 @@ package attr {
 
   case class Id(id: String) extends AttributeBase("id", id)
 
-  case class Class(names: String*) extends AttributeBase("class", names mkString " ")
+  case class Class(val names: String*) extends AttributeBase("class", names mkString " ") {
+    def &(other: Class) = Class((names ++ other.names): _*)
+  }
 
   case class Value(name: String) extends AttributeBase("value", name)
 
@@ -41,11 +43,12 @@ package attr {
 
   case class Onclick(onclick: String) extends AttributeBase("onclick", onclick)
 
-  case class Rel(id: String) extends AttributeBase("rel", id)
+  case class Rel(val types: String*) extends AttributeBase("rel", types mkString " ") {
+    def &(other: Rel) = Rel((types ++ other.types): _*)
+  }
 
   object Rel {
-    def apply(es: String*) = new Rel(es.mkString(" "))
-    object Stylesheet extends Rel("stylesheet")
+    val Stylesheet = Rel("stylesheet")
   }
 
   case class Role(id: String) extends AttributeBase("role", id)
