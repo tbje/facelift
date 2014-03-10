@@ -1,35 +1,31 @@
 package tbje.facelift.css
 
-trait WithStringApply[T] {
-  def apply(x: String): T
+trait BorderWidthX[T] { t: (String => T) =>
+  val Medium = t("medium")
+  val Thin = t("thin")
+  val Thick = t("thick")
+  def apply(c: CssMeasure): T = t(c.value)
 }
 
-trait BorderWidthX[T] { t: WithStringApply[T] =>
-  val Medium = t.apply("medium")
-  val Thin = t.apply("thin")
-  val Thick = t.apply("thick")
-  def apply(c: CssMeasure): T = t.apply(c.value)
+trait BorderStyleX[T] { t: (String => T) =>
+  val None = t("none")
+  val Hidden = t("hidden")
+  val Dotted = t("dotted")
+  val Dashed = t("dashed")
+  val Solid = t("solid")
+  val Double = t("double")
+  val Groove = t("groove")
+  val Ridge = t("ridge")
+  val Inset = t("inset")
+  val Outset = t("outset")
+  val Initial = t("initial")
+  val Inherit = t("inherit")
 }
 
-trait BorderStyleX[T] { t: WithStringApply[T] =>
-  val None = t.apply("none")
-  val Hidden = t.apply("hidden")
-  val Dotted = t.apply("dotted")
-  val Dashed = t.apply("dashed")
-  val Solid = t.apply("solid")
-  val Double = t.apply("double")
-  val Groove = t.apply("groove")
-  val Ridge = t.apply("ridge")
-  val Inset = t.apply("inset")
-  val Outset = t.apply("outset")
-  val Initial = t.apply("initial")
-  val Inherit = t.apply("inherit")
-}
-
-trait Radius[T] { t: WithStringApply[T] =>
-  def apply(measure: CssMeasure): T = t.apply(measure.value)
-  val Initial = t.apply("initial")
-  val Inherit = t.apply("inherit")
+trait Radius[T] { t: (String => T) =>
+  def apply(measure: CssMeasure): T = t(measure.value)
+  val Initial = t("initial")
+  val Inherit = t("inherit")
 }
 
 /**
@@ -173,12 +169,12 @@ case class OutlineStyle(outlineStyle: String) extends CssDeclaration {
   val value = outlineStyle
 }
 
-object BorderStyle extends BorderStyleX[BorderStyle] with WithStringApply[BorderStyle]
-object BorderTopStyle extends BorderStyleX[BorderTopStyle] with WithStringApply[BorderTopStyle]
-object BorderBottomStyle extends BorderStyleX[BorderBottomStyle] with WithStringApply[BorderBottomStyle]
-object BorderLeftStyle extends BorderStyleX[BorderLeftStyle] with WithStringApply[BorderLeftStyle]
-object BorderRightStyle extends BorderStyleX[BorderRightStyle] with WithStringApply[BorderRightStyle]
-object OutlineStyle extends BorderStyleX[OutlineStyle] with WithStringApply[OutlineStyle]
+object BorderStyle extends BorderStyleX[BorderStyle] with (String => BorderStyle)
+object BorderTopStyle extends BorderStyleX[BorderTopStyle] with (String => BorderTopStyle)
+object BorderBottomStyle extends BorderStyleX[BorderBottomStyle] with (String => BorderBottomStyle)
+object BorderLeftStyle extends BorderStyleX[BorderLeftStyle] with (String => BorderLeftStyle)
+object BorderRightStyle extends BorderStyleX[BorderRightStyle] with (String => BorderRightStyle)
+object OutlineStyle extends BorderStyleX[OutlineStyle] with (String => OutlineStyle)
 
 /**
  * Sets the width of the four borders
@@ -234,12 +230,12 @@ case class OutlineWidth(outlineWidth: String) extends CssDeclaration {
   val value = outlineWidth
 }
 
-object BorderWidth extends BorderWidthX[BorderWidth] with WithStringApply[BorderWidth]
-object BorderTopWidth extends BorderWidthX[BorderTopWidth] with WithStringApply[BorderTopWidth]
-object BorderBottomWidth extends BorderWidthX[BorderBottomWidth] with WithStringApply[BorderBottomWidth]
-object BorderLeftWidth extends BorderWidthX[BorderLeftWidth] with WithStringApply[BorderLeftWidth]
-object BorderRightWidth extends BorderWidthX[BorderRightWidth] with WithStringApply[BorderRightWidth]
-object OutlineWidth extends BorderWidthX[OutlineWidth] with WithStringApply[OutlineWidth]
+object BorderWidth extends BorderWidthX[BorderWidth] with (String => BorderWidth)
+object BorderTopWidth extends BorderWidthX[BorderTopWidth] with (String => BorderTopWidth)
+object BorderBottomWidth extends BorderWidthX[BorderBottomWidth] with (String => BorderBottomWidth)
+object BorderLeftWidth extends BorderWidthX[BorderLeftWidth] with (String => BorderLeftWidth)
+object BorderRightWidth extends BorderWidthX[BorderRightWidth] with (String => BorderRightWidth)
+object OutlineWidth extends BorderWidthX[OutlineWidth] with (String => OutlineWidth)
 
 /**
  * Sets all the left border properties in one declaration
@@ -336,11 +332,11 @@ case class BorderBottomRightRadius(borderBottomRightRadius: String) extends CssD
   val value = borderBottomRightRadius
 }
 
-object BorderRadius extends WithStringApply[BorderRadius] with Radius[BorderRadius]
-object BorderTopLeftRadius extends WithStringApply[BorderTopLeftRadius] with Radius[BorderTopLeftRadius]
-object BorderTopRightRadius extends WithStringApply[BorderTopRightRadius] with Radius[BorderTopRightRadius]
-object BorderBottomLeftRadius extends WithStringApply[BorderBottomLeftRadius] with Radius[BorderBottomLeftRadius]
-object BorderBottomRightRadius extends WithStringApply[BorderBottomRightRadius] with Radius[BorderBottomRightRadius]
+object BorderRadius extends (String => BorderRadius) with Radius[BorderRadius]
+object BorderTopLeftRadius extends Radius[BorderTopLeftRadius] with (String => BorderTopLeftRadius)
+object BorderTopRightRadius extends Radius[BorderTopRightRadius] with (String => BorderTopRightRadius)
+object BorderBottomLeftRadius extends Radius[BorderBottomLeftRadius] with (String => BorderBottomLeftRadius)
+object BorderBottomRightRadius extends Radius[BorderBottomRightRadius] with (String => BorderBottomRightRadius)
 
 /**
  * A shorthand property for setting all the border-image-* properties
