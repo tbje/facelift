@@ -45,6 +45,7 @@ object BootstrapClasses {
   val navbarCollapse = Class("navbar-collapse")
   val navbarDefault = Class("navbar-default")
   val navbarFixedTop = Class("navbar-fixed-top")
+  val navbarFixedBottom = Class("navbar-fixed-bottom")
   val navbarHeader = Class("navbar-header")
   val navbarToggle = Class("navbar-toggle")
   val progress = Class("progress")
