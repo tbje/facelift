@@ -6,7 +6,9 @@ package attr {
 
   import css._
 
-  class AttributeBase(val attrName: String, val attrValue: String) extends UnprefixedAttribute(attrName, Text(attrValue), scala.xml.Null)
+  class AttributeBase(val attrName: String, val attrValue: String) extends UnprefixedAttribute(attrName, Text(attrValue), scala.xml.Null) {
+    def tupled = attrName -> attrValue
+  }
 
   object AttributeBase {
     implicit def tuple2ToAttrBase(t: (String, String)) = t match { case (name, value) => new AttributeBase(name, value) }
