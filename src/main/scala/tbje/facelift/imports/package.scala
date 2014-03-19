@@ -77,7 +77,6 @@ package object imports {
   val Legend = html.Legend
   val Li = html.Li
   val Link = html.Link
-  val Map = html.Map
   val Mark = html.Mark
   val Menu = html.Menu
   val Meta = html.Meta
