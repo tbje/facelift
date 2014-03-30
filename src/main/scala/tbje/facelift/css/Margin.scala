@@ -1,10 +1,11 @@
 package tbje.facelift.css
 
 class Margin(val value: String) extends CssDeclaration {
-  val property = "margin"
+  val property = Margin.property
 }
 
-object Margin {
+object Margin extends AutoInheritX[Margin] {
+  val property = "margin"
   def apply(top: CssMeasure, right: CssMeasure, bottom: CssMeasure, left: CssMeasure) = new Margin(s"${top.value} ${right.value} ${bottom.value} ${left.value}")
   def apply(top: CssMeasure, rightAndLeft: CssMeasure, bottom: CssMeasure) = new Margin(s"${top.value} ${rightAndLeft.value} ${bottom.value}")
   def apply(topAndBottom: CssMeasure, rightAndLeft: CssMeasure) = new Margin(s"${topAndBottom.value} ${rightAndLeft.value}")
@@ -13,10 +14,11 @@ object Margin {
 }
 
 class MarginLeft(val value: String) extends CssDeclaration {
-  val property = "margin-left"
+  val property = MarginLeft.property
 }
 
-object MarginLeft {
+object MarginLeft extends AutoInheritX[MarginLeft] {
+  val property = "margin-left"
   def apply(value: String) = new MarginLeft(value)
   def apply(measure: CssMeasure) = new MarginLeft(measure.value)
 }
@@ -24,10 +26,11 @@ object MarginLeft {
 case class MarginLeftPx(x: Int) extends MarginLeft(s"${x}px")
 
 class MarginRight(val value: String) extends CssDeclaration {
-  val property = "margin-right"
+  val property = MarginRight.property
 }
 
-object MarginRight {
+object MarginRight extends AutoInheritX[MarginRight] {
+  val property = "margin-right"
   def apply(value: String) = new MarginRight(value)
   def apply(measure: CssMeasure) = new MarginRight(measure.value)
 }
@@ -35,10 +38,11 @@ object MarginRight {
 case class MarginRightPx(x: Int) extends MarginRight(s"${x}px")
 
 class MarginTop(val value: String) extends CssDeclaration {
-  val property = "margin-top"
+  val property = MarginTop.property
 }
 
-object MarginTop {
+object MarginTop extends AutoInheritX[MarginTop] {
+  val property = "margin-top"
   def apply(value: String) = new MarginTop(value)
   def apply(measure: CssMeasure) = new MarginTop(measure.value)
 }
@@ -46,10 +50,11 @@ object MarginTop {
 case class MarginTopPx(x: Int) extends MarginTop(s"${x}px")
 
 class MarginBottom(val value: String) extends CssDeclaration {
-  val property = "margin-bottom"
+  val property = MarginBottom.property
 }
 
-object MarginBottom {
+object MarginBottom extends AutoInheritX[MarginBottom] {
+  val property = "margin-bottom"
   def apply(value: String) = new MarginBottom(value)
   def apply(measure: CssMeasure) = new MarginBottom(measure.value)
 }

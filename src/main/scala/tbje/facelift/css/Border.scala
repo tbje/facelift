@@ -1,31 +1,31 @@
 package tbje.facelift.css
 
-trait BorderWidthX[T] { t: (String => T) =>
-  val Medium = t("medium")
-  val Thin = t("thin")
-  val Thick = t("thick")
-  def apply(c: CssMeasure): T = t(c.value)
+trait BorderWidthX[T] extends (String => T) {
+  val Medium = apply("medium")
+  val Thin = apply("thin")
+  val Thick = apply("thick")
+  def apply(c: CssMeasure): T = apply(c.value)
 }
 
-trait BorderStyleX[T] { t: (String => T) =>
-  val None = t("none")
-  val Hidden = t("hidden")
-  val Dotted = t("dotted")
-  val Dashed = t("dashed")
-  val Solid = t("solid")
-  val Double = t("double")
-  val Groove = t("groove")
-  val Ridge = t("ridge")
-  val Inset = t("inset")
-  val Outset = t("outset")
-  val Initial = t("initial")
-  val Inherit = t("inherit")
+trait BorderStyleX[T] extends (String => T) {
+  val None = apply("none")
+  val Hidden = apply("hidden")
+  val Dotted = apply("dotted")
+  val Dashed = apply("dashed")
+  val Solid = apply("solid")
+  val Double = apply("double")
+  val Groove = apply("groove")
+  val Ridge = apply("ridge")
+  val Inset = apply("inset")
+  val Outset = apply("outset")
+  val Initial = apply("initial")
+  val Inherit = apply("inherit")
 }
 
-trait Radius[T] { t: (String => T) =>
-  def apply(measure: CssMeasure): T = t(measure.value)
-  val Initial = t("initial")
-  val Inherit = t("inherit")
+trait Radius[T] extends (String => T) {
+  def apply(measure: CssMeasure): T = apply(measure.value)
+  val Initial = apply("initial")
+  val Inherit = apply("inherit")
 }
 
 /**
@@ -169,12 +169,12 @@ case class OutlineStyle(outlineStyle: String) extends CssDeclaration {
   val value = outlineStyle
 }
 
-object BorderStyle extends BorderStyleX[BorderStyle] with (String => BorderStyle)
-object BorderTopStyle extends BorderStyleX[BorderTopStyle] with (String => BorderTopStyle)
-object BorderBottomStyle extends BorderStyleX[BorderBottomStyle] with (String => BorderBottomStyle)
-object BorderLeftStyle extends BorderStyleX[BorderLeftStyle] with (String => BorderLeftStyle)
-object BorderRightStyle extends BorderStyleX[BorderRightStyle] with (String => BorderRightStyle)
-object OutlineStyle extends BorderStyleX[OutlineStyle] with (String => OutlineStyle)
+object BorderStyle extends BorderStyleX[BorderStyle]
+object BorderTopStyle extends BorderStyleX[BorderTopStyle]
+object BorderBottomStyle extends BorderStyleX[BorderBottomStyle]
+object BorderLeftStyle extends BorderStyleX[BorderLeftStyle]
+object BorderRightStyle extends BorderStyleX[BorderRightStyle]
+object OutlineStyle extends BorderStyleX[OutlineStyle]
 
 /**
  * Sets the width of the four borders
@@ -230,12 +230,12 @@ case class OutlineWidth(outlineWidth: String) extends CssDeclaration {
   val value = outlineWidth
 }
 
-object BorderWidth extends BorderWidthX[BorderWidth] with (String => BorderWidth)
-object BorderTopWidth extends BorderWidthX[BorderTopWidth] with (String => BorderTopWidth)
-object BorderBottomWidth extends BorderWidthX[BorderBottomWidth] with (String => BorderBottomWidth)
-object BorderLeftWidth extends BorderWidthX[BorderLeftWidth] with (String => BorderLeftWidth)
-object BorderRightWidth extends BorderWidthX[BorderRightWidth] with (String => BorderRightWidth)
-object OutlineWidth extends BorderWidthX[OutlineWidth] with (String => OutlineWidth)
+object BorderWidth extends BorderWidthX[BorderWidth]
+object BorderTopWidth extends BorderWidthX[BorderTopWidth]
+object BorderBottomWidth extends BorderWidthX[BorderBottomWidth]
+object BorderLeftWidth extends BorderWidthX[BorderLeftWidth]
+object BorderRightWidth extends BorderWidthX[BorderRightWidth]
+object OutlineWidth extends BorderWidthX[OutlineWidth]
 
 /**
  * Sets all the left border properties in one declaration
@@ -332,11 +332,11 @@ case class BorderBottomRightRadius(borderBottomRightRadius: String) extends CssD
   val value = borderBottomRightRadius
 }
 
-object BorderRadius extends (String => BorderRadius) with Radius[BorderRadius]
-object BorderTopLeftRadius extends Radius[BorderTopLeftRadius] with (String => BorderTopLeftRadius)
-object BorderTopRightRadius extends Radius[BorderTopRightRadius] with (String => BorderTopRightRadius)
-object BorderBottomLeftRadius extends Radius[BorderBottomLeftRadius] with (String => BorderBottomLeftRadius)
-object BorderBottomRightRadius extends Radius[BorderBottomRightRadius] with (String => BorderBottomRightRadius)
+object BorderRadius extends Radius[BorderRadius]
+object BorderTopLeftRadius extends Radius[BorderTopLeftRadius]
+object BorderTopRightRadius extends Radius[BorderTopRightRadius]
+object BorderBottomLeftRadius extends Radius[BorderBottomLeftRadius]
+object BorderBottomRightRadius extends Radius[BorderBottomRightRadius]
 
 /**
  * A shorthand property for setting all the border-image-* properties

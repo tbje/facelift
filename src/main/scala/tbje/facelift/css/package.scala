@@ -11,6 +11,16 @@ package css {
   object Auto extends CssMeasure("auto")
   object Inherit extends CssMeasure("inherit")
 
+  trait AutoInheritX[T] extends AutoX[T] with InheritX[T]
+
+  trait AutoX[T] extends (String => T) {
+    val Auto = apply("auto")
+  }
+
+  trait InheritX[T] extends (String => T) {
+    val Inherit = apply("inherit")
+  }
+
   case class CssMeasure(value: String)
 
   class ToUnitOps[T](x: T) {

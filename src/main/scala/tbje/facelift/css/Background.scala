@@ -43,14 +43,14 @@ object BackgroundColor extends BaseColorObject("background-color")
  * From CSS version 1
  */
 case class BackgroundImage(backgroundImage: String) extends CssDeclaration {
-  val property = "background-image"
+  val property = BackgroundImage.property
   val value = backgroundImage
 }
 
-object BackgroundImage {
+object BackgroundImage extends InheritX[BackgroundImage] {
+  val property = "background-image"
   def url(url: String*) = BackgroundImage("url" + url.mkString("('", "' ,'", "')"))
   val None = BackgroundImage("none")
-  val Inherit = BackgroundImage("inherit")
 }
 
 /**
@@ -58,11 +58,12 @@ object BackgroundImage {
  * From CSS version 1
  */
 case class BackgroundPosition(backgroundPosition: String) extends CssDeclaration {
-  val property = "background-position"
+  val property = BackgroundPosition.property
   val value = backgroundPosition
 }
 
-object BackgroundPosition {
+object BackgroundPosition extends InheritX[BackgroundPosition] {
+  val property = "background-position"
   val LeftTop = BackgroundPosition("left top")
   val LeftCenter = BackgroundPosition("left center")
   val LeftBottom = BackgroundPosition("left bottom")
@@ -72,7 +73,6 @@ object BackgroundPosition {
   val CenterTop = BackgroundPosition("center top")
   val CenterCenter = BackgroundPosition("center center")
   val CenterBottom = BackgroundPosition("center bottom")
-  val Inherit = BackgroundPosition("inherit")
   def apply(x: CssMeasure, y: CssMeasure) = new BackgroundPosition(s"${x.value}, ${y.value}")
 }
 
@@ -81,11 +81,12 @@ object BackgroundPosition {
  * From CSS version 1
  */
 case class BackgroundRepeat(backgroundRepeat: String) extends CssDeclaration {
-  val property = "background-repeat"
+  val property = BackgroundRepeat.property
   val value = backgroundRepeat
 }
 
-object BackgroundRepeat {
+object BackgroundRepeat extends InheritX[BackgroundRepeat] {
+  val property = "background-repeat"
   /** The background image will be repeated both vertically and horizontally. This is default */
   val Repeat = BackgroundRepeat("repeat")
   /** The background image will be repeated only horizontally */
@@ -94,7 +95,6 @@ object BackgroundRepeat {
   val RepeatY = BackgroundRepeat("repeat-y")
   /** The background-image will not be repeated */
   val NoRepeat = BackgroundRepeat("no-repeat")
-  val Inherit = BackgroundRepeat("inherit")
 }
 
 /**
@@ -123,4 +123,3 @@ case class BackgroundSize(backgroundSize: String) extends CssDeclaration {
   val property = "background-size"
   val value = backgroundSize
 }
-

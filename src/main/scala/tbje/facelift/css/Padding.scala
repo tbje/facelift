@@ -4,7 +4,7 @@ class Padding(val value: String) extends CssDeclaration {
   val property = "padding"
 }
 
-object Padding {
+object Padding extends AutoInheritX[Padding] {
   def apply(value: String) = new Padding(value)
   def apply(top: CssMeasure, right: CssMeasure, bottom: CssMeasure, left: CssMeasure) = new Padding(s"${top.value} ${right.value} ${bottom.value} ${left.value}")
   def apply(top: CssMeasure, rightAndLeft: CssMeasure, bottom: CssMeasure) = new Padding(s"${top.value} ${rightAndLeft.value} ${bottom.value}")
@@ -16,7 +16,7 @@ class PaddingLeft(val value: String) extends CssDeclaration {
   val property = "padding-left"
 }
 
-object PaddingLeft {
+object PaddingLeft extends AutoInheritX[PaddingLeft] {
   def apply(value: String) = new PaddingLeft(value)
   def apply(measure: CssMeasure) = new PaddingLeft(measure.value)
 }
@@ -27,7 +27,7 @@ class PaddingRight(val value: String) extends CssDeclaration {
   val property = "padding-right"
 }
 
-object PaddingRight {
+object PaddingRight extends AutoInheritX[PaddingRight] {
   def apply(value: String) = new PaddingRight(value)
   def apply(measure: CssMeasure) = new PaddingRight(measure.value)
 }
@@ -38,7 +38,7 @@ class PaddingTop(val value: String) extends CssDeclaration {
   val property = "padding-top"
 }
 
-object PaddingTop {
+object PaddingTop extends AutoInheritX[PaddingTop] {
   def apply(value: String) = new PaddingTop(value)
   def apply(measure: CssMeasure) = new PaddingTop(measure.value)
 }
@@ -49,7 +49,7 @@ class PaddingBottom(val value: String) extends CssDeclaration {
   val property = "padding-bottom"
 }
 
-object PaddingBottom {
+object PaddingBottom extends AutoInheritX[PaddingBottom] {
   def apply(value: String) = new PaddingBottom(value)
   def apply(measure: CssMeasure) = new PaddingBottom(measure.value)
 }
