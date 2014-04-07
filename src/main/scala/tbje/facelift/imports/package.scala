@@ -262,8 +262,6 @@ package object imports {
   val FontFamily = css.FontFamily
   val FontSize = css.FontSize
   val FontSizeAdjust = css.FontSizeAdjust
-  val FontSizeEm = css.FontSizeEm
-  val FontSizePx = css.FontSizePx
   val FontStretch = css.FontStretch
   val FontStyle = css.FontStyle
   val FontVariant = css.FontVariant
@@ -272,8 +270,6 @@ package object imports {
   val GridRows = css.GridRows
   val HangingPunctuation = css.HangingPunctuation
   val Height = css.Height
-  val HeightPct = css.HeightPct
-  val HeightPx = css.HeightPx
   val HyphenateAfter = css.HyphenateAfter
   val HyphenateBefore = css.HyphenateBefore
   val HyphenateCharacter = css.HyphenateCharacter
@@ -299,14 +295,9 @@ package object imports {
   val ListStyleType = css.ListStyleType
   val Margin = css.Margin
   val MarginBottom = css.MarginBottom
-  val MarginBottomPx = css.MarginBottomPx
   val MarginLeft = css.MarginLeft
-  val MarginLeftPx = css.MarginLeftPx
-  val MarginPx = css.MarginPx
   val MarginRight = css.MarginRight
-  val MarginRightPx = css.MarginRightPx
   val MarginTop = css.MarginTop
-  val MarginTopPx = css.MarginTopPx
   val MarkAfter = css.MarkAfter
   val MarkBefore = css.MarkBefore
   val Marks = css.Marks
@@ -336,14 +327,9 @@ package object imports {
   val OverflowY = css.OverflowY
   val Padding = css.Padding
   val PaddingBottom = css.PaddingBottom
-  val PaddingBottomPx = css.PaddingBottomPx
   val PaddingLeft = css.PaddingLeft
-  val PaddingLeftPx = css.PaddingLeftPx
-  val PaddingPx = css.PaddingPx
   val PaddingRight = css.PaddingRight
-  val PaddingRightPx = css.PaddingRightPx
   val PaddingTop = css.PaddingTop
-  val PaddingTopPx = css.PaddingTopPx
   val Page = css.Page
   val PageBreakAfter = css.PageBreakAfter
   val PageBreakBefore = css.PageBreakBefore
@@ -406,8 +392,6 @@ package object imports {
   val WhiteSpace = css.WhiteSpace
   val Widows = css.Widows
   val Width = css.Width
-  val WidthPct = css.WidthPct
-  val WidthPx = css.WidthPx
   val WordBreak = css.WordBreak
   val WordSpacing = css.WordSpacing
   val WordWrap = css.WordWrap

@@ -10,7 +10,7 @@ class Example {
 
     val titleId = Id("title")
     val titleClass = Class("cool")
-    val titleStyle = Style(Color.Green, MarginPx(45, 20, 10, 10), 'paddingLeft -> "10px")
+    val titleStyle = Style(Color.Green, Margin(45 px, 20 px, 10 px, 10 px), 'paddingLeft -> "10px")
     val html1 = // Integrate attributes with standard scala xml
       <html><body>{ <h1></h1> % titleId % titleClass % titleStyle } </body></html>
     val html2 = // Html DSL, children then attributes style
@@ -35,32 +35,32 @@ class Example {
         PaddingLeft(20 px),
         'boxShadow -> "auto",
         'boxShadow -> "0 2px 5px rgba(0,0,0,.3)",
-        WidthPx(340),
+        Width(340.px),
         Height(30.px),
         Margin(30.px, Auto, 0.px),
         Color.hsla(260, 100, 100, 0),
-        PaddingPx(30),
+        Padding(30 px),
         TextAlign.Center,
-        FontSizePx(18),
+        FontSize(1.5 em),
         FontFamily.websafe.serif.Georgia,
         BackgroundColor.hex("#00F5F5"))
     val css =
       CssElement(H1, Class("tst"), A)(
         Width.Inherit,
         Color.Green,
-        MarginPx(10, 20, 10, 20),
+        Margin(10.px, Auto, 10.px, 20.px),
         MarginLeft.Auto,
         "margin-left" -> "auto",
         'paddingLeft -> "10px",
-        FontSizeEm(1.3))(linkCss)
+        FontSize(1.3 em))(linkCss)
     val css2 =
       CssElement(H2, Class("tast"), A)(
         Color.Green,
-        MarginPx(10, 20, 10, 20),
+        Margin(10.px, 20.px, 10.px, 20.px),
         'marginLeft -> "auto",
         "margin-left" -> "auto",
         'paddingLeft -> "10px",
-        FontSizeEm(1.3))(linkCss)
+        FontSize(1.3 em))(linkCss)
 
   }
 

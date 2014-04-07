@@ -115,18 +115,13 @@ object FontFamily {
  * Specifies the font size of text
  * Available from CSS version 1
  */
-class FontSize(val value: String) extends CssDeclaration {
+case class FontSize(value: String) extends CssDeclaration {
   val property = "font-size"
 }
 
 object FontSize {
-  def apply(value: String) = new FontSize(value)
   def apply(measure: CssMeasure) = new FontSize(measure.value)
 }
-
-case class FontSizeEm(size: Double) extends FontSize(s"${size}em")
-
-case class FontSizePx(size: Int) extends FontSize(s"${size}px")
 
 /**
  * Specifies the weight of a font
