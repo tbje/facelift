@@ -19,10 +19,10 @@ In a CSS file:
         'paddingLeft -> "20px",
         'boxShadow -> "auto",
         'boxShadow -> "0 2px 5px rgba(0,0,0,.3)",
-        WidthPx(340),
+        Width(340.px),
         Margin("30px auto 0"),
         Color.Chartreuse,
-        PaddingPx(30),
+        Padding(30.px),
         TextAlign.Center,
         FontSize(1.2 em),
         FontFamily.websafe.serif.Georgia,
@@ -32,12 +32,12 @@ Nesting:
 
     val linkCss =
       CssElement(Id("link"))(
-        WidthPx(140),
+        Width(140.px),
         Color.Blue)
 
     val wideCss =
       CssElement(Class("wide"))(
-        WidthPx(340))(linkCss)
+        Width(340.px))(linkCss)
 
     println(wideCss) 
 

@@ -14,11 +14,11 @@ package css {
   trait AutoInheritX[T] extends AutoX[T] with InheritX[T]
 
   trait AutoX[T] extends (String => T) {
-    val Auto = apply("auto")
+    lazy val Auto = apply("auto")
   }
 
   trait InheritX[T] extends (String => T) {
-    val Inherit = apply("inherit")
+    lazy val Inherit = apply("inherit")
   }
 
   case class CssMeasure(value: String)
