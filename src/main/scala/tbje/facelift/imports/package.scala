@@ -129,6 +129,7 @@ package object imports {
   val Video = html.Video
   val Wbr = html.Wbr
 
+  type Id = attr.Id
   val Id = attr.Id
   val Class = attr.Class
   val Name = attr.Name
