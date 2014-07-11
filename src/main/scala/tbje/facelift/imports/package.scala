@@ -137,8 +137,25 @@ package object imports {
   val Style = attr.Style
   val Src = attr.Src
   val Href = attr.Href
-  val Onclick = attr.Onclick
+  val OnLoad = attr.OnLoad
+  val OnUnload = attr.OnUnload
+  val OnClick = attr.OnClick
+  @deprecated("Use OnClick instead", "0.2") val Onclick = attr.OnClick
+  val OnDblClick = attr.OnDblClick
+  val OnMouseDown = attr.OnMouseDown
+  val OnMouseUp = attr.OnMouseUp
+  val OnMouseOver = attr.OnMouseOver
+  val OnMouseMove = attr.OnMouseMove
+  val OnMouseOut = attr.OnMouseOut
+  val OnFocus = attr.OnFocus
+  val OnBlur = attr.OnBlur
+  val OnKeyPress = attr.OnKeyPress
+  val OnKeyDown = attr.OnKeyDown
+  val OnKeyUp = attr.OnKeyUp
   val OnSubmit = attr.OnSubmit
+  val OnReset = attr.OnReset
+  val OnSelect = attr.OnSelect
+  val OnChange = attr.OnChange
 
   val Rel = attr.Rel
   val Role = attr.Role
