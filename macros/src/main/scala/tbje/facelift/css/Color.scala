@@ -258,7 +258,7 @@ class BaseColorObject(property: String) {
    */
   def rgba(red: Int, green: Int, blue: Int, transparency: Double) = macro ColorHelper.rgbaMacroImpl
 
-  def rgbaOld(red: Int, green: Int, blue: Int, transparency: Double) = new BaseColor(s"rgb($red, $green, $blue, $transparency)", property) {
+  def rgbaOld(red: Int, green: Int, blue: Int, transparency: Double) = new BaseColor(s"rgba($red, $green, $blue, $transparency)", property) {
     import ColorHelper._
     require(octetByteCheck(red), octetByteErrorMsg("red rgb", red))
     require(octetByteCheck(green), octetByteErrorMsg("green rgb", green))
@@ -268,7 +268,7 @@ class BaseColorObject(property: String) {
 
   def rgbaPct(red: Int, green: Int, blue: Int, transparency: Double) = macro ColorHelper.rgbaPctMacroImpl
 
-  def rgbaPctOld(red: Int, green: Int, blue: Int, transparency: Double) = new BaseColor(s"rgb($red%, $green%, $blue%, $transparency)", property) {
+  def rgbaPctOld(red: Int, green: Int, blue: Int, transparency: Double) = new BaseColor(s"rgba($red%, $green%, $blue%, $transparency)", property) {
     import ColorHelper._
     require(percentCheck(red), percentErrorMsg("red rgb %", red))
     require(percentCheck(green), percentErrorMsg("green rgb %", green))
@@ -305,7 +305,7 @@ class BaseColorObject(property: String) {
    */
   def hsla(hue: Int, saturation: Int, lightness: Int, transparency: Double) = macro ColorHelper.hslaMacroImpl
 
-  def hslaOld(hue: Int, saturation: Int, lightness: Int, transparency: Double) = new BaseColor(s"hsl($hue, $saturation%, $lightness%, $transparency)", property) {
+  def hslaOld(hue: Int, saturation: Int, lightness: Int, transparency: Double) = new BaseColor(s"hsla($hue, $saturation%, $lightness%, $transparency)", property) {
     import ColorHelper._
     require(degreesCheck(hue), degreesErrorMsg("hue", hue))
     require(percentCheck(saturation), percentErrorMsg("saturation", saturation))
