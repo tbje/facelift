@@ -10,7 +10,8 @@ object BuildSettings {
   val buildSettings = Defaults.defaultSettings ++ Seq(
     organization := "tbje",
     version := "0.1-SNAPSHOT",
-    scalaVersion := "2.10.3",
+    scalaVersion := "2.10.4",
+    crossScalaVersions := Seq("2.10.4", "2.11.0"),
     resolvers += Resolver.sonatypeRepo("snapshots"),
     resolvers += Resolver.sonatypeRepo("releases"),
     scalacOptions ++= Seq(
@@ -21,6 +22,14 @@ object BuildSettings {
         "-target:jvm-1.6",
         "-encoding", "UTF-8"
     ), 
+    libraryDependencies := {
+      CrossVersion.partialVersion(scalaVersion.value) match {
+        case Some((2, scalaMajor)) if scalaMajor >= 11 => libraryDependencies.value ++ Seq(
+          "org.scala-lang.modules" %% "scala-xml" % "1.0.2" cross CrossVersion.binary)
+        case Some((2, 10)) =>
+          libraryDependencies.value
+      }
+    },
     incOptions := incOptions.value.withNameHashing(true),
     publishTo := {
       val publishDir = Option(System.getProperty("publish.dir")).getOrElse(System.getProperty("user.dir")) 

@@ -60,7 +60,7 @@ Start using it:
     git clone git@github.com:tbje/facelift.git
     cd facelift
     sbt
-    > publishLocal  // publish-local for sbt pre 0.13
+    > + publishLocal  // + publish-local for sbt pre 0.13
     
 In your project (SBT-settings):
     
