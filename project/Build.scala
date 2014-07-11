@@ -5,6 +5,7 @@ import scala.xml.{Elem, Node}
 import scala.xml.transform.{RuleTransformer, RewriteRule}
 
 object BuildSettings {
+  lazy val prepAlias = addCommandAlias("prep", ";publishLocal;cleanCache")
   val name = "facelift"
   val buildSettings = Defaults.defaultSettings ++ Seq(
     organization := "tbje",
@@ -30,7 +31,7 @@ object BuildSettings {
         Patterns(true, publishDir + publishPath)
       ))
     }
-  )
+  ) ++ prepAlias
 }
 
 object FaceliftBuild extends Build {
