@@ -1,3 +1,4 @@
+.ensime_cache/*
 -dependencyfile
 *~
 *.db
