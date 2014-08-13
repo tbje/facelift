@@ -2,14 +2,35 @@ Facelift
 ========
 Facelift is an experiment in creating a DSL for CSS in Scala. Goals are discoverability, type safety and ease of use.
 
-Inline with Scala XML-litterals:
+Writing Html:
 
     val titleId = Id("title")
-    val titleClass = Class("wide", "cool")
-    val titleStyle = Style(Color.Green, MarginPx(45, 20, 10, 10), 'paddingLeft -> "10px")
-    val html = <html><body>{ <h1/> % titleId % titleClass % titleStyle } </body></html>
+    val titleClass = Class("cool")
+    val titleStyle = Style(Color.Green, Margin(45 px, 20 px, 10 px, 10 px), 'paddingLeft -> "10px")
 
-Please also have a look at the [examples](https://github.com/tbje/facelift/blob/master/src/test/scala/tbje/facelift/Example.scala).
+    val html1 = // attributes first style
+      Html {
+        Body(Style('backgroundColor -> "#F5F5F5")) {
+          import com.github.tbje.facelift.css.{ BootstrapClasses => Bs } // Most bootstrap classes built in
+          H1(titleId, titleClass, titleStyle, 'funkyAttr -> "very-funky")("Welcome to FaceLift")(B("my friend")) ++ // Calling apply multiple times will concatenate children
+          Div(Bs.colMd4 & Bs.pullRight) { // Combine multiple styles easily
+            Glyphicon.Cloud % Style(FontSize(1.6 em), LineHeight(20.px)) ++ // Access glyps from Glyhicon
+            Span(Bs.h3, Style(MarginLeft(10.px)))("my title")
+          }
+        }
+      }
+    val html2 = // content then attributes style
+      Html {
+        Body {
+          H1("Welcome to FaceLift", titleId, titleClass, titleStyle, 'customAttr -> "hello!") ++
+        }
+      }
+
+Inline with Scala XML-litterals:
+
+    val html3 = <html><body>{ <h1/> % titleId % titleClass % titleStyle } </body></html>
+
+Please also have a look at the [examples](https://github.com/tbje/facelift/blob/master/src/test/scala/com/github/tbje/facelift/Example.scala).
 
 In a CSS file:
 
@@ -28,7 +49,7 @@ In a CSS file:
         FontFamily.websafe.serif.Georgia,
         BackgroundColor("#F5F5F5"))
 
-Nesting: 
+Nesting:
 
     val linkCss =
       CssElement(Id("link"))(
@@ -39,7 +60,7 @@ Nesting:
       CssElement(Class("wide"))(
         Width(340.px))(linkCss)
 
-    println(wideCss) 
+    println(wideCss)
 
     .wide {
       width: 340px;
@@ -48,29 +69,21 @@ Nesting:
     .wide #link {
       width: 140px;
       color: blue;
-    }              
+    }
 
 Required imports:
 
-    import com.github.tbje.facelift.Html._
-    import com.github.tbje.facelift.css._
+    import com.github.tbje.facelift.imports._
 
-Start using it:
+In your project (SBT-settings):
+
+    libraryDependencies ++= Seq(
+        "com.github.tbje" %% "facelift" % "0.1"
+    )
+
+Build it locally:
 
     git clone git@github.com:tbje/facelift.git
     cd facelift
     sbt
     > + publishLocal  // + publish-local for sbt pre 0.13
-    
-In your project (SBT-settings):
-    
-    libraryDependencies ++= Seq(
-        "com.github.tbje" %% "facelift" % "0.1-SNAPSHOT"
-    )
-
-Next steps:
------------
-1. Direct support for more css properties (you can always *'property -> "value"* or *"property" -> "value"* )
-    * Contributions are welcome and I stubbed up missing properties and added TODO tasks.  
-2. CSS file generator plugin for SBT
-3. String interpolation Selector macro for CSS.
