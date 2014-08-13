@@ -11,7 +11,7 @@ Writing Html:
     val html1 = // attributes first style
       Html {
         Body(Style('backgroundColor -> "#F5F5F5")) {
-          // Most bootstrap classes built in, let's bind them to Bs
+          // Most bootstrap classes are built in, let's bind them to Bs
           import com.github.tbje.facelift.css.{ BootstrapClasses => Bs }
           // Calling apply multiple times will add children to the node
           H1(titleId, titleClass, titleStyle, 'funkyAttr -> "very-funky"){
