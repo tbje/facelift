@@ -1,16 +1,27 @@
 import sbt._
 import Keys._
 import sbt.Keys._
-import scala.xml.{Elem, Node}
-import scala.xml.transform.{RuleTransformer, RewriteRule}
+import scala.xml.NodeSeq
 
 object BuildSettings {
   lazy val prepAlias = addCommandAlias("prep", ";publishLocal;cleanCache")
+  def devs(devList: (String, String)*) = {
+    def devsNode(x: NodeSeq) = <developers>{x}</developers>
+    def idNode(x: String) = <id>{x}</id>
+    def nameNode(x: String) = <name>{x}</name>
+    def devNode(id: String, name: String) = <developer>{idNode(id) ++ nameNode(name)}</developer>
+    devsNode(devList.foldLeft(NodeSeq.Empty){ case (ex, (id, name)) =>
+      ex ++ devNode(id, name)
+    })
+  }
   val name = "facelift"
   val buildSettings = Defaults.defaultSettings ++ Seq(
     organization := "com.github.tbje",
-    version := "0.1-SNAPSHOT",
+    version := "0.1",
     scalaVersion := "2.10.4",
+    homepage := Some(url("https://github.com/tbje/facelift")),
+    scmInfo := Some(ScmInfo(url("https://github.com/tbje/facelift"), "https://github.com/tbje/facelift.git")),
+    licenses := Seq("BSD-style" -> url("http://www.opensource.org/licenses/bsd-license.php")),
     crossScalaVersions := Seq("2.10.4", "2.11.0"),
     resolvers += Resolver.sonatypeRepo("snapshots"),
     resolvers += Resolver.sonatypeRepo("releases"),
@@ -22,6 +33,7 @@ object BuildSettings {
         "-target:jvm-1.6",
         "-encoding", "UTF-8"
     ),
+    pomExtra := devs("tbje" -> "Trond Bjerkestrand"),
     libraryDependencies := {
       CrossVersion.partialVersion(scalaVersion.value) match {
         case Some((2, scalaMajor)) if scalaMajor >= 11 => libraryDependencies.value ++ Seq(
@@ -31,21 +43,30 @@ object BuildSettings {
       }
     },
     incOptions := incOptions.value.withNameHashing(true),
+    publishMavenStyle := true,
+    publishArtifact in Test := false,
+    pomIncludeRepository := { _ => false },
     publishTo := {
-      val publishDir = Option(System.getProperty("publish.dir")).getOrElse(System.getProperty("user.dir"))
-      val publishPath = "/[organization]/[module](_[scalaVersion])/[revision]/[artifact](_[scalaVersion])-[revision](-[classifier]).[ext]"
-      Some(FileRepository(
-        "Groosker Repo",
-        Resolver.defaultFileConfiguration,
-        Patterns(true, publishDir + publishPath)
-      ))
+      Option(System.getProperty("publish.dir")) map { publishDir => // Publish locally if publish.dir is set.
+        val publishPath = "/[organization]/[module](_[scalaVersion])/[revision]/[artifact](_[scalaVersion])-[revision](-[classifier]).[ext]"
+        Some(FileRepository(
+          "Groosker Repo",
+          Resolver.defaultFileConfiguration,
+          Patterns(true, publishDir + publishPath)
+        ))
+      } getOrElse {
+        val nexus = "https://oss.sonatype.org/"
+        if (isSnapshot.value)
+          Some("snapshots" at nexus + "content/repositories/snapshots")
+        else
+          Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+      }
     }
   ) ++ prepAlias
 }
 
 object FaceliftBuild extends Build {
   import BuildSettings._
-
 
   lazy val root: Project = Project(
     name,
