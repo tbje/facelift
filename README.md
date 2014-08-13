@@ -19,9 +19,9 @@ Writing Html:
             }{B("my friend")} ++  // or another NodeSeq
             // Combine multiple styles easily using &
             Div(Bs.colMd4 & Bs.pullRight) { 
-            // Access glyphs from Glyhicon in a typesafe manner
-            Glyphicon.Cloud % Style(FontSize(1.6 em), LineHeight(20.px)) ++ 
-            Span(Bs.h3, Style(MarginLeft(10.px)))("my title")
+              // Access glyphs from Glyhicon in a typesafe manner
+              Glyphicon.Cloud % Style(FontSize(1.6 em), LineHeight(20.px)) ++ 
+              Span(Bs.h3, Style(MarginLeft(10.px)))("my title")
           }
         }
       }
