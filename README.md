@@ -8,7 +8,7 @@ Writing Html:
     val titleClass = Class("cool")
     val titleStyle = Style(Color.Green, Margin(45 px, 20 px, 10 px, 10 px), 'paddingLeft -> "10px")
 
-    val html1 = // attributes first style
+    val html1 =
       Html {
         Body(Style('backgroundColor -> "#F5F5F5")) {
           // Most bootstrap classes are built in, let's bind them to Bs
@@ -23,12 +23,6 @@ Writing Html:
               Glyphicon.Cloud % Style(FontSize(1.6 em), LineHeight(20.px)) ++ 
               Span(Bs.h3, Style(MarginLeft(10.px)))("my title")
           }
-        }
-      }
-    val html2 = // content then attributes style
-      Html {
-        Body {
-          H1("Welcome to FaceLift", titleId, titleClass, titleStyle, 'customAttr -> "hello!") ++
         }
       }
 
