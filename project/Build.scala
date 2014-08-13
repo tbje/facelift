@@ -8,7 +8,7 @@ object BuildSettings {
   lazy val prepAlias = addCommandAlias("prep", ";publishLocal;cleanCache")
   val name = "facelift"
   val buildSettings = Defaults.defaultSettings ++ Seq(
-    organization := "tbje",
+    organization := "com.github.tbje",
     version := "0.1-SNAPSHOT",
     scalaVersion := "2.10.4",
     crossScalaVersions := Seq("2.10.4", "2.11.0"),
@@ -21,7 +21,7 @@ object BuildSettings {
         "-language:_",
         "-target:jvm-1.6",
         "-encoding", "UTF-8"
-    ), 
+    ),
     libraryDependencies := {
       CrossVersion.partialVersion(scalaVersion.value) match {
         case Some((2, scalaMajor)) if scalaMajor >= 11 => libraryDependencies.value ++ Seq(
@@ -32,11 +32,11 @@ object BuildSettings {
     },
     incOptions := incOptions.value.withNameHashing(true),
     publishTo := {
-      val publishDir = Option(System.getProperty("publish.dir")).getOrElse(System.getProperty("user.dir")) 
+      val publishDir = Option(System.getProperty("publish.dir")).getOrElse(System.getProperty("user.dir"))
       val publishPath = "/[organization]/[module](_[scalaVersion])/[revision]/[artifact](_[scalaVersion])-[revision](-[classifier]).[ext]"
       Some(FileRepository(
-        "Groosker Repo", 
-        Resolver.defaultFileConfiguration, 
+        "Groosker Repo",
+        Resolver.defaultFileConfiguration,
         Patterns(true, publishDir + publishPath)
       ))
     }
@@ -44,7 +44,7 @@ object BuildSettings {
 }
 
 object FaceliftBuild extends Build {
-  import BuildSettings._  
+  import BuildSettings._
 
 
   lazy val root: Project = Project(
@@ -57,7 +57,7 @@ object FaceliftBuild extends Build {
       // include the macro classes and resources in the main jar
       mappings in (Compile, packageBin) ++= mappings.in(macros, Compile, packageBin).value,
       mappings in (Compile, packageBin) ++= mappings.in(core, Compile, packageBin).value//,
-  ) 
+  )
 
   lazy val macros: Project = Project(
     name + "-macros",
@@ -67,7 +67,7 @@ object FaceliftBuild extends Build {
   ) settings (
     publish := {},
     publishLocal := {}
-  ) dependsOn(core) 
+  ) dependsOn(core)
 
   lazy val core: Project = Project(
     name + "-core",

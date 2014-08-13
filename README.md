@@ -52,8 +52,8 @@ Nesting:
 
 Required imports:
 
-    import tbje.facelift.Html._
-    import tbje.facelift.css._
+    import com.github.tbje.facelift.Html._
+    import com.github.tbje.facelift.css._
 
 Start using it:
 
@@ -65,7 +65,7 @@ Start using it:
 In your project (SBT-settings):
     
     libraryDependencies ++= Seq(
-        "tbje" %% "facelift" % "0.1-SNAPSHOT"
+        "com.github.tbje" %% "facelift" % "0.1-SNAPSHOT"
     )
 
 Next steps:
