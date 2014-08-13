@@ -11,10 +11,16 @@ Writing Html:
     val html1 = // attributes first style
       Html {
         Body(Style('backgroundColor -> "#F5F5F5")) {
-          import com.github.tbje.facelift.css.{ BootstrapClasses => Bs } // Most bootstrap classes built in
-          H1(titleId, titleClass, titleStyle, 'funkyAttr -> "very-funky")("Welcome to FaceLift")(B("my friend")) ++ // Calling apply multiple times will concatenate children
-          Div(Bs.colMd4 & Bs.pullRight) { // Combine multiple styles easily
-            Glyphicon.Cloud % Style(FontSize(1.6 em), LineHeight(20.px)) ++ // Access glyps from Glyhicon
+          // Most bootstrap classes built in, let's bind them to Bs
+          import com.github.tbje.facelift.css.{ BootstrapClasses => Bs }
+          // Calling apply multiple times will add children to the node
+          H1(titleId, titleClass, titleStyle, 'funkyAttr -> "very-funky"){
+            "Welcome to FaceLift" // you can pass a String
+            }{B("my friend")} ++  // or another NodeSeq
+            // Combine multiple styles easily using &
+            Div(Bs.colMd4 & Bs.pullRight) { 
+            // Access glyphs from Glyhicon in a typesafe manner
+            Glyphicon.Cloud % Style(FontSize(1.6 em), LineHeight(20.px)) ++ 
             Span(Bs.h3, Style(MarginLeft(10.px)))("my title")
           }
         }
