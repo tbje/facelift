@@ -1,6 +1,7 @@
 package com.github.tbje.facelift
 
 import scala.xml._
+import css.CssDeclaration
 
 package attr {
 
@@ -162,10 +163,83 @@ package attr {
 
   case class DataTarget(id: String) extends AttributeBase("data-target", id)
 
+  case class ElemOps(val n: scala.xml.Elem) extends AnyVal {
+    def addStyle(css: com.github.tbje.facelift.css.CssDeclaration*) =
+      com.github.tbje.facelift.attr.addStyle(n, css: _*)
+  }
 }
 
 package object attr {
   @deprecated("Use OnClick instead", "0.2")
   val Onclick = OnClick
   type Onclick = OnClick
+
+  def replaceValue(map: Map[String, String], x: String, func: String => String): Map[String, String] = {
+    map.get(x) match {
+      case Some(v) => (map - x) + (x -> func(v))
+      case None => map
+    }
+  }
+
+  def mergeValue(map: Map[String, String], x: (String, String)): Map[String, String] = {
+    map.get(x._1) match {
+      case Some(v) => (map - x._1) + (x._1 -> (v + " " + x._2))
+      case None => map + (x._1 -> x._2)
+    }
+  }
+
+  def classMerge(node: Node, className: String) = appendAttr(node, "class" -> className)
+
+
+  def decomposeMetaData(m: MetaData): Option[(String, String)] = m match {
+    case Null => None
+    case PrefixedAttribute(pre, key, values, next) =>
+      Some(pre + ":" + key -> values.mkString(" "))
+    case UnprefixedAttribute(key, values, next) =>
+      Some(key -> values.mkString(" "))
+  }
+
+  def unchainMetaData(n: Node): Map[String, String] = (n match {
+    case Elem(_, _, attr, _, _) => attr.toList.flatMap(decomposeMetaData(_))
+    case _ => Nil
+  }).toMap
+
+  def unchainMetaData(m: MetaData): Map[String, String] = m.flatMap(decomposeMetaData(_)).toMap
+
+  def chainMetaData(map: List[(String, String)]): MetaData = map.toList match {
+    case Nil => Null
+    case (key, value) :: Nil => Attribute(None, key, Text(value) :: Nil, Null)
+    case (key, value) :: next => Attribute(None, key, Text(value) :: Nil, chainMetaData(next))
+    case x => Null
+  }
+
+  def chainMetaData(map: Map[String, String]): MetaData = chainMetaData(map.toList)
+
+  def appendAttr(n: Node, attr: (String, String)) = {
+    n match {
+      case Elem(pre, name, attrs, x, content @ _*) =>
+        new Elem(pre, name, chainMetaData(mergeValue(unchainMetaData(attrs), attr)), x, content.isEmpty, content: _*)
+      case x => x
+    }
+  }
+
+  def attr(x: (String, String)) = new UnprefixedAttribute(x._1, x._2, scala.xml.Null)
+
+  def addOptAttr(e: Elem, a: Option[(String, String)]) = a.map(a => e % attr(a)).getOrElse(e)
+
+  def capEach(x: String) = ((x toLowerCase) split " " map (_ capitalize)).mkString(" ")
+
+  def replaceAttrValue(n: Elem, attrName: String, replaceFunc: String => String) = {
+    n match {
+      case Elem(pre, name, attrs, x, content @ _*) =>
+        new Elem(pre, name, chainMetaData(replaceValue(unchainMetaData(attrs), attrName, replaceFunc)), x, content.isEmpty, content: _*)
+      case x => x
+    }
+  }
+
+  def addStyle(n: Elem, css: CssDeclaration*) =
+    replaceAttrValue(n, "style", x => s"$x; ${css.map(_.toString).mkString("; ")}")
+
+  implicit def elemToElemOps(n: scala.xml.Elem) = ElemOps(n)
+
 }

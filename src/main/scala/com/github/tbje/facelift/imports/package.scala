@@ -8,6 +8,8 @@ package object imports {
   implicit val tuple2ToAttrBase = attr.AttributeBase.tuple2ToAttrBase _
   implicit val tuple2ToAttrBase2 = attr.AttributeBase.tuple2ToAttrBase2 _
 
+  implicit val elemOps = attr.elemToElemOps _
+
   val Doctype = html.Doctype
   val A = html.A
   val Abbr = html.Abbr
