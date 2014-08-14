@@ -17,7 +17,7 @@ object BuildSettings {
   val name = "facelift"
   val buildSettings = Defaults.defaultSettings ++ Seq(
     organization := "com.github.tbje",
-    version := "0.1",
+    version := "0.2-SNAPSHOT",
     scalaVersion := "2.10.4",
     homepage := Some(url("https://github.com/tbje/facelift")),
     scmInfo := Some(ScmInfo(url("https://github.com/tbje/facelift"), "https://github.com/tbje/facelift.git")),
