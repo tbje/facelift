@@ -1,8 +1,8 @@
 package com.github.tbje.facelift.css
 
-import com.github.tbje.facelift.attr.Class
-
-/* (Some) Bootstrap 3 classes - requires an import like: 
+import com.github.tbje.facelift.attr.{ Class, Href, Rel, Src, Type, Id }
+import com.github.tbje.facelift.html.{ Link, Script }
+/* (Some) Bootstrap 3 classes - requires an import like:
  *   Script(Type.TextJavaScript, Src(s"//netdna.bootstrapcdn.com/bootstrap/$bootstrapVerison/js/bootstrap.min.js"), Id("bootstrap"))
  * usage example:
  * import com.github.tbje.facelift.css.{ BootstrapClasses => Bs }
@@ -10,6 +10,9 @@ import com.github.tbje.facelift.attr.Class
  * */
 
 object BootstrapClasses {
+  val bootstrapDefaultVersion = "3.2.0"
+  def cdnStylesheet(v: String = bootstrapDefaultVersion) = Link(Href(s"//maxcdn.bootstrapcdn.com/bootstrap/$v/css/bootstrap.min.css"), Rel.Stylesheet)
+  def cdnJs(v: String = bootstrapDefaultVersion) = Script(Type.TextJavaScript, Src(s"//maxcdn.bootstrapcdn.com/bootstrap/$v/js/bootstrap.min.js"), Id("bootstrap"))
   val active = Class("active")
   val affix = Class("affix")
   val alert = Class("alert")
@@ -371,4 +374,3 @@ object BootstrapClasses {
   val wellLg = Class("well-lg")
   val wellSm = Class("well-sm")
 }
-
