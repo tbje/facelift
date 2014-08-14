@@ -147,6 +147,7 @@ package attr {
     val Tel = Type("tel")
     val Text = Type("text")
     val TextJavaScript = Type("text/javascript")
+    val TextCss = Type("text/css")
   }
 
   case class Content(id: String) extends AttributeBase("content", id)
