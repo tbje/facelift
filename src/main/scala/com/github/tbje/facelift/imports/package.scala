@@ -10,6 +10,8 @@ package object imports {
 
   implicit val elemOps = attr.elemToElemOps _
 
+  implicit val strContextToXmlInterpolate = html.XmlInterpolate.strContextToXmlInterpolate _
+
   val Doctype = html.Doctype
   val A = html.A
   val Abbr = html.Abbr

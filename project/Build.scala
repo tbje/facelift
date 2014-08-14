@@ -41,7 +41,9 @@ object BuildSettings {
         case Some((2, 10)) =>
           libraryDependencies.value
       }
-    },
+    } ++ Seq(
+      "org.scalatest" %% "scalatest" % "2.2.0" % "test"
+    ),
     incOptions := incOptions.value.withNameHashing(true),
     publishMavenStyle := true,
     publishArtifact in Test := false,
