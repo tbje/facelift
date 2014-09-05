@@ -10,7 +10,12 @@ case class OverflowX(overflowX: String) extends CssDeclaration {
 }
 
 object OverflowX {
-  // TODO: overflow-x values
+  val Visible = OverflowX("visible") // The content is not clipped, and it may be rendered outside the content box
+  val Hidden = OverflowX("hidden") // The content is clipped - and no scrolling mechanism is provided
+  val Scroll = OverflowX("scroll") // The content is clipped and a scrolling mechanism is provided
+  val Auto = OverflowX("auto") // Should cause a scrolling mechanism to be provided for overflowing boxes
+  val Initial = OverflowX("initial") // Sets this property to its default value. Read about initial
+  val Inherit = OverflowX("inherit") // Inherits this property from its parent element. Read about inherit
 }
 
 /**
@@ -23,7 +28,12 @@ case class OverflowY(overflowY: String) extends CssDeclaration {
 }
 
 object OverflowY {
-  // TODO: overflow-y values
+  val Visible = OverflowY("visible") // The content is not clipped, and it may be rendered outside the content box
+  val Hidden = OverflowY("hidden") // The content is clipped - and no scrolling mechanism is provided
+  val Scroll = OverflowY("scroll") // The content is clipped and a scrolling mechanism is provided
+  val Auto = OverflowY("auto") // Should cause a scrolling mechanism to be provided for overflowing boxes
+  val Initial = OverflowY("initial") // Sets this property to its default value. Read about initial
+  val Inherit = OverflowY("inherit") // Inherits this property from its parent element. Read about inherit
 }
 
 /**
