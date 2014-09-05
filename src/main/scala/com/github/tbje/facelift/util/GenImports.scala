@@ -12,7 +12,7 @@ object GenImports extends App {
 
   val ClassReg = """.*class ([^(]*)\(.*""".r
   val ObjectReg = """.*object ([A-Z][^ ]*) .*""".r
-  val donts = Seq("Map", "Font", "Id", "Content", "Mark", "Class", "CssElementWithChildren", "CssElementWithoutChildren", "CssMeasure", "ToUnitOps[T]")
+  val donts = Seq("Option", "Map", "Font", "Id", "Content", "Mark", "Class", "CssElementWithChildren", "CssElementWithoutChildren", "CssMeasure", "ToUnitOps[T]")
 
   val results = cssFiles flatMap { file =>
     val src = scala.io.Source.fromFile(file).getLines.toList

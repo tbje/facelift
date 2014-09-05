@@ -93,7 +93,7 @@ package object imports {
   val Object = html.Object
   val Ol = html.Ol
   val Optgroup = html.Optgroup
-  val Option = html.Option
+  val HtmlOption = html.Option
   val Output = html.Output
   val P = html.P
   val Param = html.Param
