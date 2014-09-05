@@ -47,8 +47,9 @@ package attr {
     val Viewport = Name("viewport")
   }
 
-  case class Style(str: String) extends AttributeBase("style", str)
-
+  case class Style(str: String) extends AttributeBase("style", str) {
+    def &(attrs: CssDeclaration*) = new Style(s"$str; ${attrs mkString "; "}")
+  }
   object Style {
     def apply(attrs: CssDeclaration*) = new Style(attrs mkString "; ")
   }
