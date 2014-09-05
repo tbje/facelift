@@ -112,6 +112,12 @@ package attr {
 
   case class Href(href: String) extends AttributeBase("href", href)
 
+  case class Cols(cols: Int) extends AttributeBase("cols", cols.toString)
+
+  case class Colspan(colspan: Int) extends AttributeBase("colspan", colspan.toString)
+
+  case class Rows(rows: Int) extends AttributeBase("rows", rows.toString)
+
   case class Rel(val types: String*) extends AttributeBase("rel", types mkString " ") {
     def &(other: Rel) = Rel((types ++ other.types): _*)
   }

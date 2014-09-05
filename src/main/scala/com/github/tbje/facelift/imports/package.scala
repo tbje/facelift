@@ -136,6 +136,8 @@ package object imports {
   type Id = attr.Id
   val Id = attr.Id
   val Class = attr.Class
+  val Cols = attr.Cols
+  val Colspan = attr.Colspan
   val Name = attr.Name
   val For = attr.For
   val Placeholder = attr.Placeholder
@@ -145,7 +147,6 @@ package object imports {
   val OnLoad = attr.OnLoad
   val OnUnload = attr.OnUnload
   val OnClick = attr.OnClick
-  @deprecated("Use OnClick instead", "0.2") val Onclick = attr.OnClick
   val OnDblClick = attr.OnDblClick
   val OnMouseDown = attr.OnMouseDown
   val OnMouseUp = attr.OnMouseUp
@@ -164,6 +165,7 @@ package object imports {
 
   val Rel = attr.Rel
   val Role = attr.Role
+  val Rows = attr.Rows
   val Type = attr.Type
   val Value = attr.Value
   val Content = attr.Content
