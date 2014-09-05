@@ -12,6 +12,8 @@ package object imports {
 
   implicit val strContextToXmlInterpolate = html.XmlInterpolate.strContextToXmlInterpolate _
 
+  implicit def seqToHtmlSeq[T](s: Seq[T]) = html.HtmlSeq.seqToHtmlSeq[T](s)
+
   val Doctype = html.Doctype
   val A = html.A
   val Abbr = html.Abbr

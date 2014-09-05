@@ -20,6 +20,22 @@ package html {
     implicit def augmentElemToElementOps(elem: Elem) = new ElementOps(elem)
   }
 
+  class HtmlSeq[T](val seq: Seq[T]) extends AnyVal {
+    def mapXml(
+      fun: T => NodeSeq,
+      sep: NodeSeq = NodeSeq.Empty,
+      ifEmpty: NodeSeq = NodeSeq.Empty,
+      surround: NodeSeq => NodeSeq = x => x) = seq match {
+        case Nil => ifEmpty
+        case head :: Nil => surround(fun(head))
+        case _ => surround(seq.tail.foldLeft(fun(seq.head))(_ ++ sep ++ fun(_)))
+      }
+  }
+
+  object HtmlSeq {
+    implicit def seqToHtmlSeq[T](x: Seq[T]) = new HtmlSeq[T](x)
+  }
+
   object Doctype extends XmlBase("!DOCTYPE") // Defines the document type
   object A extends XmlBase("a") // Defines a hyperlink
   object Abbr extends XmlBase("abbr") // Defines an abbreviation
