@@ -130,6 +130,19 @@ package attr {
 
   case class Role(id: String) extends AttributeBase("role", id)
 
+  object Role {
+    val Banner = Role("banner")
+    val Button = Role("button")
+    val Form = Role("form")
+    val Main = Role("main")
+    val Menu = Role("menu")
+    val MenuItem = Role("menuitem")
+    val Navigation = Role("navigation")
+    val Presentation = Role("presentation")
+    val Progressbar = Role("progressbar")
+    val Toolbar = Role("toolbar")
+  }
+
   case class Type(id: String) extends AttributeBase("type", id)
 
   object Type {
