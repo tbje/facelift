@@ -126,7 +126,16 @@ case class VerticalAlign(verticalAlign: String) extends CssDeclaration {
 }
 
 object VerticalAlign {
-  // TODO: vertical-align values
+  val Baseline = VerticalAlign("baseline") // Align the baseline of the element with the baseline of the parent element. This is default
+  val Length = VerticalAlign("length") // Raises or lower an element by the specified length. Negative values are allowed
+  def apply(measure: CssMeasure) = new VerticalAlign(measure.value) // Raises or lower an element in a percent of the "line-height" property. Negative values are allowed
+  val Sub = VerticalAlign("sub") // Aligns the element as if it was subscript
+  val Super = VerticalAlign("super") // Aligns the element as if it was superscript
+  val Top = VerticalAlign("top") // The top of the element is aligned with the top of the tallest element on the line
+  val Middle = VerticalAlign("middle") // The element is placed in the middle of the parent element
+  val Bottom = VerticalAlign("bottom") // The bottom of the element is aligned with the lowest element on the line
+  val Initial = VerticalAlign("initial") // Sets this property to its default value. Read about initial
+  val Inherit = VerticalAlign("inherit") // Inherits this property from its parent element. Read about inherit  // TODO: vertical-align values
 }
 
 /**
