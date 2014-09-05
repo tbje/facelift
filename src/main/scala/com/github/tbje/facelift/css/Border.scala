@@ -230,7 +230,11 @@ case class OutlineWidth(outlineWidth: String) extends CssDeclaration {
   val value = outlineWidth
 }
 
-object BorderWidth extends BorderWidthX[BorderWidth]
+object BorderWidth extends BorderWidthX[BorderWidth] {
+  def apply(top: CssMeasure, right: CssMeasure, bottom: CssMeasure, left: CssMeasure) = new BorderWidth(s"${top.value} ${right.value} ${bottom.value} ${left.value}")
+  def apply(top: CssMeasure, rightAndLeft: CssMeasure, bottom: CssMeasure) = new BorderWidth(s"${top.value} ${rightAndLeft.value} ${bottom.value}")
+  def apply(topAndBottom: CssMeasure, rightAndLeft: CssMeasure) = new BorderWidth(s"${topAndBottom.value} ${rightAndLeft.value}")
+}
 object BorderTopWidth extends BorderWidthX[BorderTopWidth]
 object BorderBottomWidth extends BorderWidthX[BorderBottomWidth]
 object BorderLeftWidth extends BorderWidthX[BorderLeftWidth]
