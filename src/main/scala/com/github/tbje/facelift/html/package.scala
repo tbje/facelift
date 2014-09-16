@@ -3,7 +3,7 @@ package com.github.tbje.facelift
 import scala.xml._
 
 package html {
-  class XmlBase(label: String) extends Elem(null, label, scala.xml.Null, TopScope, false, Seq.empty: _*) {
+  class XmlBase(label: String, minimize: Boolean = false) extends Elem(null, label, scala.xml.Null, TopScope, minimize, Seq.empty: _*) {
     def combineAttrs(attrs: Seq[Attribute]) =
       attrs.foldLeft(Null: MetaData)((x, y) => x.append(y).asInstanceOf[Attribute])
     def apply(content: String, attrs: Attribute*): Elem = apply(Text(content), attrs: _*)
@@ -42,28 +42,28 @@ package html {
   object Acronym extends XmlBase("acronym") // Not supported in HTML5. Defines an acronym
   object Address extends XmlBase("address") // Defines contact information for the author/owner of a document
   object Applet extends XmlBase("applet") // Not supported in HTML5. Deprecated in HTML 4.01. Defines an embedded applet
-  object Area extends XmlBase("area") // Defines an area inside an image-map
+  object Area extends XmlBase("area", minimize = true) // Defines an area inside an image-map
   object Article extends XmlBase("article") // New - Defines an article
   object Aside extends XmlBase("aside") // New - Defines content aside from the page content
   object Audio extends XmlBase("audio") // New - Defines sound content
   object B extends XmlBase("b") // Defines bold text
-  object Base extends XmlBase("base") // Specifies the base URL/target for all relative URLs in a document
+  object Base extends XmlBase("base", minimize = true) // Specifies the base URL/target for all relative URLs in a document
   object Basefont extends XmlBase("basefont") // Not supported in HTML5. Deprecated in HTML 4.01. Specifies a default color, size, and font for all text in a document
   object Bdi extends XmlBase("bdi") // New - Isolates a part of text that might be formatted in a different direction from other text outside it
   object Bdo extends XmlBase("bdo") // Overrides the current text direction
   object Big extends XmlBase("big") // Not supported in HTML5. Defines big text
   object Blockquote extends XmlBase("blockquote") // Defines a section that is quoted from another source
   object Body extends XmlBase("body") // Defines the document's body
-  object Br extends XmlBase("br") // Defines a single line break
+  object Br extends XmlBase("br", minimize = true) // Defines a single line break
   object Button extends XmlBase("button") // Defines a clickable button
   object Canvas extends XmlBase("canvas") // New - Used to draw graphics, on the fly, via scripting (usually JavaScript)
   object Caption extends XmlBase("caption") // Defines a table caption
   object Center extends XmlBase("center") // Not supported in HTML5. Deprecated in HTML 4.01. Defines centered text
   object Cite extends XmlBase("cite") // Defines the title of a work
   object Code extends XmlBase("code") // Defines a piece of computer code
-  object Col extends XmlBase("col") // Specifies column properties for each column within a <colgroup> element
+  object Col extends XmlBase("col", minimize = true) // Specifies column properties for each column within a <colgroup> element
   object Colgroup extends XmlBase("colgroup") // Specifies a group of one or more columns in a table for formatting
-  object Command extends XmlBase("command") // New - Defines a command button that a user can invoke
+  object Command extends XmlBase("command", minimize = true) // New - Defines a command button that a user can invoke
   object Datalist extends XmlBase("datalist") // New - Specifies a list of pre-defined options for input controls
   object Dd extends XmlBase("dd") // Defines a description/value of a term in a description list
   object Del extends XmlBase("del") // Defines text that has been deleted from a document
@@ -75,7 +75,7 @@ package html {
   object Dl extends XmlBase("dl") // Defines a description list
   object Dt extends XmlBase("dt") // Defines a term/name in a description list
   object Em extends XmlBase("em") // Defines emphasized text
-  object Embed extends XmlBase("embed") // New - Defines a container for an external (non-HTML) application
+  object Embed extends XmlBase("embed", minimize = true) // New - Defines a container for an external (non-HTML) application
   object Fieldset extends XmlBase("fieldset") // Groups related elements in a form
   object Figcaption extends XmlBase("figcaption") // New - Defines a caption for a <figure> element
   object Figure extends XmlBase("figure") // New - Specifies self-contained content
@@ -92,23 +92,23 @@ package html {
   object H6 extends XmlBase("h6") // Defines HTML headings
   object Head extends XmlBase("head") // Defines information about the document
   object Header extends XmlBase("header") // New - Defines a header for a document or section
-  object Hr extends XmlBase("hr") //  Defines a thematic change in the content
+  object Hr extends XmlBase("hr", minimize = true) //  Defines a thematic change in the content
   object Html extends XmlBase("html") // Defines the root of an HTML document
   object I extends XmlBase("i") // Defines a part of text in an alternate voice or mood
   object Iframe extends XmlBase("iframe") // Defines an inline frame
-  object Img extends XmlBase("img") // Defines an image
-  object Input extends XmlBase("input") // Defines an input control
+  object Img extends XmlBase("img", minimize = true) // Defines an image
+  object Input extends XmlBase("input", minimize = true) // Defines an input control
   object Ins extends XmlBase("ins") // Defines a text that has been inserted into a document
   object Kbd extends XmlBase("kbd") // Defines keyboard input
-  object Keygen extends XmlBase("keygen") // New - Defines a key-pair generator field (for forms)
+  object Keygen extends XmlBase("keygen", minimize = true) // New - Defines a key-pair generator field (for forms)
   object Label extends XmlBase("label") // Defines a label for an <input> element
   object Legend extends XmlBase("legend") // Defines a caption for a <fieldset> element
   object Li extends XmlBase("li") // Defines a list item
-  object Link extends XmlBase("link") // Defines the relationship between a document and an external resource (most used to link to style sheets)
+  object Link extends XmlBase("link", minimize = true) // Defines the relationship between a document and an external resource (most used to link to style sheets)
   object Map extends XmlBase("map") // Defines a client-side image-map
   object Mark extends XmlBase("mark") // New - Defines marked/highlighted text
   object Menu extends XmlBase("menu") // Defines a list/menu of commands
-  object Meta extends XmlBase("meta") // Defines metadata about an HTML document
+  object Meta extends XmlBase("meta", minimize = true) // Defines metadata about an HTML document
   object Meter extends XmlBase("meter") // New - Defines a scalar measurement within a known range (a gauge)
   object Nav extends XmlBase("nav") // New - Defines navigation links
   object Noframes extends XmlBase("noframes") // Not supported in HTML5. Defines an alternate content for users that do not support frames
@@ -119,7 +119,7 @@ package html {
   object Option extends XmlBase("option") // Defines an option in a drop-down list
   object Output extends XmlBase("output") // New - Defines the result of a calculation
   object P extends XmlBase("p") // Defines a paragraph
-  object Param extends XmlBase("param") // Defines a parameter for an object
+  object Param extends XmlBase("param", minimize = true) // Defines a parameter for an object
   object Pre extends XmlBase("pre") // Defines preformatted text
   object Progress extends XmlBase("progress") // New - Represents the progress of a task
   object Q extends XmlBase("q") // Defines a short quotation
@@ -132,7 +132,7 @@ package html {
   object Section extends XmlBase("section") // New - Defines a section in a document
   object Select extends XmlBase("select") // Defines a drop-down list
   object Small extends XmlBase("small") // Defines smaller text
-  object Source extends XmlBase("source") // New - Defines multiple media resources for media elements (<video> and <audio>)
+  object Source extends XmlBase("source", minimize = true) // New - Defines multiple media resources for media elements (<video> and <audio>)
   object Span extends XmlBase("span") // Defines a section in a document
   object Strike extends XmlBase("strike") // Not supported in HTML5. Deprecated in HTML 4.01. Defines strikethrough text
   object Strong extends XmlBase("strong") // Defines important text
@@ -156,6 +156,6 @@ package html {
   object Ul extends XmlBase("ul") // Defines an unordered list
   object Var extends XmlBase("var") // Defines a variable
   object Video extends XmlBase("video") // New - Defines a video or movie
-  object Wbr extends XmlBase("wbr") // New - Defines a possible line-break
+  object Wbr extends XmlBase("wbr", minimize = true) // New - Defines a possible line-break
 
 }
