@@ -47,6 +47,9 @@ case class BaseColor(color: String, property: String) extends CssDeclaration {
   val value = color
 }
 
+  case class SuperString(str: String)
+
+
 class BaseColorObject(property: String) {
   object AliceBlue extends BaseColor("aliceblue", property)
   object AntiqueWhite extends BaseColor("antiquewhite", property)
@@ -224,6 +227,9 @@ class BaseColorObject(property: String) {
     }
   }
 
+  def elems(strs: String*): SuperString = macro ColorHelper.elemsImpl
+
+
   /**
    * RGB color values are supported in all major browsers.
    *
@@ -316,6 +322,31 @@ class BaseColorObject(property: String) {
 }
 
 object ColorHelper {
+
+  /* Allow writing things like Class("test") { MarginWidth(30.px); Color.Green } */
+  def elemsImpl(c: Context)(strs: c.Expr[String]*): c.Expr[SuperString] = {
+    import c.universe._
+    strs.head.tree match {
+      case Block(cont, cont2) =>
+        //SuperString(cont.head) //c.prefix.splice.hexImpl(hexColor.splice) }
+        reify { SuperString("") } //c.prefix.splice.hexImpl(hexColor.splice) }
+      case _ =>
+        c.abort(strs.head.tree.pos, s"${strs.mkString(", ")} - ${strs.size}" )
+        reify { SuperString("") } //c.prefix.splice.hexImpl(hexColor.splice) }
+    }
+/*    checkMacroVar[String](c)(hexColor, hexFormatCheck, hexFormatErrorMsg(_))
+      case Literal(Constant(value: String)) =>
+        value.tail.sliding(2, 2).toList zip Seq("RR", "GG", "BB") foreach {
+          case (value, part) =>
+            testHex(value, part) match {
+              case Some(msg) => c.abort(hexColor.tree.pos, msg)
+              case _ =>
+            }
+        }
+      case _ =>
+    }*/
+  }
+
 
   def checkMacroVar[T: ClassTag](c: Context)(x: c.Expr[T], req: T => Boolean, errorMsg: T => String) = {
     import c.universe._

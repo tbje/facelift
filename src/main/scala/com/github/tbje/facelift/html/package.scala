@@ -136,7 +136,12 @@ package html {
   object Span extends XmlBase("span") // Defines a section in a document
   object Strike extends XmlBase("strike") // Not supported in HTML5. Deprecated in HTML 4.01. Defines strikethrough text
   object Strong extends XmlBase("strong") // Defines important text
-  object Style extends XmlBase("style") // Defines style information for a document
+  object Style extends XmlBase("style") { // Defines style information for a document
+    import ElementOps._
+    def fromCss(decs: css.CssElement*): Elem = {
+      this.apply(attr.Type.TextCss)(Unparsed("\n" + decs.map(_.toString).mkString("\n")))
+    }
+  }
   object Sub extends XmlBase("sub") // Defines subscripted text
   object Summary extends XmlBase("summary") // New - Defines a visible heading for a <details> element
   object Sup extends XmlBase("sup") // Defines superscripted text
