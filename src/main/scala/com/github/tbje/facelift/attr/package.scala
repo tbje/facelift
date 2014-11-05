@@ -26,8 +26,17 @@ package attr {
 
   case class Id(id: String) extends AttributeBase("id", id)
 
+  case class ClassAndDefinition(cssClass: Class, definition: CssElement)
+  object ClassAndDefinition {
+    implicit def classAndDefinitionToClass(cd: ClassAndDefinition) = cd.cssClass
+    implicit def classAndDefinitionToDefinition(cd: ClassAndDefinition) = cd.definition
+  }
+
   case class Class(val names: String*) extends AttributeBase("class", names mkString " ") {
+    val name = names mkString " "
     def &(other: Class) = Class((names ++ other.names): _*)
+    def withDef(other: CssElement) = ClassAndDefinition(this, other)
+    def apply(cssDecs: CssDeclaration*) = withDef(CssElement(CssSelector.Class(name))(cssDecs:_*))
   }
 
   case class Value(name: String) extends AttributeBase("value", name)
