@@ -47,6 +47,8 @@ package attr {
 
   case class Name(name: String) extends AttributeBase("name", name)
 
+  case class Alt(alt: String) extends AttributeBase("alt", alt)
+
   object Name {
     val ApplicationName = Name("application-name")
     val Author = Name("author")

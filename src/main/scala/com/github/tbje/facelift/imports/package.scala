@@ -136,6 +136,8 @@ package object imports {
   val Wbr = html.Wbr
 
   type Id = attr.Id
+
+  val Alt = attr.Alt
   val Id = attr.Id
   val Class = attr.Class
   val Cols = attr.Cols
