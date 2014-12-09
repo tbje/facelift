@@ -22,7 +22,7 @@ object BuildSettings {
     homepage := Some(url("https://github.com/tbje/facelift")),
     scmInfo := Some(ScmInfo(url("https://github.com/tbje/facelift"), "https://github.com/tbje/facelift.git")),
     licenses := Seq("BSD-style" -> url("http://www.opensource.org/licenses/bsd-license.php")),
-    crossScalaVersions := Seq("2.10.4", "2.11.0"),
+    crossScalaVersions := Seq("2.10.4", "2.11.4"),
     resolvers += Resolver.sonatypeRepo("snapshots"),
     resolvers += Resolver.sonatypeRepo("releases"),
     scalacOptions ++= Seq(
