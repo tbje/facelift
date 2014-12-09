@@ -3,8 +3,13 @@ import Keys._
 import sbt.Keys._
 import scala.xml.NodeSeq
 import sbtrelease.ReleasePlugin._
+import com.typesafe.sbt.pgp.PgpKeys
+
 
 object BuildSettings {
+
+  val faceliftReleaseSettings = (ReleaseKeys.publishArtifactsAction := PgpKeys.publishSigned.value) +: releaseSettings
+
   lazy val prepAlias = addCommandAlias("prep", ";publishLocal;cleanCache")
   def devs(devList: (String, String)*) = {
     def devsNode(x: NodeSeq) = <developers>{x}</developers>
@@ -73,7 +78,7 @@ object FaceliftBuild extends Build {
   lazy val root: Project = Project(
     name,
     file("."),
-    settings = buildSettings ++ Seq(
+    settings = buildSettings ++ faceliftReleaseSettings ++ Seq(
       run <<= run in Compile in core)
     ) dependsOn(macros) settings (
       allDependencies <<= allDependencies.map{ deps => deps.filter(_.name != "facelift-macros") },
@@ -85,7 +90,7 @@ object FaceliftBuild extends Build {
   lazy val macros: Project = Project(
     name + "-macros",
     file("macros"),
-    settings = buildSettings ++ Seq(
+    settings = buildSettings ++ faceliftReleaseSettings ++ Seq(
       libraryDependencies <+= (scalaVersion)("org.scala-lang" % "scala-reflect" % _))
   ) settings (
     publish := {},
@@ -95,7 +100,7 @@ object FaceliftBuild extends Build {
   lazy val core: Project = Project(
     name + "-core",
     file("core"),
-    settings = buildSettings
+    settings = buildSettings ++ faceliftReleaseSettings
   ) settings (
     publish := {},
     publishLocal := {}
