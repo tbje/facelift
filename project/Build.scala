@@ -2,6 +2,7 @@ import sbt._
 import Keys._
 import sbt.Keys._
 import scala.xml.NodeSeq
+import sbtrelease.ReleasePlugin._
 
 object BuildSettings {
   lazy val prepAlias = addCommandAlias("prep", ";publishLocal;cleanCache")
@@ -15,9 +16,8 @@ object BuildSettings {
     })
   }
   val name = "facelift"
-  val buildSettings = Defaults.defaultSettings ++ Seq(
+  val buildSettings = Defaults.defaultSettings ++ releaseSettings ++ Seq(
     organization := "com.github.tbje",
-    version := "0.2-SNAPSHOT",
     scalaVersion := "2.10.4",
     homepage := Some(url("https://github.com/tbje/facelift")),
     scmInfo := Some(ScmInfo(url("https://github.com/tbje/facelift"), "https://github.com/tbje/facelift.git")),
